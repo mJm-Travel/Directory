@@ -17,30 +17,36 @@
 </head>
 <body>
   <p><a href="https://mjm-travel.github.io/Directory/">📂 Back To Main Directory</a></p>
- <h1 id="page-title">📂 Travel Directory</h1> <!-- placeholder, will be replaced -->
+<h1 id="page-title">📂 Travel Directory</h1>
+<div id="repo-tree"></div>
 
-  <script>
-    // --- Detect current folder name ---
-    let pathParts = window.location.pathname.split("/").filter(p => p);
-    const repoName = "Directory"; 
-    const repoIndex = pathParts.indexOf(repoName);
-    const currentFolder = pathParts[repoIndex + 1]; // e.g. "Egypt"
-
-    if (currentFolder) {
-      // --- Update <h1> ---
-      document.getElementById("page-title").innerHTML = "📂 " + currentFolder + " Travel Directory";
-
-      // --- Update <title> ---
-      document.title = currentFolder + " Travel Directory";
-    }
-  </script>
-
-  <ul id="repo-tree"></ul>
 <script>
   const repoOwner = "mJm-Travel"; // your GitHub username/org
-  const repoName = "Directory";    // your repo name
-  const branch = "main";           // branch name
+  const repoName = "Directory";   // your repo name
+  const branch = "main";          // branch name
 
+  // --- Detect current folder from URL ---
+  let pathParts = window.location.pathname.split("/").filter(p => p);
+  const repoIndex = pathParts.indexOf(repoName);
+  let currentFolderName = pathParts[repoIndex + 1] || ""; // e.g. "egypt"
+
+  // --- Prettify folder name ---
+  function prettifyName(str) {
+    return str
+      .replace(/[-_]+/g, " ")          // replace - and _ with spaces
+      .replace(/\b\w/g, c => c.toUpperCase()); // capitalize each word
+  }
+  const prettyFolderName = prettifyName(currentFolderName);
+
+  const currentFolder = currentFolderName ? currentFolderName + "/" : "";
+
+  // --- Update <h1> and <title> ---
+  if (currentFolderName) {
+    document.getElementById("page-title").innerHTML = "📂 " + prettyFolderName + " Travel Directory";
+    document.title = prettyFolderName + " Travel Directory";
+  }
+
+  // --- Load repo tree for current folder ---
   async function loadRepoTree() {
     const url = `https://api.github.com/repos/${repoOwner}/${repoName}/git/trees/${branch}?recursive=1`;
 
@@ -49,17 +55,6 @@
       const data = await response.json();
       const files = data.tree;
 
-      // --- Detect current folder ---
-      // Example: /Directory/Egypt/index.html
-      let pathParts = window.location.pathname.split("/").filter(p => p);
-
-      // Find repo root in path (e.g., "Directory")
-      const repoIndex = pathParts.indexOf(repoName);
-
-      // Folder immediately after repo is the current folder (Egypt)
-      const currentFolder = pathParts[repoIndex + 1] + "/"; // "Egypt/"
-
-      // --- Build nested structure only for current folder ---
       let root = {};
       files.forEach(item => {
         if (item.path.split("/").pop() === "index.html") return;
@@ -116,6 +111,12 @@
 
   loadRepoTree();
 </script>
+
+
+
+
+  <ul id="repo-tree"></ul>
+
 
 
 
