@@ -23,7 +23,7 @@
   const repoOwner = "mJm-Travel"; // 👈 change this to your GitHub username/org
   const repoName = "Directory"; // 👈 change this to your repo name
   const branch = "main"; // or "master" depending on your repo
-  const folderPath = "Egypt/"; // 👈 specify the path to the folder where this script is located relative to repo root; empty string means repo root
+  const folderPath = ""; // 👈 specify the path to the folder where this script is located relative to repo root; empty string means repo root
 
   async function loadRepoFolder() {
     const url = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${folderPath}?ref=${branch}`;
