@@ -25,67 +25,72 @@
   const branch = "main"; // or "master" depending on your repo
   const folderPath = ""; // 👈 specify the path to the folder where this script is located relative to repo root; empty string means repo root
 
-  async function loadRepoFolder() {
-    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${folderPath}?ref=${branch}`;
-    try {
-      const response = await fetch(url);
-      if (!response.ok) throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
-      const data = await response.json();
 
-      let root = {};
+    async function loadRepoTree() {
+      const url = `https://api.github.com/repos/${repoOwner}/${repoName}/git/trees/${branch}?recursive=1`;
 
-      data.forEach(item => {
-        // Exclude any index.html file
-        if (item.name === "index.html") return;
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        const files = data.tree;
 
-        if (item.type === "file") {
-          root[item.name] = { __type: "blob", url: item.html_url };
-        } else if (item.type === "dir") {
-          root[item.name] = { __type: "tree" };
-          // Note: For simplicity, subfolders are not fetched recursively here
-        }
-      });
+        // Build nested folder structure
+        let root = {};
+          files.forEach(item => {
+// ✅ Exclude any index.html in root or subfolders
+if (item.path.split("/").pop() === "index.html") return;
 
-      function buildList(obj) {
-        let ul = document.createElement("ul");
-        for (let name in obj) {
-          if (name === "__type") continue;
-          let li = document.createElement("li");
-
-          if (obj[name].__type === "blob") {
-            let a = document.createElement("a");
-            if (name.endsWith(".html")) {
-              // Link to GitHub Pages if you host this repo there, adjust URL accordingly
-              let basePath = folderPath ? folderPath + "/" : "";
-              a.href = `https://${repoOwner}.github.io/${repoName}/${basePath}${name}`;
-            } else {
-              a.href = obj[name].url;
+          let parts = item.path.split("/");
+          let current = root;
+          parts.forEach((part, i) => {
+            if (!current[part]) {
+              current[part] = { __type: i === parts.length - 1 ? item.type : "tree" };
             }
-            a.textContent = name;
-            a.target = "_blank"; // open in new tab
-            li.appendChild(a);
+            current = current[part];
+          });
+        });
 
-          } else if (obj[name].__type === "tree") {
-            li.textContent = "📁 " + name;
-            // Optional: show a placeholder or icon without sub-list since no recursion
+        function buildList(obj, basePath = "") {
+          let ul = document.createElement("ul");
+          for (let name in obj) {
+            if (name === "__type") continue;
+            let li = document.createElement("li");
+
+            if (obj[name].__type === "blob") { 
+              // file
+             let a = document.createElement("a");
+
+// 🔥 Always build from repo root (avoid duplicate folder names)
+if (name.endsWith(".html")) {
+  a.href = `https://${repoOwner}.github.io/${repoName}/${basePath}${name}`;
+} else {
+  a.href = `https://github.com/${repoOwner}/${repoName}/blob/${branch}/${basePath}${name}`;
+}
+
+a.textContent = name;
+a.target = "_blank"; // ✅ open in new window
+li.appendChild(a);
+
+            } else { 
+              // folder
+              li.textContent = "📁 " + name;
+              li.appendChild(buildList(obj[name], basePath + name + "/"));
+            }
+
+            ul.appendChild(li);
           }
-
-          ul.appendChild(li);
+          return ul;
         }
-        return ul;
+
+        document.getElementById("repo-tree").appendChild(buildList(root));
+
+      } catch (err) {
+        console.error("Error loading repo tree:", err);
       }
-
-      const container = document.getElementById("repo-tree");
-      container.innerHTML = ""; // clear existing content
-      container.appendChild(buildList(root));
-
-    } catch (err) {
-      console.error("Error loading folder content:", err);
     }
-  }
 
-  loadRepoFolder();
-</script>
+    loadRepoTree();
+  </script>
 
  
 
