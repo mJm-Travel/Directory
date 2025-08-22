@@ -14,7 +14,7 @@
 
   <script>
     const repoOwner = "mJm-Travel"; // 👈 change this
-    const repoName = "France";                // 👈 change this
+    const repoName = "Directory";                // 👈 change this
     const branch = "main"; // or "master" depending on your repo
 
     async function loadRepoTree() {
@@ -27,8 +27,9 @@
 
         // Build nested folder structure
         let root = {};
-
-        files.forEach(item => {
+          files.forEach(item => {
+          // ❌ Exclude ONLY root index.html
+          if (item.path === "index.html") return;
           let parts = item.path.split("/");
           let current = root;
           parts.forEach((part, i) => {
