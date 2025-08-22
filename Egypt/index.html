@@ -32,19 +32,25 @@
       const data = await response.json();
       const files = data.tree;
 
-      // Get the current folder relative to repo root
-      // Example: window.location.pathname = /Directory/Egypt/page.html
+      // --- Detect current folder ---
+      // Example: /Directory/Egypt/index.html
       let pathParts = window.location.pathname.split("/").filter(p => p);
-      const repoIndex = pathParts.indexOf(repoName);
-      const currentFolderParts = pathParts.slice(repoIndex + 1, pathParts.length - 1); 
-      const currentFolder = currentFolderParts.join("/") + (currentFolderParts.length ? "/" : "");
 
-      // Build nested structure only for files in current folder
+      // Find repo root in path (e.g., "Directory")
+      const repoIndex = pathParts.indexOf(repoName);
+
+      // Folder immediately after repo is the current folder (Egypt)
+      const currentFolder = pathParts[repoIndex + 1] + "/"; // "Egypt/"
+
+      // --- Build nested structure only for current folder ---
       let root = {};
       files.forEach(item => {
         if (item.path.split("/").pop() === "index.html") return;
+
+        // Only keep files inside the current folder
         if (!item.path.startsWith(currentFolder)) return;
 
+        // Path relative to current folder
         let relativePath = item.path.substring(currentFolder.length);
         if (!relativePath) return;
 
@@ -93,6 +99,7 @@
 
   loadRepoTree();
 </script>
+
 
 
  
