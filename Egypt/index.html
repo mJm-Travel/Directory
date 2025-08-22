@@ -89,16 +89,26 @@
           return ul;
         }
 
-        // ✅ If folderPath detected → show only that folder
-        let displayRoot = root;
-        if (folderPath) {
-          let parts = folderPath.split("/");
-          for (let p of parts) {
-            if (displayRoot[p]) {
-              displayRoot = displayRoot[p];
-            }
-          }
-        }
+// ✅ If folderPath detected → show only that folder
+let displayRoot = root;
+if (folderPath) {
+  let parts = folderPath.split("/");
+  for (let p of parts) {
+    if (displayRoot[p]) {
+      displayRoot = displayRoot[p];
+    } else {
+      console.warn("Folder not found in tree:", folderPath);
+    }
+  }
+}
+
+// ⛔ prevent showing full repo accidentally
+if (folderPath && (!displayRoot || !Object.keys(displayRoot).length)) {
+  document.getElementById("repo-tree").innerHTML = "<li>No files found in this folder.</li>";
+} else {
+  document.getElementById("repo-tree").appendChild(buildList(displayRoot, folderPath ? folderPath + "/" : ""));
+}
+
 
         document.getElementById("repo-tree").appendChild(buildList(displayRoot));
 
