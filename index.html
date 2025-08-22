@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Worldwide Travel Directory</title>
+  <style>
+    ul { list-style-type: none; margin-left: 20px; }
+    li { margin: 4px 0; }
+  </style>
+</head>
+<body>
+  <h1>📂 Worldwide Travel Directory</h1>
+  <ul id="repo-tree"></ul>
+
+  <script>
+    const repoOwner = "mJm-Travel"; // 👈 change this
+    const repoName = "France";                // 👈 change this
+    const branch = "main"; // or "master" depending on your repo
+
+    async function loadRepoTree() {
+      const url = `https://api.github.com/repos/${repoOwner}/${repoName}/git/trees/${branch}?recursive=1`;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        const files = data.tree;
+
+        // Build nested folder structure
+        let root = {};
+
+        files.forEach(item => {
+          let parts = item.path.split("/");
+          let current = root;
+          parts.forEach((part, i) => {
+            if (!current[part]) {
+              current[part] = { __type: i === parts.length - 1 ? item.type : "tree" };
+            }
+            current = current[part];
+          });
+        });
+
+        function buildList(obj, basePath = "") {
+          let ul = document.createElement("ul");
+          for (let name in obj) {
+            if (name === "__type") continue;
+            let li = document.createElement("li");
+
+            if (obj[name].__type === "blob") { 
+              // file
+              let a = document.createElement("a");
+              a.href = `${name}`.endsWith(".html") 
+                ? `${basePath}${name}` 
+                : `https://github.com/${repoOwner}/${repoName}/blob/${branch}/${basePath}${name}`;
+              a.textContent = name;
+              li.appendChild(a);
+            } else { 
+              // folder
+              li.textContent = "📁 " + name;
+              li.appendChild(buildList(obj[name], basePath + name + "/"));
+            }
+
+            ul.appendChild(li);
+          }
+          return ul;
+        }
+
+        document.getElementById("repo-tree").appendChild(buildList(root));
+
+      } catch (err) {
+        console.error("Error loading repo tree:", err);
+      }
+    }
+
+    loadRepoTree();
+  </script>
+</body>
+</html>
