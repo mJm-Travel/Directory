@@ -19,56 +19,76 @@
   <p><a href="https://mjm-travel.github.io/Directory/">📂 Back To Main Directory</a></p>
   <h1>📂 Egypt Travel Directory</h1>
   <ul id="repo-tree"></ul>
+<script>
+  const repoOwner = "mJm-Travel"; // 👈 change this to your GitHub username/org
+  const repoName = "Directory"; // 👈 change this to your repo name
+  const branch = "main"; // or "master" depending on your repo
+  const folderPath = "Egypt/"; // 👈 specify the path to the folder where this script is located relative to repo root; empty string means repo root
 
- 
-
- <script>
-  const repoOwner = "mJm-Travel"; // 👈 change this
-  const repoName = "Directory";   // 👈 change this
-  const branch = "main";          // or "master" depending on your repo
-
-  async function loadRepoTree() {
-    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/git/trees/${branch}?recursive=1`;
-
+  async function loadRepoFolder() {
+    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${folderPath}?ref=${branch}`;
     try {
       const response = await fetch(url);
+      if (!response.ok) throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
       const data = await response.json();
-      const files = data.tree;
 
-      // Collect first-level folders only
-      let topFolders = new Set();
+      let root = {};
 
-      files.forEach(item => {
-        if (item.type === "tree") {
-          let parts = item.path.split("/");
-          if (parts.length === 1) {
-            topFolders.add(parts[0]); // only first-level folder
-          }
+      data.forEach(item => {
+        // Exclude any index.html file
+        if (item.name === "index.html") return;
+
+        if (item.type === "file") {
+          root[item.name] = { __type: "blob", url: item.html_url };
+        } else if (item.type === "dir") {
+          root[item.name] = { __type: "tree" };
+          // Note: For simplicity, subfolders are not fetched recursively here
         }
       });
 
-      // Build the list
-      let ul = document.createElement("ul");
-      topFolders.forEach(folder => {
-        let li = document.createElement("li");
-        let a = document.createElement("a");
+      function buildList(obj) {
+        let ul = document.createElement("ul");
+        for (let name in obj) {
+          if (name === "__type") continue;
+          let li = document.createElement("li");
 
-        // Link to GitHub Pages directory
-        a.href = `${folder}/`;
-        a.textContent = "📁 " + folder;
+          if (obj[name].__type === "blob") {
+            let a = document.createElement("a");
+            if (name.endsWith(".html")) {
+              // Link to GitHub Pages if you host this repo there, adjust URL accordingly
+              let basePath = folderPath ? folderPath + "/" : "";
+              a.href = `https://${repoOwner}.github.io/${repoName}/${basePath}${name}`;
+            } else {
+              a.href = obj[name].url;
+            }
+            a.textContent = name;
+            a.target = "_blank"; // open in new tab
+            li.appendChild(a);
 
-        li.appendChild(a);
-        ul.appendChild(li);
-      });
+          } else if (obj[name].__type === "tree") {
+            li.textContent = "📁 " + name;
+            // Optional: show a placeholder or icon without sub-list since no recursion
+          }
 
-      document.getElementById("repo-tree").appendChild(ul);
+          ul.appendChild(li);
+        }
+        return ul;
+      }
+
+      const container = document.getElementById("repo-tree");
+      container.innerHTML = ""; // clear existing content
+      container.appendChild(buildList(root));
 
     } catch (err) {
-      console.error("Error loading repo tree:", err);
+      console.error("Error loading folder content:", err);
     }
   }
 
-  loadRepoTree();
+  loadRepoFolder();
 </script>
+
+ 
+
+
 </body>
 </html>
