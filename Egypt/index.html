@@ -20,104 +20,55 @@
   <h1>📂 Egypt Travel Directory</h1>
   <ul id="repo-tree"></ul>
 
+ 
+
  <script>
-    const repoOwner = "mJm-Travel";
-    const repoName = "Directory";
-    const branch = "main";
+  const repoOwner = "mJm-Travel"; // 👈 change this
+  const repoName = "Directory";   // 👈 change this
+  const branch = "main";          // or "master" depending on your repo
 
-    // 🔎 Auto-detect folder path from current URL
-    let pathParts = window.location.pathname.split("/").filter(Boolean);
-    const repoIndex = pathParts.indexOf(repoName);
-    const folderPath = pathParts.slice(repoIndex + 1, -1).join("/"); 
-    // (-1 removes index.html)
+  async function loadRepoTree() {
+    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/git/trees/${branch}?recursive=1`;
 
-    if (folderPath) {
-      document.getElementById("page-title").textContent = "📂 " + folderPath + " Directory";
-    }
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      const files = data.tree;
 
-    async function loadRepoTree() {
-      const url = `https://api.github.com/repos/${repoOwner}/${repoName}/git/trees/${branch}?recursive=1`;
+      // Collect first-level folders only
+      let topFolders = new Set();
 
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-        const files = data.tree;
-
-        // Build nested folder structure
-        let root = {};
-        files.forEach(item => {
-          // ❌ exclude all index.html files
-          if (item.path.split("/").pop() === "index.html") return;
-
+      files.forEach(item => {
+        if (item.type === "tree") {
           let parts = item.path.split("/");
-          let current = root;
-          parts.forEach((part, i) => {
-            if (!current[part]) {
-              current[part] = { __type: i === parts.length - 1 ? item.type : "tree" };
-            }
-            current = current[part];
-          });
-        });
-
-        // Recursive function to build HTML list
-        function buildList(obj, basePath = "") {
-          let ul = document.createElement("ul");
-          for (let name in obj) {
-            if (name === "__type") continue;
-            let li = document.createElement("li");
-
-            if (obj[name].__type === "blob") { 
-              // file
-              let a = document.createElement("a");
-              if (name.endsWith(".html")) {
-                a.href = `https://${repoOwner}.github.io/${repoName}/${basePath}${name}`;
-              } else {
-                a.href = `https://github.com/${repoOwner}/${repoName}/blob/${branch}/${basePath}${name}`;
-              }
-              a.textContent = name;
-              a.target = "_blank";
-              li.appendChild(a);
-
-            } else { 
-              // folder
-              li.textContent = "📁 " + name;
-              li.appendChild(buildList(obj[name], basePath + name + "/"));
-            }
-
-            ul.appendChild(li);
+          if (parts.length === 1) {
+            topFolders.add(parts[0]); // only first-level folder
           }
-          return ul;
         }
+      });
 
-// ✅ If folderPath detected → show only that folder
-let displayRoot = root;
-if (folderPath) {
-  let parts = folderPath.split("/");
-  for (let p of parts) {
-    if (displayRoot[p]) {
-      displayRoot = displayRoot[p];
-    } else {
-      console.warn("Folder not found in tree:", folderPath);
+      // Build the list
+      let ul = document.createElement("ul");
+      topFolders.forEach(folder => {
+        let li = document.createElement("li");
+        let a = document.createElement("a");
+
+        // Link to GitHub Pages directory
+        a.href = `${folder}/`;
+        a.textContent = "📁 " + folder;
+
+        li.appendChild(a);
+        ul.appendChild(li);
+      });
+
+      document.getElementById("repo-tree").appendChild(ul);
+
+    } catch (err) {
+      console.error("Error loading repo tree:", err);
     }
   }
-}
 
-// ⛔ prevent showing full repo accidentally
-if (folderPath && (!displayRoot || !Object.keys(displayRoot).length)) {
-  document.getElementById("repo-tree").innerHTML = "<li>No files found in this folder.</li>";
-} else {
-  document.getElementById("repo-tree").appendChild(buildList(displayRoot, folderPath ? folderPath + "/" : ""));
-}
-
-
-        document.getElementById("repo-tree").appendChild(buildList(displayRoot));
-
-      } catch (err) {
-        console.error("Error loading repo tree:", err);
-      }
-    }
-
-    loadRepoTree();
-  </script>
+  loadRepoTree();
+</script>
 </body>
 </html>
