@@ -9,7 +9,7 @@
 <link rel="apple-touch-icon" href="https://mjm-travel.freesite.host/wp-content/uploads/2025/03/cropped-mJm-Travel-Logo-180x180.jpeg" />
 <meta name="msapplication-TileImage" content="https://mjm-travel.freesite.host/wp-content/uploads/2025/03/cropped-mJm-Travel-Logo-270x270.jpeg" />
   <meta charset="UTF-8">
-  <title>Egypt Travel Directory</title>
+  <title>Travel Directory</title> <!-- placeholder, will be replaced -->
   <style>
     ul { list-style-type: none; margin-left: 20px; }
     li { margin: 4px 0; }
@@ -17,7 +17,24 @@
 </head>
 <body>
   <p><a href="https://mjm-travel.github.io/Directory/">📂 Back To Main Directory</a></p>
-  <h1>📂 Egypt Travel Directory</h1>
+ <h1 id="page-title">📂 Travel Directory</h1> <!-- placeholder, will be replaced -->
+
+  <script>
+    // --- Detect current folder name ---
+    let pathParts = window.location.pathname.split("/").filter(p => p);
+    const repoName = "Directory"; 
+    const repoIndex = pathParts.indexOf(repoName);
+    const currentFolder = pathParts[repoIndex + 1]; // e.g. "Egypt"
+
+    if (currentFolder) {
+      // --- Update <h1> ---
+      document.getElementById("page-title").innerHTML = "📂 " + currentFolder + " Travel Directory";
+
+      // --- Update <title> ---
+      document.title = currentFolder + " Travel Directory";
+    }
+  </script>
+
   <ul id="repo-tree"></ul>
 <script>
   const repoOwner = "mJm-Travel"; // your GitHub username/org
