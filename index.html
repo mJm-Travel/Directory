@@ -35,8 +35,9 @@
         // Build nested folder structure
         let root = {};
           files.forEach(item => {
-          // ❌ Exclude ONLY root index.html
-          if (item.path === "index.html") return;
+// ✅ Exclude any index.html in root or subfolders
+if (item.path.split("/").pop() === "index.html") return;
+
           let parts = item.path.split("/");
           let current = root;
           parts.forEach((part, i) => {
