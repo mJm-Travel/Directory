@@ -26,7 +26,18 @@
     const branch = "main"; // or "master" depending on your repo
 
     async function loadRepoTree() {
-      const url = `https://api.github.com/repos/${repoOwner}/${repoName}/git/trees/${branch}?recursive=1`;
+     // Get current URL path after repo name
+let pathParts = window.location.pathname.split("/").filter(Boolean);
+
+// Repo name is the 1st segment after domain
+const repoName = "Directory"; // still set this manually
+const repoIndex = pathParts.indexOf(repoName);
+
+// Folder is whatever comes right after repo name
+const folderPath = pathParts[repoIndex + 1] || "";
+
+     const url = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${folderPath}?ref=${branch}`;
+
 
       try {
         const response = await fetch(url);
