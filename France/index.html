@@ -57,12 +57,19 @@ if (item.path.split("/").pop() === "index.html") return;
 
             if (obj[name].__type === "blob") { 
               // file
-              let a = document.createElement("a");
-              a.href = `${name}`.endsWith(".html") 
-                ? `${basePath}${name}` 
-                : `https://github.com/${repoOwner}/${repoName}/blob/${branch}/${basePath}${name}`;
-              a.textContent = name;
-              li.appendChild(a);
+             let a = document.createElement("a");
+
+// 🔥 Always build from repo root (avoid duplicate folder names)
+if (name.endsWith(".html")) {
+  a.href = `https://${repoOwner}.github.io/${repoName}/${basePath}${name}`;
+} else {
+  a.href = `https://github.com/${repoOwner}/${repoName}/blob/${branch}/${basePath}${name}`;
+}
+
+a.textContent = name;
+a.target = "_blank"; // ✅ open in new window
+li.appendChild(a);
+
             } else { 
               // folder
               li.textContent = "📁 " + name;
