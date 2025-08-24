@@ -1,0 +1,60 @@
+name: Generate Sitemap Index
+
+on:
+  push:
+    branches:
+      - main   # change if your default branch is different
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Generate sitemap index and folder sitemaps
+        run: |
+          BASE_URL="https://mJm-Travel.github.io/Directory"
+
+          # Start sitemap index
+          echo '<?xml version="1.0" encoding="UTF-8"?>' > sitemap.xml
+          echo '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' >> sitemap.xml
+
+          # Loop through top-level folders
+          for folder in $(find . -maxdepth 1 -type d ! -name ".git" ! -name ".github" ! -name "."); do
+            folder_name=$(basename "$folder")
+            sitemap_file="${folder_name}-sitemap.xml"
+
+            # Start folder sitemap
+            echo '<?xml version="1.0" encoding="UTF-8"?>' > "$sitemap_file"
+            echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' >> "$sitemap_file"
+
+            # Add all .html files inside this folder
+            find "$folder" -type f -name "*.html" | while read file; do
+              url="$BASE_URL/${file#./}"
+              lastmod=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+              echo "  <url>" >> "$sitemap_file"
+              echo "    <loc>$url</loc>" >> "$sitemap_file"
+              echo "    <lastmod>$lastmod</lastmod>" >> "$sitemap_file"
+              echo "  </url>" >> "$sitemap_file"
+            done
+
+            echo '</urlset>' >> "$sitemap_file"
+
+            # Add sitemap to index
+            echo "  <sitemap>" >> sitemap.xml
+            echo "    <loc>$BASE_URL/$sitemap_file</loc>" >> sitemap.xml
+            echo "    <lastmod>$(date -u +"%Y-%m-%dT%H:%M:%SZ")</lastmod>" >> sitemap.xml
+            echo "  </sitemap>" >> sitemap.xml
+          done
+
+          # Close sitemap index
+          echo '</sitemapindex>' >> sitemap.xml
+
+      - name: Commit sitemap files
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add *.xml
+          git commit -m "Update sitemap index and folder sitemaps" || echo "No changes to commit"
+          git push
