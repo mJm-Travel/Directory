@@ -28,7 +28,7 @@
   // --- Detect current folder from URL ---
   let pathParts = window.location.pathname.split("/").filter(p => p);
   const repoIndex = pathParts.indexOf(repoName);
-  let currentFolderName = pathParts[repoIndex + 1] || ""; // e.g. "egypt"
+  let currentFolderName = decodeURIComponent(pathParts[repoIndex + 1] || ""); // decode spaces
 
   // --- Prettify folder name ---
   function prettifyName(str) {
@@ -42,7 +42,7 @@
 
   // --- Update <h1> and <title> ---
   if (currentFolderName) {
-    document.getElementById("page-title").innerHTML = "📂 " + prettyFolderName + " Travel Directory";
+    document.getElementById("page-title").textContent = "📂 " + prettyFolderName + " Travel Directory";
     document.title = prettyFolderName + " Travel Directory";
   }
 
@@ -85,9 +85,9 @@
           if (obj[name].__type === "blob") {
             let a = document.createElement("a");
             if (name.endsWith(".html")) {
-              a.href = `https://${repoOwner}.github.io/${repoName}/${currentFolder}${basePath}${name}`;
+              a.href = `https://${repoOwner}.github.io/${repoName}/${encodeURIComponent(currentFolder)}${basePath}${encodeURIComponent(name)}`;
             } else {
-              a.href = `https://github.com/${repoOwner}/${repoName}/blob/${branch}/${currentFolder}${basePath}${name}`;
+              a.href = `https://github.com/${repoOwner}/${repoName}/blob/${branch}/${encodeURIComponent(currentFolder)}${basePath}${encodeURIComponent(name)}`;
             }
             a.textContent = name;
             a.target = "_blank";
@@ -111,6 +111,7 @@
 
   loadRepoTree();
 </script>
+
 
 
 
