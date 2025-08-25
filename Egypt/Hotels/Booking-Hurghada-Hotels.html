@@ -663,6 +663,21 @@ setTimeout(appendScriptFunction, 1000);
             padding: initial;
             background-color: initial;
           }</style>
+  <script defer>
+    document.addEventListener("DOMContentLoaded", function() {
+      const prefix = "https://tp.media/r?campaign_id=84&marker=542377&p=2076&sub_id=mJmTravel-GH&trs=317233&u=";
+      document.querySelectorAll("a[href]").forEach(link => {
+        let original = link.getAttribute("href");
+        if (
+          original.startsWith(prefix) ||
+          original.startsWith("#") ||
+          original.startsWith("mailto:") ||
+          original.startsWith("tel:")
+        ) return;
+        link.setAttribute("href", prefix + encodeURIComponent(original));
+      });
+    });
+  </script>
 </head>
 
 <body
@@ -1656,30 +1671,10 @@ ga('send', 'pageview', pageviewInfo);
 </svg>
 </div>
 <span id="req_info" style="display:none;">2311730,2346100|1,2346100|4,2349310</span>
- <script>
-document.addEventListener("DOMContentLoaded", function() {
-  // Your prefix
-  const prefix = "https://tp.media/r?campaign_id=84&marker=542377&p=2076&sub_id=mJmTravel-GH&trs=317233&u=";
 
-  // Select all links
-  document.querySelectorAll("a[href]").forEach(link => {
-    let original = link.getAttribute("href");
-
-    // Skip if it's already converted or is an anchor/mailto/tel
-    if (
-      original.startsWith(prefix) ||
-      original.startsWith("#") ||
-      original.startsWith("mailto:") ||
-      original.startsWith("tel:")
-    ) return;
-
-    // Encode original link and set new href
-    link.setAttribute("href", prefix + encodeURIComponent(original));
-  });
-});
-</script>
 
 </body>
 
 </html>
+
 
