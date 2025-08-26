@@ -76,33 +76,42 @@
         });
       });
 
-      function buildList(obj, basePath = "") {
-        let ul = document.createElement("ul");
-        for (let name in obj) {
-          if (name === "__type") continue;
-          let li = document.createElement("li");
+     function buildList(obj, basePath = "") {
+  let ul = document.createElement("ul");
+  for (let name in obj) {
+    if (name === "__type") continue;
+    let li = document.createElement("li");
 
-          if (obj[name].__type === "blob") {
-            let a = document.createElement("a");
-            if (name.endsWith(".html")) {
-              a.href = `https://${repoOwner}.github.io/${repoName}/${encodeURIComponent(currentFolder)}${basePath}${encodeURIComponent(name)}`;
-            } else {
-              a.href = `https://github.com/${repoOwner}/${repoName}/blob/${branch}/${encodeURIComponent(currentFolder)}${basePath}${encodeURIComponent(name)}`;
-            }
-            a.textContent = name;
-            a.target = "_blank";
-            li.appendChild(a);
-          } else {
-            li.textContent = "📁 " + name;
-            li.appendChild(buildList(obj[name], basePath + name + "/"));
-          }
+    if (obj[name].__type === "blob") {
+      let a = document.createElement("a");
 
-          ul.appendChild(li);
-        }
-        return ul;
+      // Format display name: replace "-" with space + remove ".html"
+      let displayName = name.replace(/-/g, " ");
+      if (displayName.toLowerCase().endsWith(".html")) {
+        displayName = displayName.slice(0, -5);
       }
 
-      document.getElementById("repo-tree").appendChild(buildList(root));
+      // Keep original file name in href
+      if (name.endsWith(".html")) {
+        a.href = `https://${repoOwner}.github.io/${repoName}/${encodeURIComponent(currentFolder)}${basePath}${encodeURIComponent(name)}`;
+      } else {
+        a.href = `https://github.com/${repoOwner}/${repoName}/blob/${branch}/${encodeURIComponent(currentFolder)}${basePath}${encodeURIComponent(name)}`;
+      }
+
+      a.textContent = displayName;
+      a.target = "_blank";
+      li.appendChild(a);
+    } else {
+      li.textContent = "📁 " + name;
+      li.appendChild(buildList(obj[name], basePath + name + "/"));
+    }
+
+    ul.appendChild(li);
+  }
+  return ul;
+}
+
+document.getElementById("repo-tree").appendChild(buildList(root));
 
     } catch (err) {
       console.error("Error loading repo tree:", err);
@@ -111,20 +120,19 @@
 
   loadRepoTree();
 </script>
-
-
-
-
-
   <ul id="repo-tree"></ul>
-
-
-
-
- 
-
-  <footer style="text-align:center; margin-top:20px; padding:10px; font-size:14px; border-top:1px solid #ccc;">
-    <a href="https://mjm-travel.github.io/Directory/sitemap.xml" target="_blank">Sitemap</a>
+<footer style="text-align:center; margin-top:20px; padding:10px; font-size:14px; border-top:1px solid #ccc;">
+  <P>Worldwide Travel Directory Provided by mJm Travel. <br>Looking For Tours, Hotels, Flights ?  <br>All Travel Services are Provided Here.</P>  
+  <br><b>mJm Travel © 2014−<span id="year"></span><br></b><br>
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+<a href="https://mjm-travel.github.io/Directory/sitemap.xml" target="_blank">Sitemap</a><br><br>
+<a href="https://www.facebook.com/mjm.travelagency" target=_blank><img src="https://cdn-icons-png.flaticon.com/128/3670/3670032.png" alt="Facebook" width="30" loading="lazy"></a>
+<a href="https://wa.me/12513732508" target=_blank><img src="https://cdn-icons-png.flaticon.com/128/3670/3670051.png" alt= "Whatsapp" width="30" loading="lazy"></a>
+<a href="https://www.youtube.com/@mjmtravel8033" target=_blank><img src="https://cdn-icons-png.flaticon.com/128/3938/3938026.png" alt="Youtube" width="30" loading="lazy"></a>
+<a href="https://www.instagram.com/mjm_travel/" target=_blank><img src="https://cdn-icons-png.flaticon.com/128/3955/3955024.png" alt="Instagram" width="30" loading="lazy"></a>
+<a href="https://www.pinterest.com/mjmtravelagency/" target=_blank><img src="https://cdn-icons-png.flaticon.com/128/220/220214.png" alt="Pinterest" width="30" loading="lazy"></a>
   </footer>
 </body>
 </html>
