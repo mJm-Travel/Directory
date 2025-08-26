@@ -82,16 +82,26 @@
           if (name === "__type") continue;
           let li = document.createElement("li");
 
-          if (obj[name].__type === "blob") {
-            let a = document.createElement("a");
-            if (name.endsWith(".html")) {
-              a.href = `https://${repoOwner}.github.io/${repoName}/${encodeURIComponent(currentFolder)}${basePath}${encodeURIComponent(name)}`;
-            } else {
-              a.href = `https://github.com/${repoOwner}/${repoName}/blob/${branch}/${encodeURIComponent(currentFolder)}${basePath}${encodeURIComponent(name)}`;
-            }
-            a.textContent = name;
-            a.target = "_blank";
-            li.appendChild(a);
+        if (obj[name].__type === "blob") {
+    let a = document.createElement("a");
+
+    // Replace dashes with spaces for display
+    let displayName = name.replace(/-/g, ' ');
+    if (displayName.endsWith(".html")) {
+        displayName = displayName.slice(0, -5); // remove .html for display
+    }
+
+    if (name.endsWith(".html")) {
+        a.href = `https://${repoOwner}.github.io/${repoName}/${encodeURIComponent(currentFolder)}${basePath}${encodeURIComponent(name)}`;
+    } else {
+        a.href = `https://github.com/${repoOwner}/${repoName}/blob/${branch}/${encodeURIComponent(currentFolder)}${basePath}${encodeURIComponent(name)}`;
+    }
+
+    a.textContent = displayName; // use formatted name
+    a.target = "_blank";
+    li.appendChild(a);
+} 
+
           } else {
             li.textContent = "📁 " + name;
             li.appendChild(buildList(obj[name], basePath + name + "/"));
