@@ -1,30 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<URL><LOC>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Azur-Dream-By-The-Sea.html</LOC></URL>
-<URL><LOC>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Booking-Hurghada-Hotels.html</LOC></URL>
-<URL><LOC>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Doubletree-By-Hilton-Mangroovy-El-Gouna-Resort.html</LOC></URL>
-<URL><LOC>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Dusit-Thani-Lakeview-Cairo.html</LOC></URL>
-<URL><LOC>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Four-Seasons-Hotel-Cairo-At-Nile-Plaza.html</LOC></URL>
-<URL><LOC>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Golden-Park-Hotel-Cairo-Heliopolis.html</LOC></URL>
-<URL><LOC>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Helnan-Landmark-Hotel.html</LOC></URL>
-<URL><LOC>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Hurghada-Marriott-Beach-Resort.html</LOC></URL>
-<URL><LOC>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Imperial-Resort-Hurghada.html</LOC></URL>
-<URL><LOC>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Jaz-Elite-Asteria.html</LOC></URL>
-<URL><LOC>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Jewel-Sport-City-And-Aqua-Park.html</LOC></URL>
-<URL><LOC>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Jewel-Zamalek-Hotel.html</LOC></URL>
-<URL><LOC>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Mirage-New-Hawaii-Resort-Amp-Spa-en-Us.html</LOC></URL>
-<URL><LOC>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Pickalbatros-Citadel-Resort-Sahl-Hasheesh.html</LOC></URL>
-<URL><LOC>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Pyramisa-Suites-Hotel-Cairo.html</LOC></URL>
-<URL><LOC>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Rewaya-Majestic-Resort.html</LOC></URL>
-<URL><LOC>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Safir-Hotel-Cairo.html</LOC></URL>
-<URL><LOC>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Siva-Grand-Beach.html</LOC></URL>
-<URL><LOC>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Steigenberger-Hotel-El-Tahrir-Cairo.html</LOC></URL>
-<URL><LOC>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Sunrise-Alora-Aqua-Park-Resort.html</LOC></URL>
-<URL><LOC>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Tui-Magic-Life-Kalawy.html</LOC></URL>
-<URL><LOC>https://mJm-Travel.github.io/Directory/Egypt/Tours/Giza-Pyramids.html</LOC></URL>
-<URL><LOC>https://mJm-Travel.github.io/Directory/Egypt/Tours/Great-Sphinx-Of-Giza.html</LOC></URL>
-<URL><LOC>https://mJm-Travel.github.io/Directory/Egypt/Tours/Philae-Temple.html</LOC></URL>
-<URL><LOC>https://mJm-Travel.github.io/Directory/Egypt/Tours/Temple-Of-Isis.html</LOC></URL>
-<URL><LOC>https://mJm-Travel.github.io/Directory/Egypt/Tours/The-Sphinx.html</LOC></URL>
-<URL><LOC>https://mJm-Travel.github.io/Directory/Egypt/index.html</LOC></URL>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Azur-Dream-By-The-Sea.html</loc>
+  </url>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Booking-Hurghada-Hotels.html</loc>
+  </url>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Doubletree-By-Hilton-Mangroovy-El-Gouna-Resort.html</loc>
+  </url>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Dusit-Thani-Lakeview-Cairo.html</loc>
+  </url>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Four-Seasons-Hotel-Cairo-At-Nile-Plaza.html</loc>
+  </url>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Golden-Park-Hotel-Cairo-Heliopolis.html</loc>
+  </url>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Helnan-Landmark-Hotel.html</loc>
+  </url>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Hurghada-Marriott-Beach-Resort.html</loc>
+  </url>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Imperial-Resort-Hurghada.html</loc>
+  </url>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Jaz-Elite-Asteria.html</loc>
+  </url>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Jewel-Sport-City-And-Aqua-Park.html</loc>
+  </url>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Jewel-Zamalek-Hotel.html</loc>
+  </url>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Mirage-New-Hawaii-Resort-Amp-Spa-en-Us.html</loc>
+  </url>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Pickalbatros-Citadel-Resort-Sahl-Hasheesh.html</loc>
+  </url>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Pyramisa-Suites-Hotel-Cairo.html</loc>
+  </url>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Rewaya-Majestic-Resort.html</loc>
+  </url>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Safir-Hotel-Cairo.html</loc>
+  </url>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Siva-Grand-Beach.html</loc>
+  </url>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Steigenberger-Hotel-El-Tahrir-Cairo.html</loc>
+  </url>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Sunrise-Alora-Aqua-Park-Resort.html</loc>
+  </url>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/Hotels/Tui-Magic-Life-Kalawy.html</loc>
+  </url>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/Tours/Giza-Pyramids.html</loc>
+  </url>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/Tours/Great-Sphinx-Of-Giza.html</loc>
+  </url>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/Tours/Hurghada-Day-Tours.html</loc>
+  </url>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/Tours/Philae-Temple.html</loc>
+  </url>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/Tours/Temple-Of-Isis.html</loc>
+  </url>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/Tours/The-Sphinx.html</loc>
+  </url>
+  <url>
+    <loc>https://mJm-Travel.github.io/Directory/Egypt/index.html</loc>
+  </url>
 </urlset>
