@@ -1,3 +1,6 @@
+User-agent: *
+Disallow:
+
 Sitemap: https://mJm-Travel.github.io/Directory/sitemap.xml
 Sitemap: https://mJm-Travel.github.io/Directory/Argentina-Sitemap.xml
 Sitemap: https://mJm-Travel.github.io/Directory/Australia-Sitemap.xml
