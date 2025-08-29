@@ -5,6 +5,7 @@ Sitemap: https://mJm-Travel.github.io/Directory/sitemap.xml
 Sitemap: https://mJm-Travel.github.io/Directory/Argentina-Sitemap.xml
 Sitemap: https://mJm-Travel.github.io/Directory/Australia-Sitemap.xml
 Sitemap: https://mJm-Travel.github.io/Directory/Brazil-Sitemap.xml
+Sitemap: https://mJm-Travel.github.io/Directory/Oman-Sitemap.xml
 Sitemap: https://mJm-Travel.github.io/Directory/Canada-Sitemap.xml
 Sitemap: https://mJm-Travel.github.io/Directory/Chile-Sitemap.xml
 Sitemap: https://mJm-Travel.github.io/Directory/China-Sitemap.xml
