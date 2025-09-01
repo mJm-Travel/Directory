@@ -304,26 +304,36 @@
   }
 
   // Load popular exchange rates
-  async function loadPopularRates() {
-    const base = fromCurrency.value; // now uses selected fromCurrency
-    try {
-      const res = await fetch(`https://api.frankfurter.app/latest?from=${base}`);
-      const data = await res.json();
+async function loadPopularRates() {
+  const base = fromCurrency.value; // use selected From currency
+  try {
+    const res = await fetch(`https://api.frankfurter.app/latest?from=${base}`);
+    const data = await res.json();
 
-      const pairs = ["USD","EUR","GBP","EGP","JPY","CAD"];
-      popularRatesList.innerHTML = "";
+    const pairs = ["USD","EUR","GBP","EGP","JPY","CAD"];
+    const flags = {
+      "USD": "🇺🇸",
+      "EUR": "🇪🇺",
+      "GBP": "🇬🇧",
+      "EGP": "🇪🇬",
+      "JPY": "🇯🇵",
+      "CAD": "🇨🇦"
+    };
 
-      pairs.forEach(to => {
-        if (to !== base && data.rates[to]) {
-          const li = document.createElement("li");
-          li.textContent = `1 ${base} = ${data.rates[to].toFixed(2)} ${to}`;
-          popularRatesList.appendChild(li);
-        }
-      });
-    } catch (e) {
-      popularRatesList.innerHTML = "<li>⚠️ Could not load popular rates.</li>";
-    }
+    popularRatesList.innerHTML = "";
+
+    pairs.forEach(to => {
+      if (to !== base && data.rates[to]) {
+        const li = document.createElement("li");
+        li.textContent = `${flags[to] || ""} 1 ${base} = ${data.rates[to].toFixed(2)} ${to}`;
+        popularRatesList.appendChild(li);
+      }
+    });
+  } catch (e) {
+    popularRatesList.innerHTML = "<li>⚠️ Could not load popular rates.</li>";
   }
+}
+
 
   // Update popular rates when From currency changes
   fromCurrency.addEventListener("change", loadPopularRates);
