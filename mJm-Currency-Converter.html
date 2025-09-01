@@ -196,8 +196,7 @@
     }
 
     loadCurrencies();
-  </script>
-  <script>async function loadPopularRates() {
+async function loadPopularRates() {
   try {
     const res = await fetch("https://api.frankfurter.app/latest?from=USD");
     const data = await res.json();
