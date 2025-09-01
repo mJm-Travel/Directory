@@ -167,147 +167,53 @@
     <p>© 2025 mJm Travel • Live rates via exchangerate.host</p>
   </footer>
 
-  <script defer>
-    const fromSelect = document.getElementById('fromCurrency');
-    const toSelect   = document.getElementById('toCurrency');
-    const amountEl   = document.getElementById('amount');
-    const resultEl   = document.getElementById('result');
-    const metaEl     = document.getElementById('meta');
-    const errorEl    = document.getElementById('error');
-    const swapBtn    = document.getElementById('swapBtn');
-    const convertBtn = document.getElementById('convertBtn');
-    const refreshBtn = document.getElementById('refreshBtn');
+ <script>
+  const fromCurrency = document.getElementById("fromCurrency");
+  const toCurrency = document.getElementById("toCurrency");
+  const result = document.getElementById("result");
 
-    // Fallback currency list in case the symbols API is unreachable
-    const FALLBACK_CODES = [
-      "USD","EUR","GBP","EGP","AED","SAR","QAR","KWD","JOD","MAD","TND","DZD","TRY","ILS",
-      "INR","PKR","BDT","LKR","CNY","JPY","KRW","HKD","TWD","THB","MYR","IDR","SGD",
-      "AUD","NZD","CAD","CHF","NOK","SEK","DKK","PLN","CZK","HUF","RON","BGN","HRK",
-      "BRL","MXN","ARS","CLP","COP","PEN","ZAR","NGN","GHS","KES","ETB","VND","PHP","UAH"
-    ];
+  async function loadCurrencies() {
+    try {
+      const res = await fetch("https://api.frankfurter.app/currencies");
+      const data = await res.json();
+      const codes = Object.keys(data);
 
-    let lastRatesDate = null;
+      fromCurrency.innerHTML = "";
+      toCurrency.innerHTML = "";
 
-    function showError(msg) {
-      errorEl.textContent = msg;
-      errorEl.style.display = 'block';
+      codes.forEach(curr => {
+        fromCurrency.innerHTML += `<option value="${curr}">${curr} - ${data[curr]}</option>`;
+        toCurrency.innerHTML += `<option value="${curr}">${curr} - ${data[curr]}</option>`;
+      });
+
+      fromCurrency.value = "USD";
+      toCurrency.value = "EUR";
+    } catch (e) {
+      result.innerHTML = "⚠️ Could not load currencies.";
     }
-    function clearError() {
-      errorEl.textContent = '';
-      errorEl.style.display = 'none';
-    }
+  }
 
-    function populateSelects(codes) {
-      const options = codes
-        .filter(Boolean)
-        .sort()
-        .map(c => `<option value="${c}">${c}</option>`)
-        .join('');
-      fromSelect.innerHTML = options;
-      toSelect.innerHTML = options;
+  async function convertCurrency() {
+    const amount = document.getElementById("amount").value;
+    const from = fromCurrency.value;
+    const to = toCurrency.value;
 
-      // Set sensible defaults
-      fromSelect.value = "USD";
-      toSelect.value = "EUR";
-      if (!fromSelect.value) fromSelect.selectedIndex = 0;
-      if (!toSelect.value)   toSelect.selectedIndex = Math.min(1, toSelect.options.length-1);
+    if (from === to) {
+      result.innerHTML = "Choose two different currencies.";
+      return;
     }
 
-    async function loadSymbols() {
-      // Try the official symbols endpoint
-      try {
-        const r = await fetch("https://api.exchangerate.host/symbols", { cache: "no-store" });
-        if (!r.ok) throw new Error("Symbols request failed");
-        const j = await r.json();
-        if (j && j.symbols) {
-          const codes = Object.keys(j.symbols);
-          if (codes.length) {
-            populateSelects(codes);
-            return true;
-          }
-        }
-        throw new Error("Symbols missing in response");
-      } catch (e) {
-        // Fallback: use embedded list so the UI still works
-        populateSelects(FALLBACK_CODES);
-        return false;
-      }
+    try {
+      const res = await fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${from}&to=${to}`);
+      const data = await res.json();
+      result.innerHTML = `${amount} ${from} = ${data.rates[to].toFixed(2)} ${to}`;
+    } catch (e) {
+      result.innerHTML = "⚠️ Conversion failed. Try again.";
     }
+  }
 
-    async function convertCurrency() {
-      clearError();
-      const amount = parseFloat(amountEl.value || "0");
-      const from = fromSelect.value;
-      const to   = toSelect.value;
-      if (!from || !to) {
-        showError("Currencies not loaded. Please click Refresh Rates.");
-        return;
-      }
-      if (!(amount >= 0)) {
-        showError("Please enter a valid amount.");
-        return;
-      }
+  loadCurrencies();
+</script>
 
-      // Primary: use convert endpoint
-      try {
-        const url = `https://api.exchangerate.host/convert?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&amount=${encodeURIComponent(amount)}&places=6`;
-        const r = await fetch(url, { cache: "no-store" });
-        if (!r.ok) throw new Error("Convert request failed");
-        const j = await r.json();
-        if (j && typeof j.result === "number") {
-          const out = j.result;
-          lastRatesDate = j.date || null;
-          resultEl.textContent = `${amount.toLocaleString(undefined, { maximumFractionDigits: 6 })} ${from} = ${out.toLocaleString(undefined, { maximumFractionDigits: 6 })} ${to}`;
-          metaEl.textContent = lastRatesDate ? `Last update: ${lastRatesDate}` : '';
-          return;
-        }
-        throw new Error("Unexpected response format");
-      } catch (e) {
-        // Fallback: fetch base rates and compute manually
-        try {
-          const baseUrl = `https://api.exchangerate.host/latest?base=${encodeURIComponent(from)}`;
-          const r2 = await fetch(baseUrl, { cache: "no-store" });
-          if (!r2.ok) throw new Error("Latest request failed");
-          const j2 = await r2.json();
-          if (j2 && j2.rates && j2.rates[to]) {
-            const rate = j2.rates[to];
-            lastRatesDate = j2.date || null;
-            const out = amount * rate;
-            resultEl.textContent = `${amount.toLocaleString(undefined, { maximumFractionDigits: 6 })} ${from} = ${out.toLocaleString(undefined, { maximumFractionDigits: 6 })} ${to}`;
-            metaEl.textContent = lastRatesDate ? `Last update: ${lastRatesDate}` : '';
-            return;
-          }
-          throw new Error("Target currency not found in rates");
-        } catch (e2) {
-          showError("Could not fetch live rates. Please check your connection and try Refresh Rates.");
-        }
-      }
-    }
-
-    async function init() {
-      await loadSymbols();
-      await convertCurrency();
-    }
-
-    // Events
-    convertBtn.addEventListener('click', convertCurrency);
-    refreshBtn.addEventListener('click', init);
-    swapBtn.addEventListener('click', () => {
-      const a = fromSelect.value;
-      fromSelect.value = toSelect.value;
-      toSelect.value = a;
-      convertCurrency();
-    });
-    fromSelect.addEventListener('change', convertCurrency);
-    toSelect.addEventListener('change', convertCurrency);
-    amountEl.addEventListener('input', () => {
-      // light debounce
-      clearTimeout(amountEl._t);
-      amountEl._t = setTimeout(convertCurrency, 200);
-    });
-
-    // Kick off
-    init();
-  </script>
 </body>
 </html>
