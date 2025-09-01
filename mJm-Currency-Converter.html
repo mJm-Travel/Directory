@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mJm Currency Converter - Live Exchange Rates</title>
+  <meta name="description" content="mJm Currency Converter lets you calculate and convert currencies in real-time using today's latest exchange rates. Fast, free, and easy to use.">
+  <meta name="keywords" content="currency converter, live exchange rates, mJm Travel, money calculator, forex rates, USD to EUR, GBP to USD, currency exchange">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #0d47a1, #1976d2, #42a5f5);
+      color: #fff;
+      text-align: center;
+      padding: 50px 20px;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+    }
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+    .converter {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      padding: 30px;
+      border-radius: 15px;
+      display: inline-block;
+      box-shadow: 0 4px 25px rgba(0,0,0,0.3);
+    }
+    select, input {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+    }
+    input {
+      width: 120px;
+    }
+    button {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 10px;
+      background: #ffca28;
+      color: #000;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #ffc107;
+      transform: scale(1.05);
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+    footer {
+      margin-top: 50px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <h1>mJm Currency Converter</h1>
+  <p>Convert currencies instantly with today's latest exchange rates.</p>
+
+  <div class="converter">
+    <input type="number" id="amount" placeholder="Enter amount" value="1">
+    <br>
+    <select id="fromCurrency"></select>
+    <select id="toCurrency"></select>
+    <br>
+    <button onclick="convertCurrency()">Convert</button>
+    <div id="result"></div>
+  </div>
+
+  <footer>
+    <p>© 2025 mJm Travel | Powered by free currency exchange API</p>
+  </footer>
+
+  <script>
+    const fromCurrency = document.getElementById("fromCurrency");
+    const toCurrency = document.getElementById("toCurrency");
+    const result = document.getElementById("result");
+
+    async function loadCurrencies() {
+      const res = await fetch("https://api.exchangerate.host/latest");
+      const data = await res.json();
+      const currencies = Object.keys(data.rates);
+
+      currencies.forEach(curr => {
+        fromCurrency.innerHTML += `<option value="${curr}">${curr}</option>`;
+        toCurrency.innerHTML += `<option value="${curr}">${curr}</option>`;
+      });
+
+      fromCurrency.value = "USD";
+      toCurrency.value = "EUR";
+    }
+
+    async function convertCurrency() {
+      const amount = document.getElementById("amount").value;
+      const from = fromCurrency.value;
+      const to = toCurrency.value;
+
+      const res = await fetch(`https://api.exchangerate.host/convert?from=${from}&to=${to}&amount=${amount}`);
+      const data = await res.json();
+
+      result.innerHTML = `${amount} ${from} = ${data.result.toFixed(2)} ${to}`;
+    }
+
+    loadCurrencies();
+  </script>
+</body>
+</html>
