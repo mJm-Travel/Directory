@@ -322,14 +322,14 @@ async function loadPopularRates() {
     const data = await res.json();
 
     const pairs = ["USD","EUR","GBP","EGP","JPY","CAD"];
-    const flags = {
-      "USD": "🇺🇸",
-      "EUR": "🇪🇺",
-      "GBP": "🇬🇧",
-      "EGP": "🇪🇬",
-      "JPY": "🇯🇵",
-      "CAD": "🇨🇦"
-    };
+const flags = {
+  "USD": "\uD83C\uDDFA\uD83C\uDDF8", // 🇺🇸
+  "EUR": "\uD83C\uDDEA\uD83C\uDDFA", // 🇪🇺
+  "GBP": "\uD83C\uDDEC\uD83C\uDDE7", // 🇬🇧
+  "EGP": "\uD83C\uDDEA\uD83C\uDDEC", // 🇪🇬
+  "JPY": "\uD83C\uDDEF\uD83C\uDDF5", // 🇯🇵
+  "CAD": "\uD83C\uDDE8\uD83C\uDDE6"  // 🇨🇦
+};
 
     popularRatesList.innerHTML = "";
 
