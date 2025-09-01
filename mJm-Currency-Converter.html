@@ -73,60 +73,161 @@
   }
   </script>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #0d47a1, #1976d2, #42a5f5);
-      color: #fff;
-      text-align: center;
-      padding: 50px 20px;
-      margin: 0;
-    }
-    h1 { font-size: 2.4rem; margin-bottom: 10px; text-shadow: 2px 2px 6px rgba(0,0,0,.35); }
-    p { font-size: 1.1rem; margin-bottom: 30px; }
-    .converter {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 25px;
-      border-radius: 12px;
-      display: inline-block;
-      box-shadow: 0 4px 25px rgba(0,0,0,0.3);
-    }
-    .rates-box h2 {
-  margin-bottom: 10px;
-  font-size: 1.4em;
-  color: #444;
-}
-.rate-list {
-  text-align: left;
-  list-style: none;
-  padding: 0;
-}
-.rate-list li {
-  background: #f7f7f7;
-  padding: 8px;
-  margin: 5px 0;
-  border-radius: 6px;
-}
+ <style>
+  /* Body & headings */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0d47a1, #1976d2, #42a5f5);
+    color: #fff;
+    text-align: center;
+    padding: 50px 20px;
+    margin: 0;
+    transition: background 0.5s;
+  }
 
-    input, select, button {
-      padding: 10px;
-      margin: 8px;
-      border-radius: 8px;
-      border: none;
-      font-size: 1rem;
+  h1 {
+    font-size: 2.6rem;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+    animation: fadeIn 1s ease-in-out;
+  }
+
+  p {
+    font-size: 1.2rem;
+    margin-bottom: 35px;
+    animation: fadeIn 1.2s ease-in-out;
+  }
+
+  /* Converter box */
+  .converter-box {
+    background: linear-gradient(145deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+    padding: 30px;
+    border-radius: 16px;
+    display: inline-block;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    margin-bottom: 30px;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .converter-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+  }
+
+  input, select, button {
+    padding: 12px;
+    margin: 10px 5px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1.05rem;
+    transition: all 0.3s;
+  }
+
+  input {
+    width: 150px;
+    text-align: center;
+  }
+
+  input:focus, select:focus {
+    outline: 2px solid #ffca28;
+    box-shadow: 0 0 8px #ffca28;
+  }
+
+  select {
+    min-width: 140px;
+  }
+
+  button {
+    background: linear-gradient(135deg, #ffca28, #ffc107);
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  button:hover {
+    background: linear-gradient(135deg, #ffc107, #ffb300);
+    transform: scale(1.08);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+  }
+
+  #result {
+    margin-top: 25px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+  }
+
+  /* Popular rates section */
+  .rates-box {
+    background: linear-gradient(145deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05));
+    padding: 25px;
+    border-radius: 16px;
+    display: inline-block;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+    max-width: 520px;
+    width: 100%;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .rates-box:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+  }
+
+  .rates-box h2 {
+    margin-bottom: 12px;
+    font-size: 1.5em;
+    color: #fff;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+    animation: fadeIn 1.3s ease-in-out;
+  }
+
+  .rate-list {
+    text-align: left;
+    list-style: none;
+    padding: 0;
+  }
+
+  .rate-list li {
+    background: rgba(255,255,255,0.9);
+    color: #222;
+    padding: 10px 12px;
+    margin: 6px 0;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .rate-list li:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+
+  /* Footer */
+  footer {
+    margin-top: 45px;
+    font-size: 0.95rem;
+    opacity: 0.8;
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Responsive adjustments */
+  @media(max-width: 600px) {
+    .converter-box, .rates-box {
+      width: 90%;
     }
-    input { width: 140px; }
-    button {
-      background: #ffca28;
-      color: #000;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    button:hover { background: #ffc107; transform: scale(1.05); }
-    #result { margin-top: 20px; font-size: 1.3rem; font-weight: bold; }
-    footer { margin-top: 40px; font-size: 0.9rem; opacity: 0.8; }
-  </style>
+    input { width: 120px; }
+    select { min-width: 100px; }
+  }
+</style>
+
 </head>
 <body>
   <h1>mJm Currency Converter</h1>
