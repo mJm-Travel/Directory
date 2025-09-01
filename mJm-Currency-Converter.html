@@ -190,20 +190,31 @@
     padding: 0;
   }
 
-  .rate-list li {
-    background: rgba(255,255,255,0.9);
-    color: #222;
-    padding: 10px 12px;
-    margin: 6px 0;
-    border-radius: 8px;
-    font-weight: bold;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
+/* Align flag emojis in popular rates */
+.rate-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* space between flag and text */
+  font-weight: bold;
+  background: rgba(255,255,255,0.9);
+  color: #222;
+  padding: 10px 12px;
+  margin: 6px 0;
+  border-radius: 8px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
 
-  .rate-list li:hover {
-    transform: translateX(5px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  }
+.rate-list li:hover {
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* Ensure flag emoji size is slightly bigger */
+.rate-list li span.flag {
+  font-size: 1.3em;
+  line-height: 1;
+}
+
 
   /* Footer */
   footer {
@@ -325,7 +336,8 @@ async function loadPopularRates() {
     pairs.forEach(to => {
       if (to !== base && data.rates[to]) {
         const li = document.createElement("li");
-        li.textContent = `${flags[to] || ""} 1 ${base} = ${data.rates[to].toFixed(2)} ${to}`;
+        li.innerHTML = `<span class="flag">${flags[to] || ""}</span> 1 ${base} = ${data.rates[to].toFixed(2)} ${to}`;
+
         popularRatesList.appendChild(li);
       }
     });
