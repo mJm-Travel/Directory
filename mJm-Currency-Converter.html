@@ -91,6 +91,23 @@
       display: inline-block;
       box-shadow: 0 4px 25px rgba(0,0,0,0.3);
     }
+    .rates-box h2 {
+  margin-bottom: 10px;
+  font-size: 1.4em;
+  color: #444;
+}
+.rate-list {
+  text-align: left;
+  list-style: none;
+  padding: 0;
+}
+.rate-list li {
+  background: #f7f7f7;
+  padding: 8px;
+  margin: 5px 0;
+  border-radius: 6px;
+}
+
     input, select, button {
       padding: 10px;
       margin: 8px;
@@ -124,6 +141,10 @@
     <button onclick="convertCurrency()">Convert</button>
     <div id="result"></div>
   </div>
+<div class="rates-box">
+  <h2>📊 Popular Exchange Rates Today</h2>
+  <ul class="rate-list" id="popularRates"></ul>
+</div>
 
   <footer>
     © 2025 mJm Travel | Rates powered by European Central Bank (Frankfurter API)
@@ -176,5 +197,28 @@
 
     loadCurrencies();
   </script>
+  <script>async function loadPopularRates() {
+  try {
+    const res = await fetch("https://api.frankfurter.app/latest?from=USD");
+    const data = await res.json();
+
+    // Choose some popular pairs
+    const pairs = ["EUR", "GBP", "EGP", "JPY", "CAD"];
+    popularRatesList.innerHTML = "";
+
+    pairs.forEach(to => {
+      if (data.rates[to]) {
+        const li = document.createElement("li");
+        li.textContent = `1 USD = ${data.rates[to].toFixed(2)} ${to}`;
+        popularRatesList.appendChild(li);
+      }
+    });
+  } catch (e) {
+    popularRatesList.innerHTML = "<li>⚠️ Could not load popular rates.</li>";
+  }
+}
+
+loadPopularRates();
+</script>
 </body>
 </html>
