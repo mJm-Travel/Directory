@@ -214,6 +214,13 @@
   font-size: 1.3em;
   line-height: 1;
 }
+.rate-list li img.flag {
+  width: 20px;
+  height: 14px;
+  vertical-align: middle;
+  margin-right: 8px;
+  border-radius: 2px;
+}
 
 
   /* Footer */
@@ -316,19 +323,19 @@
 
   // Load popular exchange rates
 async function loadPopularRates() {
-  const base = fromCurrency.value; // use selected From currency
+  const base = fromCurrency.value; // selected From currency
   try {
     const res = await fetch(`https://api.frankfurter.app/latest?from=${base}`);
     const data = await res.json();
 
     const pairs = ["USD","EUR","GBP","EGP","JPY","CAD"];
-const flags = {
-  "USD": "\uD83C\uDDFA\uD83C\uDDF8", // 🇺🇸
-  "EUR": "\uD83C\uDDEA\uD83C\uDDFA", // 🇪🇺
-  "GBP": "\uD83C\uDDEC\uD83C\uDDE7", // 🇬🇧
-  "EGP": "\uD83C\uDDEA\uD83C\uDDEC", // 🇪🇬
-  "JPY": "\uD83C\uDDEF\uD83C\uDDF5", // 🇯🇵
-  "CAD": "\uD83C\uDDE8\uD83C\uDDE6"  // 🇨🇦
+    const flags = {
+  "USD": "https://flagcdn.com/us.svg",
+  "EUR": "https://flagcdn.com/eu.svg",
+  "GBP": "https://flagcdn.com/gb.svg",
+  "EGP": "https://flagcdn.com/eg.svg",
+  "JPY": "https://flagcdn.com/jp.svg",
+  "CAD": "https://flagcdn.com/ca.svg"
 };
 
     popularRatesList.innerHTML = "";
@@ -336,8 +343,10 @@ const flags = {
     pairs.forEach(to => {
       if (to !== base && data.rates[to]) {
         const li = document.createElement("li");
-        li.innerHTML = `<span class="flag">${flags[to] || ""}</span> 1 ${base} = ${data.rates[to].toFixed(2)} ${to}`;
-
+        const flagImg = flags[to]
+          ? `<img src="${flags[to]}" alt="${to}" class="flag" />`
+          : "";
+        li.innerHTML = `${flagImg} 1 ${base} = ${data.rates[to].toFixed(2)} ${to}`;
         popularRatesList.appendChild(li);
       }
     });
@@ -345,6 +354,7 @@ const flags = {
     popularRatesList.innerHTML = "<li>⚠️ Could not load popular rates.</li>";
   }
 }
+
 
 
   // Update popular rates when From currency changes
