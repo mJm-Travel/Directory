@@ -149,75 +149,89 @@
   <footer>
     © 2025 mJm Travel | Rates powered by European Central Bank (Frankfurter API)
   </footer>
+<script>
+  // Elements
+  const fromCurrency = document.getElementById("fromCurrency");
+  const toCurrency = document.getElementById("toCurrency");
+  const result = document.getElementById("result");
+  const popularRatesList = document.getElementById("popularRates"); // for popular rates
 
-  <script>
-    const fromCurrency = document.getElementById("fromCurrency");
-    const toCurrency = document.getElementById("toCurrency");
-    const result = document.getElementById("result");
+  // Load currency list
+  async function loadCurrencies() {
+    try {
+      const res = await fetch("https://api.frankfurter.app/currencies");
+      const data = await res.json();
+      const codes = Object.keys(data);
 
-    async function loadCurrencies() {
-      try {
-        const res = await fetch("https://api.frankfurter.app/currencies");
-        const data = await res.json();
-        const codes = Object.keys(data);
+      fromCurrency.innerHTML = "";
+      toCurrency.innerHTML = "";
 
-        fromCurrency.innerHTML = "";
-        toCurrency.innerHTML = "";
+      codes.forEach(curr => {
+        fromCurrency.innerHTML += `<option value="${curr}">${curr} - ${data[curr]}</option>`;
+        toCurrency.innerHTML += `<option value="${curr}">${curr} - ${data[curr]}</option>`;
+      });
 
-        codes.forEach(curr => {
-          fromCurrency.innerHTML += `<option value="${curr}">${curr} - ${data[curr]}</option>`;
-          toCurrency.innerHTML += `<option value="${curr}">${curr} - ${data[curr]}</option>`;
-        });
+      // Default selections
+      fromCurrency.value = "USD";
+      toCurrency.value = "EUR";
 
-        fromCurrency.value = "USD";
-        toCurrency.value = "EUR";
-      } catch (e) {
-        result.innerHTML = "⚠️ Could not load currencies.";
-      }
+      // Update popular rates initially
+      loadPopularRates();
+    } catch (e) {
+      result.innerHTML = "⚠️ Could not load currencies.";
     }
-
-    async function convertCurrency() {
-      const amount = document.getElementById("amount").value;
-      const from = fromCurrency.value;
-      const to = toCurrency.value;
-
-      if (from === to) {
-        result.innerHTML = "Choose two different currencies.";
-        return;
-      }
-
-      try {
-        const res = await fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${from}&to=${to}`);
-        const data = await res.json();
-        result.innerHTML = `${amount} ${from} = ${data.rates[to].toFixed(2)} ${to}`;
-      } catch (e) {
-        result.innerHTML = "⚠️ Conversion failed. Try again.";
-      }
-    }
-
-    loadCurrencies();
-async function loadPopularRates() {
-  try {
-    const res = await fetch("https://api.frankfurter.app/latest?from=USD");
-    const data = await res.json();
-
-    // Choose some popular pairs
-    const pairs = ["EUR", "GBP", "EGP", "JPY", "CAD"];
-    popularRatesList.innerHTML = "";
-
-    pairs.forEach(to => {
-      if (data.rates[to]) {
-        const li = document.createElement("li");
-        li.textContent = `1 USD = ${data.rates[to].toFixed(2)} ${to}`;
-        popularRatesList.appendChild(li);
-      }
-    });
-  } catch (e) {
-    popularRatesList.innerHTML = "<li>⚠️ Could not load popular rates.</li>";
   }
-}
 
-loadPopularRates();
+  // Convert function
+  async function convertCurrency() {
+    const amount = document.getElementById("amount").value;
+    const from = fromCurrency.value;
+    const to = toCurrency.value;
+
+    if (from === to) {
+      result.innerHTML = "Choose two different currencies.";
+      return;
+    }
+
+    try {
+      const res = await fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${from}&to=${to}`);
+      const data = await res.json();
+      result.innerHTML = `${amount} ${from} = ${data.rates[to].toFixed(2)} ${to}`;
+    } catch (e) {
+      result.innerHTML = "⚠️ Conversion failed. Try again.";
+    }
+  }
+
+  // Load popular exchange rates
+  async function loadPopularRates() {
+    const base = fromCurrency.value; // now uses selected fromCurrency
+    try {
+      const res = await fetch(`https://api.frankfurter.app/latest?from=${base}`);
+      const data = await res.json();
+
+      const pairs = ["USD","EUR","GBP","EGP","JPY","CAD"];
+      popularRatesList.innerHTML = "";
+
+      pairs.forEach(to => {
+        if (to !== base && data.rates[to]) {
+          const li = document.createElement("li");
+          li.textContent = `1 ${base} = ${data.rates[to].toFixed(2)} ${to}`;
+          popularRatesList.appendChild(li);
+        }
+      });
+    } catch (e) {
+      popularRatesList.innerHTML = "<li>⚠️ Could not load popular rates.</li>";
+    }
+  }
+
+  // Update popular rates when From currency changes
+  fromCurrency.addEventListener("change", loadPopularRates);
+
+  // Initialize
+  loadCurrencies();
 </script>
+
+
+
 </body>
 </html>
