@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta property="og:locale" content="en_US" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="mJm Travel" />
+<link rel="pingback" href="https://mjm-travel.freesite.host/xmlrpc.php"><link rel="icon" href="https://mjm-travel.freesite.host/wp-content/uploads/2025/03/cropped-mJm-Travel-Logo-32x32.jpeg" sizes="32x32" />
+<link rel="icon" href="https://mjm-travel.freesite.host/wp-content/uploads/2025/03/cropped-mJm-Travel-Logo-192x192.jpeg" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://mjm-travel.freesite.host/wp-content/uploads/2025/03/cropped-mJm-Travel-Logo-180x180.jpeg" />
+<meta name="msapplication-TileImage" content="https://mjm-travel.freesite.host/wp-content/uploads/2025/03/cropped-mJm-Travel-Logo-270x270.jpeg" />
+  <meta charset="UTF-8">
+  <title>Travel Directory</title> <!-- placeholder, will be replaced -->
+  <style>
+    ul { list-style-type: none; margin-left: 20px; }
+    li { margin: 4px 0; }
+  </style>
+</head>
+<body>
+  <p><a href="https://mjm-travel.github.io/Directory/">📂 Back To Main Directory</a></p>
+<h1 id="page-title">📂 Travel Directory</h1>
+<div id="repo-tree"></div>
+
+<script>
+  const repoOwner = "mJm-Travel"; // your GitHub username/org
+  const repoName = "Directory";   // your repo name
+  const branch = "main";          // branch name
+
+  // --- Detect current folder from URL ---
+  let pathParts = window.location.pathname.split("/").filter(p => p);
+  const repoIndex = pathParts.indexOf(repoName);
+  let currentFolderName = decodeURIComponent(pathParts[repoIndex + 1] || ""); // decode spaces
+
+  // --- Prettify folder name ---
+  function prettifyName(str) {
+    return str
+      .replace(/[-_]+/g, " ")          // replace - and _ with spaces
+      .replace(/\b\w/g, c => c.toUpperCase()); // capitalize each word
+  }
+  const prettyFolderName = prettifyName(currentFolderName);
+
+  const currentFolder = currentFolderName ? currentFolderName + "/" : "";
+
+  // --- Update <h1> and <title> ---
+  if (currentFolderName) {
+    document.getElementById("page-title").textContent = "📂 " + prettyFolderName + " Travel Directory";
+    document.title = prettyFolderName + " Travel Directory";
+  }
+
+  // --- Load repo tree for current folder ---
+  async function loadRepoTree() {
+    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/git/trees/${branch}?recursive=1`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      const files = data.tree;
+
+      let root = {};
+      files.forEach(item => {
+        if (item.path.split("/").pop() === "index.html") return;
+
+        // Only keep files inside the current folder
+        if (!item.path.startsWith(currentFolder)) return;
+
+        // Path relative to current folder
+        let relativePath = item.path.substring(currentFolder.length);
+        if (!relativePath) return;
+
+        let parts = relativePath.split("/");
+        let current = root;
+        parts.forEach((part, i) => {
+          if (!current[part]) {
+            current[part] = { __type: i === parts.length - 1 ? item.type : "tree" };
+          }
+          current = current[part];
+        });
+      });
+
+     function buildList(obj, basePath = "") {
+  let ul = document.createElement("ul");
+  for (let name in obj) {
+    if (name === "__type") continue;
+    let li = document.createElement("li");
+
+    if (obj[name].__type === "blob") {
+      let a = document.createElement("a");
+
+      // Format display name: replace "-" with space + remove ".html"
+      let displayName = name.replace(/-/g, " ");
+      if (displayName.toLowerCase().endsWith(".html")) {
+        displayName = displayName.slice(0, -5);
+      }
+
+      // Keep original file name in href
+      if (name.endsWith(".html")) {
+        a.href = `https://${repoOwner}.github.io/${repoName}/${encodeURIComponent(currentFolder)}${basePath}${encodeURIComponent(name)}`;
+      } else {
+        a.href = `https://github.com/${repoOwner}/${repoName}/blob/${branch}/${encodeURIComponent(currentFolder)}${basePath}${encodeURIComponent(name)}`;
+      }
+
+      a.textContent = displayName;
+      a.target = "_blank";
+      li.appendChild(a);
+    } else {
+      li.textContent = "📁 " + name;
+      li.appendChild(buildList(obj[name], basePath + name + "/"));
+    }
+
+    ul.appendChild(li);
+  }
+  return ul;
+}
+
+document.getElementById("repo-tree").appendChild(buildList(root));
+
+    } catch (err) {
+      console.error("Error loading repo tree:", err);
+    }
+  }
+
+  loadRepoTree();
+</script>
+  <ul id="repo-tree"></ul>
+<footer style="text-align:center; margin-top:20px; padding:10px; font-size:14px; border-top:1px solid #ccc;">
+  <P>Worldwide Travel Directory Provided by mJm Travel. <br>Looking For Tours, Hotels, Flights ?  <br>All Travel Services are Provided Here.</P>  
+  <br><a href="https://mjm-travel.github.io/" target=_blank><b>mJm Travel</a> © 2014−<span id="year"></span><br></b><br>
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+<a href="https://mjm-travel.github.io/Directory/sitemap.xml" target="_blank">Sitemap</a> | <a href="https://mjm-travel.github.io/Directory/mJm-Currency-Converter.html" target="_blank">Currency Converter</a><br><br>
+<a href="https://www.facebook.com/mjm.travelagency" target=_blank><img src="https://cdn-icons-png.flaticon.com/128/3670/3670032.png" alt="Facebook" width="30" loading="lazy"></a>
+<a href="https://wa.me/12513732508" target=_blank><img src="https://cdn-icons-png.flaticon.com/128/3670/3670051.png" alt= "Whatsapp" width="30" loading="lazy"></a>
+<a href="https://www.youtube.com/@mjmtravel8033" target=_blank><img src="https://cdn-icons-png.flaticon.com/128/3938/3938026.png" alt="Youtube" width="30" loading="lazy"></a>
+<a href="https://www.instagram.com/mjm_travel/" target=_blank><img src="https://cdn-icons-png.flaticon.com/128/3955/3955024.png" alt="Instagram" width="30" loading="lazy"></a>
+<a href="https://www.pinterest.com/mjmtravelagency/" target=_blank><img src="https://cdn-icons-png.flaticon.com/128/220/220214.png" alt="Pinterest" width="30" loading="lazy"></a>
+  </footer>
+</body>
+</html>
