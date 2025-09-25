@@ -27,7 +27,7 @@ jobs:
 
       - name: Generate sitemaps
         env:
-          BASE_URL: 'https://yourusername.github.io/yourrepo' # <<-- REPLACE this with your actual base URL
+          BASE_URL: 'https://mjm-travel.github.io/Directory/' # <<-- REPLACE this with your actual base URL
           SITEMAP_DIR: 'sitemaps' # or 'docs/sitemaps' if you use docs/
         run: |
           node generate-sitemaps.js
