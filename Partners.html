@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>mJm Partners</title>
+  <meta name="description" content="Directory of mJm Partners — quick search and browse partners with images and titles." />
+  <style>
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --muted:#9aa6bf;
+      --accent:#7dd3fc;
+      --glass: rgba(255,255,255,0.03);
+      --radius:12px;
+      --gap:18px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    /* Page layout */
+    html,body{height:100%}
+    body{
+      margin:0;
+      background: linear-gradient(180deg,#071028 0%, #081226 100%);
+      color:#e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:40px;
+      box-sizing:border-box;
+      display:flex;
+      flex-direction:column;
+      gap:20px;
+    }
+
+    header{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      max-width:1100px;
+      width:100%;
+      margin:0 auto;
+    }
+
+    h1{
+      margin:0;
+      font-size:clamp(20px,3.2vw,32px);
+      letter-spacing:-0.02em;
+    }
+    p.lead{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    /* Search */
+    .search-wrap{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      margin-top:8px;
+      width:100%;
+    }
+    label.search-label{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      background:var(--glass);
+      border-radius:999px;
+      padding:6px 10px;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.02) inset;
+      border:1px solid rgba(255,255,255,0.025);
+      flex:1 1 460px;
+    }
+    label.search-label svg{opacity:0.9}
+    input#search{
+      background:transparent;
+      border:0;
+      outline:none;
+      color:inherit;
+      font-size:15px;
+      width:100%;
+      padding:8px 6px;
+    }
+    .controls{
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .pill{
+      background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.03);
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    /* Grid */
+    main{
+      max-width:1100px;
+      width:100%;
+      margin:0 auto;
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
+      gap:var(--gap);
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:var(--radius);
+      padding:12px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      transition:transform .15s ease, box-shadow .15s ease, opacity .12s ease;
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .card.hidden{
+      opacity:0;
+      transform:scale(.99);
+      pointer-events:none;
+      height:0;
+      padding:0;
+      margin:0;
+      overflow:hidden;
+    }
+
+    .thumb{
+      width:100%;
+      aspect-ratio:16/10;
+      background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(0,0,0,0.05));
+      border-radius:10px;
+      display:block;
+      overflow:hidden;
+      flex-shrink:0;
+    }
+    .thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .title{
+      font-weight:600;
+      font-size:15px;
+      margin:0;
+      line-height:1.2;
+      color: #eaf6ff;
+    }
+    .meta{
+      color:var(--muted);
+      font-size:13px;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    footer{
+      max-width:1100px;
+      margin:0 auto;
+      color:var(--muted);
+      font-size:13px;
+      padding-top:10px;
+      border-top:1px solid rgba(255,255,255,0.02);
+    }
+
+    /* small screens */
+    @media (max-width:520px){
+      body{padding:18px}
+      .pill{display:none}
+    }
+
+    /* highlight matched text */
+    mark.match {
+      background: linear-gradient(90deg, rgba(125,211,252,0.2), rgba(125,211,252,0.1));
+      color:inherit;
+      padding:0 3px;
+      border-radius:3px;
+    }
+  </style>
+</head>
+<body>
+  <header role="banner" aria-labelledby="page-title">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap">
+      <div>
+        <h1 id="page-title">mJm Partners</h1>
+        <p class="lead">Browse partner sites. Type in the search box to filter results instantly.</p>
+      </div>
+      <div class="controls" aria-hidden="true">
+        <div class="pill" id="count">8 partners</div>
+      </div>
+    </div>
+
+    <div class="search-wrap" role="search" aria-label="Search partners">
+      <label for="search" class="search-label">
+        <!-- simple magnifier icon -->
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+          <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <input id="search" type="search" placeholder="Search partners by title..." aria-label="Search partners by title" />
+      </label>
+    </div>
+  </header>
+
+  <main>
+    <section class="grid" id="partnersGrid" aria-live="polite">
+      <!-- Example cards: add, remove, or duplicate these blocks -->
+      <article class="card" data-title="Blue Horizon Tours">
+        <a class="thumb" href="https://example.com/blue-horizon" target="_blank" rel="noopener">
+          <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=example" alt="Blue Horizon Tours - seascape">
+        </a>
+        <div>
+          <h3 class="title">Blue Horizon Tours</h3>
+          <div class="meta">Adventure · <span>example.com</span></div>
+        </div>
+      </article>
+
+      <article class="card" data-title="Desert Day Trips">
+        <a class="thumb" href="https://example.com/desert-day" target="_blank" rel="noopener">
+          <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=example2" alt="Desert Day Trips - dunes">
+        </a>
+        <div>
+          <h3 class="title">Desert Day Trips</h3>
+          <div class="meta">Culture · <span>example.com</span></div>
+        </div>
+      </article>
+
+      <article class="card" data-title="City Walk Guides">
+        <a class="thumb" href="https://example.com/city-walks" target="_blank" rel="noopener">
+          <img src="https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=example3" alt="City Walk Guides - streetscape">
+        </a>
+        <div>
+          <h3 class="title">City Walk Guides</h3>
+          <div class="meta">Walking Tours · <span>example.com</span></div>
+        </div>
+      </article>
+
+      <article class="card" data-title="Highland Escapes">
+        <a class="thumb" href="https://example.com/highland-escapes" target="_blank" rel="noopener">
+          <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=example4" alt="Highland Escapes - mountains">
+        </a>
+        <div>
+          <h3 class="title">Highland Escapes</h3>
+          <div class="meta">Nature · <span>example.com</span></div>
+        </div>
+      </article>
+
+      <article class="card" data-title="Coastal Kayak Co">
+        <a class="thumb" href="https://example.com/coast-kayak" target="_blank" rel="noopener">
+          <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=example5" alt="Coastal Kayak Co - kayak">
+        </a>
+        <div>
+          <h3 class="title">Coastal Kayak Co</h3>
+          <div class="meta">Water Sports · <span>example.com</span></div>
+        </div>
+      </article>
+
+      <article class="card" data-title="Taste Local">
+        <a class="thumb" href="https://example.com/taste-local" target="_blank" rel="noopener">
+          <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=example6" alt="Taste Local - food">
+        </a>
+        <div>
+          <h3 class="title">Taste Local</h3>
+          <div class="meta">Food Tours · <span>example.com</span></div>
+        </div>
+      </article>
+
+      <article class="card" data-title="Nightlife Navigator">
+        <a class="thumb" href="https://example.com/nightlife" target="_blank" rel="noopener">
+          <img src="https://images.unsplash.com/photo-1510511459019-5dda7724fd87?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=example7" alt="Nightlife Navigator - city night">
+        </a>
+        <div>
+          <h3 class="title">Nightlife Navigator</h3>
+          <div class="meta">Nightlife · <span>example.com</span></div>
+        </div>
+      </article>
+
+      <article class="card" data-title="Family Fun Trips">
+        <a class="thumb" href="https://example.com/family-fun" target="_blank" rel="noopener">
+          <img src="https://images.unsplash.com/photo-1503264116251-35a269479413?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=example8" alt="Family Fun Trips - family">
+        </a>
+        <div>
+          <h3 class="title">Family Fun Trips</h3>
+          <div class="meta">Family · <span>example.com</span></div>
+        </div>
+      </article>
+
+      <!-- Add more .card elements here. Ensure data-title is present for search. -->
+    </section>
+  </main>
+
+  <footer role="contentinfo">
+    Tip: add more partner cards by duplicating a <code>article.card</code> and updating the <code>data-title</code> attribute.
+  </footer>
+
+  <script>
+    // Live filter for partner cards (title and optional meta). Case-insensitive.
+    (function () {
+      const input = document.getElementById('search');
+      const grid = document.getElementById('partnersGrid');
+      const cards = Array.from(grid.querySelectorAll('.card'));
+      const countEl = document.getElementById('count');
+
+      function normalize(s){
+        return (s || '').toString().trim().toLowerCase();
+      }
+
+      function highlight(text, query){
+        if(!query) return text;
+        // escape regex chars from query
+        const q = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const re = new RegExp('('+ q +')', 'ig');
+        return text.replace(re, '<mark class="match">$1</mark>');
+      }
+
+      function filter(q){
+        const qn = normalize(q);
+        let visible = 0;
+
+        cards.forEach(card => {
+          // search title and meta (visible text)
+          const titleEl = card.querySelector('.title');
+          const metaEl = card.querySelector('.meta');
+
+          const titleText = titleEl ? normalize(titleEl.textContent) : '';
+          const metaText = metaEl ? normalize(metaEl.textContent) : '';
+          const dataTitle = normalize(card.dataset.title);
+
+          // decide match
+          const isMatch = !qn || titleText.includes(qn) || metaText.includes(qn) || dataTitle.includes(qn);
+
+          if (isMatch) {
+            card.classList.remove('hidden');
+            visible++;
+
+            // highlight matches in title (render HTML safely)
+            const rawTitle = titleEl.textContent;
+            titleEl.innerHTML = highlight(escapeHtml(rawTitle), qn);
+          } else {
+            card.classList.add('hidden');
+            // remove previous highlights
+            if (titleEl) titleEl.innerHTML = escapeHtml(titleEl.textContent);
+          }
+        });
+
+        // update count
+        countEl.textContent = visible + (visible === 1 ? ' partner' : ' partners');
+      }
+
+      function escapeHtml(unsafe){
+        return (unsafe + '').replace(/[&<"'>]/g, function(m){
+          return {
+            '&':'&amp;',
+            '<':'&lt;',
+            '>':'&gt;',
+            '"':'&quot;',
+            "'":'&#39;'
+          }[m];
+        });
+      }
+
+      // debounce to avoid too many repaints
+      function debounce(fn, wait){
+        let t;
+        return function(...args){
+          clearTimeout(t);
+          t = setTimeout(()=>fn.apply(this,args), wait);
+        };
+      }
+
+      const debouncedFilter = debounce(function(e){
+        filter(e.target.value);
+      }, 120);
+
+      input.addEventListener('input', debouncedFilter);
+
+      // init (in case page loaded with search param)
+      (function initFromQuery(){
+        const params = new URLSearchParams(location.search);
+        const q = params.get('q') || '';
+        if(q){
+          input.value = q;
+          filter(q);
+        } else {
+          // set initial count
+          countEl.textContent = cards.length + ' partners';
+        }
+      })();
+    })();
+  </script>
+</body>
+</html>
