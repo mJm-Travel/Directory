@@ -54,12 +54,14 @@
       transform: scale(1.03);
     }
     .card img {
-      width: 100%;
-      aspect-ratio: 16 / 10;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
+  width: 100%;
+  height: 150px; /* Fixed height for consistent card size */
+  object-fit: cover; /* Ensures it fills the card while keeping proportions */
+  border-radius: 8px;
+  display: block;
+  background: #0f1724; /* fallback color */
+}
+
     .title {
       font-weight: 600;
       color: #eaf6ff;
