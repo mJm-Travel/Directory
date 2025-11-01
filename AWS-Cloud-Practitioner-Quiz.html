@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Cloud Practitioner Quiz | John Nessime</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #232f3e, #1a2530);
+            color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+        h1 {
+            text-align: center;
+            color: #ff9900;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .counter-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 15px 0;
+            font-size: 0.95rem;
+        }
+        .counter-item {
+            background: rgba(255,255,255,0.1);
+            padding: 8px 14px;
+            border-radius: 8px;
+            min-width: 120px;
+            text-align: center;
+        }
+        .progress-container {
+            width: 100%;
+            background: rgba(255,255,255,0.2);
+            height: 12px;
+            border-radius: 6px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: #ff9900;
+            width: 0%;
+            border-radius: 6px;
+            transition: width 0.4s ease;
+        }
+        .question-container {
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255,153,0,0.2);
+        }
+        .question {
+            font-size: 1.3rem;
+            margin-bottom: 18px;
+            font-weight: 600;
+        }
+        .options {
+            display: grid;
+            gap: 12px;
+        }
+        .option {
+            padding: 14px 18px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .option:hover {
+            background: rgba(255,153,0,0.2);
+            transform: translateY(-2px);
+        }
+        .option.selected {
+            border-color: #ff9900;
+            background: rgba(255,153,0,0.3);
+        }
+        .option.correct {
+            background: #28a745 !important;
+            color: white;
+        }
+        .option.wrong {
+            background: #dc3545 !important;
+            color: white;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            margin: 15px 8px 0 0;
+            background: #ff9900;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+        .btn:hover {
+            background: #e68a00;
+            transform: translateY(-2px);
+        }
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .navigation {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(40,167,69,0.2);
+            border-radius: 12px;
+            text-align: center;
+            font-size: 1.4rem;
+            display: none;
+        }
+        .explanation {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            font-size: 0.95rem;
+            display: none;
+            border-left: 4px solid #ff9900;
+        }
+        .score {
+            font-size: 2rem;
+            color: #ff9900;
+            margin: 10px 0;
+        }
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .summary-item {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 20px; }
+            h1 { font-size: 2rem; }
+            .question { font-size: 1.1rem; }
+            .counter-container { font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AWS Cloud Practitioner Quiz</h1>
+        <p style="text-align:center; margin-bottom:30px;">Practice Questions | Random Order | Live Stats</p>
+
+        <!-- LIVE CUMULATIVE COUNTER -->
+        <div class="counter-container" id="counterContainer">
+            <div class="counter-item">
+                <strong>Answered:</strong> <span id="answeredCount">0</span> / <span id="totalQuestions">0</span>
+            </div>
+            <div class="counter-item">
+                <strong>Correct:</strong> <span id="correctCountLive">0</span>
+            </div>
+            <div class="counter-item">
+                <strong>Wrong:</strong> <span id="wrongCountLive">0</span>
+            </div>
+            <div class="counter-item">
+                <strong>Accuracy:</strong> <span id="accuracyPercent">0%</span>
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div id="quiz"></div>
+
+        <div class="navigation">
+            <button class="btn" id="prevBtn" onclick="previousQuestion()">Previous</button>
+            <button class="btn" id="nextBtn" onclick="nextQuestion()">Next</button>
+            <button class="btn" id="submitBtn" onclick="submitQuiz()" style="display:none;">Submit Quiz</button>
+        </div>
+
+        <div class="result" id="result">
+            <h2>Quiz Complete!</h2>
+            <div class="score" id="finalScore"></div>
+            <div class="summary">
+                <div class="summary-item">
+                    <strong>Correct:</strong> <span id="correctCount">0</span>
+                </div>
+                <div class="summary-item">
+                    <strong>Wrong:</strong> <span id="wrongCount">0</span>
+                </div>
+                <div class="summary-item">
+                    <strong>Skipped:</strong> <span id="skippedCount">0</span>
+                </div>
+                <div class="summary-item">
+                    <strong>Time:</strong> <span id="timeTaken">0</span> min
+                </div>
+            </div>
+            <button class="btn" onclick="restartQuiz()">Restart Quiz</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "Which component of the AWS global infrastructure is used by Amazon CloudFront to ensure low-latency delivery of content to end-users worldwide?",
+                options: ["A) Availability Zones", "B) Regions", "C) Edge Locations", "D) Data Centers"],
+                correct: 2,
+                explanation: "Amazon CloudFront is a content delivery network (CDN) that uses a global network of Edge Locations to cache copies of content closer to the end-users, thereby reducing latency and improving delivery speed. Regions and Availability Zones are core components for deploying primary application infrastructure with high availability and fault tolerance."
+            },
+            {
+                question: "Which AWS service provides a fully managed file storage solution that can be mounted concurrently by multiple EC2 instances?",
+                options: ["A) Amazon S3", "B) Amazon EBS", "C) Amazon EFS", "D) Amazon Glacier"],
+                correct: 2,
+                explanation: "Amazon Elastic File System (EFS) is a managed file storage service for EC2 instances that allows multiple instances to access the same file system simultaneously, supporting NFS protocol. S3 is object storage, EBS is block storage for single instances, and Glacier is for archival storage."
+            },
+            {
+                question: "What is the primary purpose of AWS Identity and Access Management (IAM)?",
+                options: ["A) To manage virtual private clouds", "B) To control access to AWS services and resources securely", "C) To monitor application performance", "D) To store relational data"],
+                correct: 1,
+                explanation: "IAM enables you to manage users, groups, roles, and permissions to allow or deny access to AWS resources. It does not handle networking (VPC), monitoring (CloudWatch), or databases (RDS)."
+            },
+            {
+                question: "Which AWS service is used for serverless computing, allowing code execution without provisioning servers?",
+                options: ["A) Amazon EC2", "B) AWS Lambda", "C) Amazon RDS", "D) Amazon S3"],
+                correct: 1,
+                explanation: "AWS Lambda runs code in response to triggers and automatically manages the underlying compute resources. EC2 requires server management, RDS is for databases, and S3 is for storage."
+            },
+            {
+                question: "What does an AWS Region consist of?",
+                options: ["A) A single data center", "B) Multiple Availability Zones", "C) Edge locations only", "D) Global endpoints"],
+                correct: 1,
+                explanation: "An AWS Region is a geographical area containing multiple isolated Availability Zones for high availability and fault tolerance. Data centers are part of AZs, edge locations are for CDN, and global endpoints are service-specific."
+            },
+            {
+                question: "Which pricing model allows you to pay only for the compute capacity you consume, with no long-term commitments?",
+                options: ["A) Reserved Instances", "B) On-Demand Instances", "C) Savings Plans", "D) Dedicated Hosts"],
+                correct: 1,
+                explanation: "On-Demand Instances let you pay by the second for the resources you use, ideal for short-term or unpredictable workloads. Reserved Instances and Savings Plans require commitments for discounts, while Dedicated Hosts are for physical servers."
+            },
+            {
+                question: "What is the main benefit of using Amazon S3 for storage?",
+                options: ["A) Block-level access", "B) Highly durable and scalable object storage", "C) Relational querying", "D) File system mounting"],
+                correct: 1,
+                explanation: "Amazon S3 provides 99.999999999% durability for objects, with unlimited scalability. EBS offers block-level, RDS provides relational querying, and EFS allows file mounting."
+            },
+            {
+                question: "Which AWS service automatically distributes incoming application traffic across multiple targets?",
+                options: ["A) Amazon Route 53", "B) Elastic Load Balancing", "C) AWS Auto Scaling", "D) Amazon VPC"],
+                correct: 1,
+                explanation: "Elastic Load Balancing (ELB) distributes traffic to ensure no single target is overwhelmed, improving availability. Route 53 is for DNS, Auto Scaling adjusts capacity, and VPC is for networking."
+            },
+            {
+                question: "What is an Availability Zone in AWS?",
+                options: ["A) A global network of edge locations", "B) An isolated location within a Region consisting of one or more data centers", "C) A logical grouping of resources across Regions", "D) A content delivery endpoint"],
+                correct: 1,
+                explanation: "Availability Zones are designed to be independent for fault isolation, allowing high-availability architectures. Edge locations are for CloudFront, Regions group AZs, and endpoints are service access points."
+            },
+            {
+                question: "Which AWS database service is fully managed and supports relational databases like MySQL and PostgreSQL?",
+                options: ["A) Amazon DynamoDB", "B) Amazon RDS", "C) Amazon Redshift", "D) Amazon Neptune"],
+                correct: 1,
+                explanation: "Amazon Relational Database Service (RDS) handles setup, patching, and backups for relational engines. DynamoDB is NoSQL, Redshift is for data warehousing, and Neptune is for graphs."
+            },
+            {
+                question: "What does AWS Shared Responsibility Model mean for security?",
+                options: ["A) AWS manages all security aspects", "B) Customers manage all security aspects", "C) AWS secures the cloud infrastructure, while customers secure their data in the cloud", "D) Third parties handle security"],
+                correct: 2,
+                explanation: "AWS handles physical security and infrastructure, but customers are responsible for OS, applications, and data security configurations like IAM and encryption."
+            },
+            {
+                question: "Which AWS service is used for domain name registration and DNS routing?",
+                options: ["A) Amazon VPC", "B) AWS Direct Connect", "C) Amazon Route 53", "D) AWS CloudFormation"],
+                correct: 2,
+                explanation: "Route 53 provides scalable DNS, health checks, and domain registration. VPC is for virtual networks, Direct Connect for dedicated connections, and CloudFormation for infrastructure as code."
+            },
+            {
+                question: "What is the purpose of AWS Auto Scaling?",
+                options: ["A) To automatically adjust compute capacity based on demand", "B) To distribute traffic", "C) To store data", "D) To manage identities"],
+                correct: 0,
+                explanation: "Auto Scaling ensures the right number of EC2 instances or other resources are running to handle load, maintaining performance and cost efficiency. ELB distributes traffic, S3 stores data, IAM manages identities."
+            },
+            {
+                question: "Which storage class in Amazon S3 is designed for infrequently accessed data with retrieval times in minutes?",
+                options: ["A) S3 Standard", "B) S3 Glacier Instant Retrieval", "C) S3 Intelligent-Tiering", "D) S3 Glacier Flexible Retrieval"],
+                correct: 3,
+                explanation: "S3 Glacier Flexible Retrieval offers low-cost storage with retrieval in 1-5 minutes. Standard is for frequent access, Instant Retrieval for milliseconds, Intelligent-Tiering auto-moves based on access."
+            },
+            {
+                question: "What is Amazon VPC used for?",
+                options: ["A) Content delivery", "B) Virtual private cloud to launch AWS resources in an isolated network", "C) Serverless computing", "D) Data analytics"],
+                correct: 1,
+                explanation: "Virtual Private Cloud (VPC) allows custom network topology, subnets, and security. CloudFront is for CDN, Lambda for serverless, Athena for analytics."
+            },
+            {
+                question: "Which AWS service provides a data warehouse for analytics?",
+                options: ["A) Amazon RDS", "B) Amazon Redshift", "C) Amazon DynamoDB", "D) Amazon ElastiCache"],
+                correct: 1,
+                explanation: "Redshift is optimized for complex queries on large datasets using columnar storage. RDS is transactional, DynamoDB NoSQL, ElastiCache in-memory caching."
+            },
+            {
+                question: "What is the AWS Well-Architected Framework?",
+                options: ["A) A set of best practices for designing reliable, secure, efficient systems", "B) A pricing calculator", "C) A deployment tool", "D) A monitoring service"],
+                correct: 0,
+                explanation: "It covers pillars like operational excellence, security, reliability, performance, cost optimization, and sustainability. Not related to pricing (TCO Calculator), deployment (CodeDeploy), or monitoring (CloudWatch)."
+            },
+            {
+                question: "Which AWS service allows you to run containers without managing servers?",
+                options: ["A) Amazon EC2", "B) AWS Fargate", "C) Amazon EBS", "D) AWS Batch"],
+                correct: 1,
+                explanation: "Fargate is serverless for ECS and EKS, handling infrastructure. EC2 requires servers, EBS is storage, Batch is for jobs."
+            },
+            {
+                question: "What does AWS CloudTrail do?",
+                options: ["A) Monitors performance metrics", "B) Logs API calls and actions across AWS services", "C) Manages encryption keys", "D) Provides DNS routing"],
+                correct: 1,
+                explanation: "CloudTrail records user activity and API usage for auditing and compliance. CloudWatch monitors metrics, KMS manages keys, Route 53 does DNS."
+            },
+            {
+                question: "Which AWS billing feature provides detailed cost allocation?",
+                options: ["A) AWS Budgets", "B) Cost Explorer", "C) Tags", "D) Consolidated Billing"],
+                correct: 2,
+                explanation: "Tags allow labeling resources for cost tracking and allocation reports. Budgets set alerts, Cost Explorer visualizes, Consolidated Billing aggregates accounts."
+            },
+            {
+                question: "What is Amazon EC2?",
+                options: ["A) Elastic Block Store", "B) Elastic Compute Cloud for virtual servers", "C) Content Delivery Network", "D) Database Service"],
+                correct: 1,
+                explanation: "EC2 provides resizable compute capacity in the cloud. EBS is storage, CloudFront CDN, RDS databases."
+            },
+            {
+                question: "Which service is used for real-time messaging and streaming data?",
+                options: ["A) Amazon SQS", "B) Amazon Kinesis", "C) Amazon SNS", "D) AWS Glue"],
+                correct: 1,
+                explanation: "Kinesis handles real-time data streams for processing. SQS is queuing, SNS notifications, Glue ETL."
+            },
+            {
+                question: "What is the maximum durability percentage for Amazon S3?",
+                options: ["A) 99.99%", "B) 99.999999999%", "C) 99.9%", "D) 100%"],
+                correct: 1,
+                explanation: "S3 is designed for eleven 9s of durability over a year, meaning objects are highly unlikely to be lost."
+            },
+            {
+                question: "Which AWS service provides managed Kubernetes?",
+                options: ["A) Amazon ECS", "B) Amazon EKS", "C) AWS Fargate", "D) AWS Lambda"],
+                correct: 1,
+                explanation: "Elastic Kubernetes Service (EKS) manages Kubernetes clusters. ECS is container orchestration, Fargate serverless, Lambda functions."
+            },
+            {
+                question: "What does AWS Direct Connect provide?",
+                options: ["A) Public internet access", "B) Dedicated network connection from on-premises to AWS", "C) DNS resolution", "D) Load balancing"],
+                correct: 1,
+                explanation: "It bypasses the internet for faster, more reliable connectivity. Not public access, Route 53 DNS, ELB balancing."
+            },
+            {
+                question: "Which AWS database is serverless and NoSQL?",
+                options: ["A) Amazon RDS", "B) Amazon DynamoDB", "C) Amazon Aurora", "D) Amazon Redshift"],
+                correct: 1,
+                explanation: "DynamoDB auto-scales and is key-value/document. RDS and Aurora are relational, Redshift warehouse."
+            },
+            {
+                question: "What is AWS Snowball used for?",
+                options: ["A) Data transfer for large datasets offline", "B) Compute in remote areas", "C) Monitoring", "D) Encryption"],
+                correct: 0,
+                explanation: "Snowball is a physical device for petabyte-scale data migration. Snowcone for edge compute, CloudWatch monitoring, KMS encryption."
+            },
+            {
+                question: "Which pillar of the Well-Architected Framework focuses on protecting data and systems?",
+                options: ["A) Reliability", "B) Security", "C) Performance Efficiency", "D) Cost Optimization"],
+                correct: 1,
+                explanation: "Security pillar includes identity, detection, protection, and response. Reliability for recovery, Performance for resources, Cost for spending."
+            },
+            {
+                question: "What is Amazon GuardDuty?",
+                options: ["A) Firewall service", "B) Threat detection using machine learning", "C) Identity management", "D) Backup service"],
+                correct: 1,
+                explanation: "It analyzes logs for malicious activity. WAF is firewall, IAM identity, EBS snapshots backups."
+            },
+            {
+                question: "Which AWS service is for infrastructure as code?",
+                options: ["A) AWS CloudFormation", "B) AWS CodeBuild", "C) AWS OpsWorks", "D) AWS Elastic Beanstalk"],
+                correct: 0,
+                explanation: "CloudFormation uses templates to provision resources. CodeBuild compiles, OpsWorks config management, Beanstalk app deployment."
+            },
+            {
+                question: "What does Amazon SNS provide?",
+                options: ["A) Queuing", "B) Pub/sub messaging for notifications", "C) Data streaming", "D) ETL"],
+                correct: 1,
+                explanation: "Simple Notification Service sends messages to subscribers. SQS queuing, Kinesis streaming, Glue ETL."
+            },
+            {
+                question: "Which storage service is optimized for workloads requiring low-latency access like databases?",
+                options: ["A) Amazon S3", "B) Amazon EBS", "C) Amazon EFS", "D) Amazon Glacier"],
+                correct: 1,
+                explanation: "Elastic Block Store provides persistent block storage for EC2. S3 object, EFS file, Glacier archive."
+            },
+            {
+                question: "What is the AWS Free Tier?",
+                options: ["A) Unlimited free usage", "B) Limited free usage for 12 months on select services", "C) Paid tier discount", "D) Enterprise support"],
+                correct: 1,
+                explanation: "It offers hands-on experience with limits, like 750 hours of EC2 t2.micro per month."
+            },
+            {
+                question: "Which service monitors AWS resources and applications in real-time?",
+                options: ["A) AWS Config", "B) Amazon CloudWatch", "C) AWS Trusted Advisor", "D) AWS Inspector"],
+                correct: 1,
+                explanation: "CloudWatch collects metrics, logs, and sets alarms. Config tracks changes, Trusted Advisor optimizes, Inspector assesses security."
+            },
+            {
+                question: "What is Amazon Aurora?",
+                options: ["A) NoSQL database", "B) MySQL and PostgreSQL-compatible relational database with high performance", "C) Graph database", "D) Time-series database"],
+                correct: 1,
+                explanation: "Aurora offers faster performance than standard RDS engines. DynamoDB NoSQL, Neptune graph, Timestream time-series."
+            },
+            {
+                question: "Which AWS service helps with cost forecasting?",
+                options: ["A) AWS Budgets", "B) Cost Explorer", "C) AWS Pricing Calculator", "D) Savings Plans"],
+                correct: 1,
+                explanation: "Cost Explorer provides usage and cost analysis with forecasts. Budgets alerts, Calculator estimates, Savings Plans discounts."
+            },
+            {
+                question: "What does AWS WAF protect against?",
+                options: ["A) DDoS attacks only", "B) Common web exploits like SQL injection", "C) Physical threats", "D) Data loss"],
+                correct: 1,
+                explanation: "Web Application Firewall filters traffic. Shield for DDoS, physical by AWS, backups for data loss."
+            },
+            {
+                question: "Which compute option is best for batch processing jobs?",
+                options: ["A) AWS Lambda", "B) AWS Batch", "C) Amazon Lightsail", "D) Amazon Outposts"],
+                correct: 1,
+                explanation: "Batch manages job queues and compute environments. Lambda event-driven, Lightsail simple VPS, Outposts on-premises."
+            },
+            {
+                question: "What is AWS Organizations used for?",
+                options: ["A) Single account management", "B) Centralized management of multiple AWS accounts", "C) Code deployment", "D) Data transfer"],
+                correct: 1,
+                explanation: "It applies policies and consolidates billing across accounts. Not single account, CodeDeploy deployment, Snow family transfer."
+            },
+            {
+                question: "Which service provides in-memory caching?",
+                options: ["A) Amazon ElastiCache", "B) Amazon MemoryDB", "C) Amazon RDS", "D) Amazon DynamoDB"],
+                correct: 0,
+                explanation: "ElastiCache supports Redis and Memcached for fast data access. MemoryDB is transactional Redis, RDS relational, DynamoDB NoSQL."
+            },
+            {
+                question: "What is the purpose of AWS KMS?",
+                options: ["A) Monitoring keys", "B) Key Management Service for creating and controlling encryption keys", "C) Messaging", "D) Storage"],
+                correct: 1,
+                explanation: "It integrates with other services for data encryption. CloudWatch monitoring, SNS messaging, S3 storage."
+            },
+            {
+                question: "Which AWS service is for interactive querying of S3 data using SQL?",
+                options: ["A) Amazon EMR", "B) Amazon Athena", "C) Amazon QuickSight", "D) AWS Glue"],
+                correct: 1,
+                explanation: "Athena is serverless and charges per query. EMR big data, QuickSight BI, Glue ETL."
+            },
+            {
+                question: "What does AWS Elastic Beanstalk do?",
+                options: ["A) Manages containers", "B) Deploys and scales web applications easily", "C) Provides block storage", "D) Handles DNS"],
+                correct: 1,
+                explanation: "It handles provisioning, load balancing, and scaling. ECS containers, EBS storage, Route 53 DNS."
+            },
+            {
+                question: "Which pillar focuses on recovering from failures?",
+                options: ["A) Security", "B) Reliability", "C) Operational Excellence", "D) Sustainability"],
+                correct: 1,
+                explanation: "Reliability includes fault tolerance and recovery strategies. Security protection, Operational processes, Sustainability eco-impact."
+            },
+            {
+                question: "What is Amazon EMR?",
+                options: ["A) Email service", "B) Elastic MapReduce for big data processing with Hadoop/Spark", "C) Monitoring", "D) Relational database"],
+                correct: 1,
+                explanation: "It simplifies running frameworks on managed clusters. SES email, CloudWatch monitoring, RDS database."
+            },
+            {
+                question: "Which service provides hybrid cloud storage?",
+                options: ["A) AWS Storage Gateway", "B) Amazon S3", "C) AWS Direct Connect", "D) AWS VPN"],
+                correct: 0,
+                explanation: "Storage Gateway connects on-premises to cloud storage. S3 cloud-only, Direct Connect network, VPN secure connection."
+            },
+            {
+                question: "What is AWS Trusted Advisor?",
+                options: ["A) Security scanner", "B) Service that checks your environment for best practices", "C) Billing tool", "D) Deployment service"],
+                correct: 1,
+                explanation: "It provides recommendations on cost, performance, security, etc. Inspector scanner, Cost Explorer billing, CodeDeploy deployment."
+            },
+            {
+                question: "Which AWS service is for machine learning model training?",
+                options: ["A) Amazon SageMaker", "B) Amazon Comprehend", "C) Amazon Rekognition", "D) Amazon Lex"],
+                correct: 0,
+                explanation: "SageMaker builds, trains, and deploys ML models. Comprehend NLP, Rekognition image, Lex chatbots."
+            },
+            {
+                question: "What does AWS Config do?",
+                options: ["A) Configures EC2 instances", "B) Records and evaluates configurations of AWS resources", "C) Provides load balancing", "D) Manages keys"],
+                correct: 1,
+                explanation: "It assesses compliance and changes. Not instance config (OpsWorks), ELB balancing, KMS keys."
+            },
+            {
+                question: "Which storage class in S3 is for data that is accessed less than once a year?",
+                options: ["A) S3 Standard-IA", "B) S3 Glacier Deep Archive", "C) S3 One Zone-IA", "D) S3 Intelligent-Tiering"],
+                correct: 1,
+                explanation: "Deep Archive has the lowest cost with 12-hour retrieval. Standard-IA monthly, One Zone single AZ, Intelligent auto."
+            },
+            {
+                question: "What is Amazon Lightsail?",
+                options: ["A) High-performance computing", "B) Simple virtual private servers for developers", "C) Data warehouse", "D) Graph database"],
+                correct: 1,
+                explanation: "It's easy-to-use with fixed pricing for apps and sites. Not HPC (EC2), Redshift warehouse, Neptune graph."
+            },
+            {
+                question: "Which service provides DDoS protection?",
+                options: ["A) AWS Shield", "B) AWS WAF", "C) Amazon GuardDuty", "D) AWS Firewall Manager"],
+                correct: 0,
+                explanation: "Shield mitigates DDoS attacks. WAF web exploits, GuardDuty threats, Firewall Manager policies."
+            },
+            {
+                question: "What is AWS Batch?",
+                options: ["A) Batch email sending", "B) Fully managed batch computing for jobs", "C) Storage batching", "D) Networking batch"],
+                correct: 1,
+                explanation: "It plans, schedules, and executes batch jobs. SES email, no storage/network batch."
+            },
+            {
+                question: "Which AWS service is for extract, transform, load (ETL)?",
+                options: ["A) AWS Glue", "B) Amazon Athena", "C) Amazon EMR", "D) AWS Data Pipeline"],
+                correct: 0,
+                explanation: "Glue is serverless ETL with data catalog. Athena query, EMR processing, Data Pipeline orchestration."
+            },
+            {
+                question: "What does Amazon SQS provide?",
+                options: ["A) Streaming", "B) Fully managed message queuing", "C) Notifications", "D) Data warehousing"],
+                correct: 1,
+                explanation: "Simple Queue Service decouples applications. Kinesis streaming, SNS notifications, Redshift warehousing."
+            },
+            {
+                question: "Which compute service is for virtual desktops?",
+                options: ["A) Amazon WorkSpaces", "B) Amazon AppStream", "C) AWS Outposts", "D) AWS Snowmobile"],
+                correct: 0,
+                explanation: "WorkSpaces provides persistent desktops. AppStream streaming apps, Outposts on-prem, Snowmobile exabyte transfer."
+            },
+            {
+                question: "What is the AWS Support plan that includes 24/7 access to engineers?",
+                options: ["A) Basic", "B) Developer", "C) Business", "D) Enterprise"],
+                correct: 2,
+                explanation: "Business and Enterprise offer 24/7 support; Basic is self-service, Developer business hours."
+            },
+            {
+                question: "Which service automates code deployments?",
+                options: ["A) AWS CodeDeploy", "B) AWS CodeCommit", "C) AWS CodePipeline", "D) AWS CodeBuild"],
+                correct: 0,
+                explanation: "CodeDeploy deploys to EC2, Lambda, etc. CodeCommit repo, CodePipeline CI/CD, CodeBuild compile."
+            },
+            {
+                question: "What is Amazon Neptune?",
+                options: ["A) Relational DB", "B) Graph database", "C) Document DB", "D) Key-value store"],
+                correct: 1,
+                explanation: "It's for highly connected data like social networks. RDS relational, DocumentDB Mongo, DynamoDB key-value."
+            },
+            {
+                question: "Which AWS service provides business intelligence and visualizations?",
+                options: ["A) Amazon QuickSight", "B) Amazon SageMaker", "C) Amazon Athena", "D) AWS Glue"],
+                correct: 0,
+                explanation: "QuickSight creates dashboards from data sources. SageMaker ML, Athena query, Glue ETL."
+            },
+            {
+                question: "What does AWS Outposts do?",
+                options: ["A) Runs AWS services on-premises", "B) Provides global CDN", "C) Manages identities", "D) Stores objects"],
+                correct: 0,
+                explanation: "It extends AWS infrastructure to your data center. CloudFront CDN, IAM identities, S3 storage."
+            },
+            {
+                question: "Which pillar emphasizes efficient use of resources?",
+                options: ["A) Cost Optimization", "B) Performance Efficiency", "C) Operational Excellence", "D) Reliability"],
+                correct: 1,
+                explanation: "Performance Efficiency selects right resource types and sizes. Cost minimizes spend, Operational processes, Reliability recovery."
+            },
+            {
+                question: "What is Amazon Timestream?",
+                options: ["A) Time-series database", "B) Graph database", "C) Relational database", "D) In-memory cache"],
+                correct: 0,
+                explanation: "It's for IoT and operational data with time-based queries. Neptune graph, RDS relational, ElastiCache cache."
+            },
+            {
+                question: "Which service provides automated backups for EC2?",
+                options: ["A) Amazon EBS Snapshots", "B) AWS Backup", "C) Amazon Glacier", "D) AWS Storage Gateway"],
+                correct: 1,
+                explanation: "AWS Backup centralizes and automates across services. EBS manual snapshots, Glacier archive, Gateway hybrid."
+            },
+            {
+                question: "What is AWS CodePipeline?",
+                options: ["A) Code repository", "B) Continuous integration and delivery service", "C) Build server", "D) Deployment tool"],
+                correct: 1,
+                explanation: "It orchestrates build, test, deploy stages. CodeCommit repo, CodeBuild build, CodeDeploy deploy."
+            },
+            {
+                question: "Which AWS service is for chatbots and voice apps?",
+                options: ["A) Amazon Lex", "B) Amazon Polly", "C) Amazon Transcribe", "D) Amazon Translate"],
+                correct: 0,
+                explanation: "Lex builds conversational interfaces. Polly text-to-speech, Transcribe speech-to-text, Translate languages."
+            },
+            {
+                question: "What does AWS Inspector assess?",
+                options: ["A) Costs", "B) Security vulnerabilities in applications", "C) Performance", "D) Compliance"],
+                correct: 1,
+                explanation: "It scans for exposures and deviations. Cost Explorer costs, CloudWatch performance, Config compliance."
+            },
+            {
+                question: "Which storage option is for HPC workloads?",
+                options: ["A) Amazon FSx for Lustre", "B) Amazon EFS", "C) Amazon S3", "D) Amazon EBS"],
+                correct: 0,
+                explanation: "FSx for Lustre provides high-throughput file systems. EFS general, S3 object, EBS block."
+            },
+            {
+                question: "What is Amazon Comprehend?",
+                options: ["A) Image recognition", "B) Natural language processing service", "C) Speech recognition", "D) Video analysis"],
+                correct: 1,
+                explanation: "It extracts insights from text. Rekognition image/video, Transcribe speech."
+            },
+            {
+                question: "Which AWS service provides private connectivity between VPCs?",
+                options: ["A) VPC Peering", "B) AWS VPN", "C) AWS Direct Connect", "D) Internet Gateway"],
+                correct: 0,
+                explanation: "Peering connects VPCs directly. VPN over internet, Direct Connect dedicated, IGW public."
+            },
+            {
+                question: "What is the AWS TCO Calculator used for?",
+                options: ["A) Real-time monitoring", "B) Estimating cost savings when moving to AWS", "C) Deploying resources", "D) Managing users"],
+                correct: 1,
+                explanation: "Total Cost of Ownership compares on-prem to cloud. Not monitoring (CloudWatch), deployment (CloudFormation), users (IAM)."
+            },
+            {
+                question: "Which service is for serverless data lakes?",
+                options: ["A) Amazon S3", "B) AWS Lake Formation", "C) Amazon Redshift", "D) Amazon EMR"],
+                correct: 1,
+                explanation: "Lake Formation builds and manages data lakes. S3 storage, Redshift warehouse, EMR processing."
+            },
+            {
+                question: "What does AWS Macie do?",
+                options: ["A) Manages Macs", "B) Discovers and protects sensitive data using ML", "C) Monitors metrics", "D) Deploys code"],
+                correct: 1,
+                explanation: "It classifies data in S3. Not hardware, CloudWatch metrics, CodeDeploy code."
+            },
+            {
+                question: "Which compute service is for edge locations?",
+                options: ["A) AWS Lambda@Edge", "B) Amazon EC2", "C) AWS Fargate", "D) Amazon Lightsail"],
+                correct: 0,
+                explanation: "It runs code closer to users via CloudFront. EC2 regions, Fargate containers, Lightsail VPS."
+            },
+            {
+                question: "What is Amazon Rekognition?",
+                options: ["A) Text analysis", "B) Image and video analysis", "C) Speech synthesis", "D) Translation"],
+                correct: 1,
+                explanation: "It detects objects, faces, etc. Comprehend text, Polly speech, Translate languages."
+            },
+            {
+                question: "Which AWS service provides email sending capabilities?",
+                options: ["A) Amazon SES", "B) Amazon SNS", "C) Amazon SQS", "D) Amazon Kinesis"],
+                correct: 0,
+                explanation: "Simple Email Service for bulk/transactional emails. SNS notifications, SQS queues, Kinesis streams."
+            },
+            {
+                question: "What is AWS Firewall Manager?",
+                options: ["A) Manages firewalls across accounts", "B) Detects threats", "C) Encrypts data", "D) Monitors logs"],
+                correct: 0,
+                explanation: "It centralizes WAF, Shield, etc. GuardDuty threats, KMS encryption, CloudWatch logs."
+            },
+            {
+                question: "Which database is for document-oriented storage?",
+                options: ["A) Amazon DocumentDB", "B) Amazon DynamoDB", "C) Amazon RDS", "D) Amazon Quantum Ledger"],
+                correct: 0,
+                explanation: "Compatible with MongoDB. DynamoDB key-value, RDS relational, QLDB ledger."
+            },
+            {
+                question: "What does AWS Savings Plans offer?",
+                options: ["A) Fixed pricing", "B) Flexible discounts on usage commitments", "C) Free tier extension", "D) Billing alerts"],
+                correct: 1,
+                explanation: "Discounts for committed spend across EC2, Lambda, Fargate. Not fixed, free tier separate, Budgets alerts."
+            },
+            {
+                question: "Which service provides quantum computing?",
+                options: ["A) Amazon Braket", "B) Amazon SageMaker", "C) Amazon EMR", "D) AWS Batch"],
+                correct: 0,
+                explanation: "Braket for quantum algorithms. SageMaker ML, EMR big data, Batch jobs."
+            },
+            {
+                question: "What is Amazon Polly?",
+                options: ["A) Text-to-speech", "B) Speech-to-text", "C) Language translation", "D) Sentiment analysis"],
+                correct: 0,
+                explanation: "Converts text to lifelike speech. Transcribe speech-to-text, Translate languages, Comprehend sentiment."
+            },
+            {
+                question: "Which AWS service is for IoT device management?",
+                options: ["A) AWS IoT Core", "B) Amazon Kinesis", "C) AWS Lambda", "D) Amazon S3"],
+                correct: 0,
+                explanation: "Connects devices securely. Kinesis streams, Lambda compute, S3 storage."
+            },
+            {
+                question: "What is the purpose of AWS Artifact?",
+                options: ["A) Provides compliance reports", "B) Manages artifacts in code", "C) Monitors performance", "D) Deploys apps"],
+                correct: 0,
+                explanation: "On-demand access to AWS compliance documents. Not code (CodeArtifact), CloudWatch performance, Beanstalk deploy."
+            },
+            {
+                question: "Which pillar added in 2021 to the Well-Architected Framework?",
+                options: ["A) Security", "B) Sustainability", "C) Reliability", "D) Cost Optimization"],
+                correct: 1,
+                explanation: "Focuses on minimizing environmental impact. Others were original."
+            },
+            {
+                question: "What is Amazon Quantum Ledger Database (QLDB)?",
+                options: ["A) Blockchain-like immutable ledger", "B) Relational DB", "C) Graph DB", "D) Time-series"],
+                correct: 0,
+                explanation: "For transparent, cryptographically verifiable transactions. RDS relational, Neptune graph, Timestream time-series."
+            },
+            {
+                question: "Which service provides managed blockchain?",
+                options: ["A) Amazon Managed Blockchain", "B) Amazon QLDB", "C) Amazon Neptune", "D) AWS Glue"],
+                correct: 0,
+                explanation: "Supports Hyperledger and Ethereum. QLDB ledger, Neptune graph, Glue ETL."
+            },
+            {
+                question: "What does AWS CodeCommit provide?",
+                options: ["A) Private Git repositories", "B) Build service", "C) Deployment", "D) Pipeline"],
+                correct: 0,
+                explanation: "Fully managed source control. CodeBuild build, CodeDeploy deploy, CodePipeline orchestrate."
+            },
+            {
+                question: "Which AWS service is for video transcoding?",
+                options: ["A) Amazon Elastic Transcoder", "B) Amazon Rekognition", "C) Amazon Kinesis Video Streams", "D) Amazon Polly"],
+                correct: 0,
+                explanation: "Converts media files. Rekognition analysis, Kinesis streams, Polly speech."
+            },
+            {
+                question: "What is AWS App Runner?",
+                options: ["A) Serverless container deployment", "B) Virtual machines", "C) Batch jobs", "D) Data processing"],
+                correct: 0,
+                explanation: "Builds and runs web apps from code or containers. EC2 VMs, Batch jobs, EMR processing."
+            },
+            {
+                question: "Which service provides serverless workflows?",
+                options: ["A) AWS Step Functions", "B) AWS Batch", "C) AWS Glue", "D) Amazon EMR"],
+                correct: 0,
+                explanation: "Orchestrates Lambda and other services. Batch jobs, Glue ETL, EMR big data."
+            },
+            {
+                question: "What is Amazon Fraud Detector?",
+                options: ["A) ML-based fraud detection", "B) Threat detection", "C) Data classification", "D) Cost analysis"],
+                correct: 0,
+                explanation: "Identifies fraudulent activities. GuardDuty threats, Macie data, Cost Explorer costs."
+            },
+            {
+                question: "Which AWS service is for contact centers?",
+                options: ["A) Amazon Connect", "B) Amazon Lex", "C) Amazon Polly", "D) Amazon Transcribe"],
+                correct: 0,
+                explanation: "Cloud-based call center. Lex chatbots, Polly speech, Transcribe transcription."
+            },
+            {
+                question: "What does AWS Personal Health Dashboard provide?",
+                options: ["A) Personalized alerts on AWS service issues", "B) Cost reports", "C) Security scans", "D) Performance metrics"],
+                correct: 0,
+                explanation: "Notifies about events affecting your resources. Cost Explorer reports, Inspector scans, CloudWatch metrics."
+            },
+            {
+                question: "Which compute option is for ARM-based processors?",
+                options: ["A) AWS Graviton", "B) Amazon EC2", "C) AWS Lambda", "D) AWS Fargate"],
+                correct: 0,
+                explanation: "Graviton instances offer cost-effective performance. EC2 general, Lambda/Fargate support them."
+            },
+            {
+                question: "What is Amazon Textract?",
+                options: ["A) Extracts text and data from documents", "B) Translates text", "C) Synthesizes speech", "D) Analyzes sentiment"],
+                correct: 0,
+                explanation: "Uses OCR for forms, invoices. Translate translation, Polly speech, Comprehend sentiment."
+            },
+            {
+                question: "Which service provides edge computing for IoT?",
+                options: ["A) AWS IoT Greengrass", "B) AWS Snowcone", "C) AWS Outposts", "D) AWS Lambda@Edge"],
+                correct: 0,
+                explanation: "Runs Lambda on devices. Snowcone portable, Outposts racks, Lambda@Edge CDN."
+            },
+            {
+                question: "What is AWS Control Tower?",
+                options: ["A) Sets up and governs multi-account environments", "B) Monitors towers", "C) Deploys code", "D) Manages storage"],
+                correct: 0,
+                explanation: "Landing zones with best practices. Not physical, CodeDeploy code, S3 storage."
+            },
+            {
+                question: "Which AWS service is for API management?",
+                options: ["A) Amazon API Gateway", "B) AWS AppSync", "C) Amazon Cognito", "D) AWS Lambda"],
+                correct: 0,
+                explanation: "Builds, deploys, and manages APIs. AppSync GraphQL, Cognito auth, Lambda compute."
+            },
+            {
+                question: "What does Amazon Cognito provide?",
+                options: ["A) User authentication and authorization", "B) Data synchronization", "C) Messaging", "D) Storage"],
+                correct: 0,
+                explanation: "Sign-up, sign-in for apps. AppSync sync, SNS messaging, S3 storage."
+            },
+            {
+                question: "Which database is for caching with Redis compatibility?",
+                options: ["A) Amazon MemoryDB", "B) Amazon ElastiCache", "C) Amazon DynamoDB", "D) Amazon RDS"],
+                correct: 0,
+                explanation: "MemoryDB is durable Redis. ElastiCache caching, DynamoDB NoSQL, RDS relational."
+            },
+            {
+                question: "What is AWS RoboMaker?",
+                options: ["A) Robotics simulation and deployment", "B) ML models", "C) Data robotics", "D) Automation"],
+                correct: 0,
+                explanation: "For building intelligent robots. SageMaker ML, no data robotics, Step Functions automation."
+            },
+            {
+                question: "Which service provides serverless GraphQL APIs?",
+                options: ["A) AWS AppSync", "B) Amazon API Gateway", "C) AWS Lambda", "D) Amazon DynamoDB"],
+                correct: 0,
+                explanation: "Real-time data with offline support. API Gateway REST, Lambda code, DynamoDB DB."
+            },
+             {
+                question: "Which of the following is a key benefit of moving to the AWS Cloud compared to on-premises infrastructure?",
+                options: ["A) Elimination of all operational costs and responsibilities.", "B) Increased physical control over data centers.", "C) Ability to trade capital expenses (CapEx) for variable expenses (OpEx).", "D) Guaranteed 100% uptime for all services provided by AWS."],
+                correct: 2,
+                explanation: "The move to the cloud allows trading CapEx (upfront data center costs) for OpEx (pay-as-you-go variable costs)."
+            },
+            {
+                question: "A company needs to quickly deploy and test a new application for only two months. Which pricing model would be the most cost-effective?",
+                options: ["A) Reserved Instances", "B) Savings Plans", "C) On-Demand", "D) Spot Instances"],
+                correct: 2,
+                explanation: "On-Demand instances are ideal for short-term, unpredictable workloads that can be stopped at any time without commitment."
+            },
+            {
+                question: "XXXXX",
+                options: ["XXXXX"],
+                correct: 0,
+                explanation: "XXXXX"
+            }
+
+
+
+
+        ];
+
+        // SHUFFLE QUESTIONS ON PAGE LOAD
+        (function() {
+            for (let i = questions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [questions[i], questions[j]] = [questions[j], questions[i]];
+            }
+        })();
+
+        let currentQuestion = 0;
+        let answers = new Array(questions.length).fill(null);
+        let startTime = Date.now();
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            const quizDiv = document.getElementById('quiz');
+            const explanationDiv = quizDiv.querySelector('.explanation') || document.createElement('div');
+            explanationDiv.className = 'explanation';
+            explanationDiv.style.display = 'none';
+
+            quizDiv.innerHTML = `
+                <div class="question-container">
+                    <div class="question">${currentQuestion + 1}. ${q.question}</div>
+                    <div class="options">
+                        ${q.options.map((opt, i) => `
+                            <div class="option" data-index="${i}" onclick="selectOption(${i})">
+                                ${opt}
+                            </div>
+                        `).join('')}
+                    </div>
+                    ${explanationDiv.outerHTML}
+                </div>
+            `;
+
+            if (answers[currentQuestion] !== null) {
+                const selected = quizDiv.querySelectorAll('.option')[answers[currentQuestion]];
+                selected.classList.add('selected');
+                showAnswer();
+            }
+
+            updateProgress();
+            updateCounters();
+            updateButtons();
+        }
+
+        function selectOption(index) {
+            if (answers[currentQuestion] !== null) return;
+
+            answers[currentQuestion] = index;
+            const options = document.querySelectorAll('.option');
+            options[index].classList.add('selected');
+            showAnswer();
+            updateCounters();
+            updateProgress();
+        }
+
+        function showAnswer() {
+            const q = questions[currentQuestion];
+            const options = document.querySelectorAll('.option');
+            const explanationDiv = document.querySelector('.explanation');
+
+            options.forEach((opt, i) => {
+                if (i === q.correct) opt.classList.add('correct');
+                else if (answers[currentQuestion] === i) opt.classList.add('wrong');
+            });
+
+            explanationDiv.innerHTML = `<strong>Correct Answer: ${q.options[q.correct].charAt(0)}</strong><br><br>${q.explanation}`;
+            explanationDiv.style.display = 'block';
+        }
+
+        function updateProgress() {
+            const answered = answers.filter(a => a !== null).length;
+            const percentage = (answered / questions.length) * 100;
+            document.getElementById('progressBar').style.width = percentage + '%';
+        }
+
+        function updateCounters() {
+            const answered = answers.filter(a => a !== null).length;
+            const correct = answers.filter((a, i) => a === questions[i].correct).length;
+            const wrong = answered - correct;
+            const accuracy = answered > 0 ? Math.round((correct / answered) * 100) : 0;
+
+            document.getElementById('totalQuestions').textContent = questions.length;
+            document.getElementById('answeredCount').textContent = answered;
+            document.getElementById('correctCountLive').textContent = correct;
+            document.getElementById('wrongCountLive').textContent = wrong;
+            document.getElementById('accuracyPercent').textContent = accuracy + '%';
+        }
+
+        function updateButtons() {
+            document.getElementById('prevBtn').style.display = currentQuestion === 0 ? 'none' : 'inline-block';
+            document.getElementById('nextBtn').style.display = currentQuestion === questions.length - 1 ? 'none' : 'inline-block';
+            document.getElementById('submitBtn').style.display = currentQuestion === questions.length - 1 ? 'inline-block' : 'none';
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                loadQuestion();
+            }
+        }
+
+        function submitQuiz() {
+            const correct = answers.filter((a, i) => a === questions[i].correct).length;
+            const wrong = answers.filter(a => a !== null).length - correct;
+            const skipped = questions.length - answers.filter(a => a !== null).length;
+            const timeTaken = Math.round((Date.now() - startTime) / 60000);
+
+            document.getElementById('correctCount').textContent = correct;
+            document.getElementById('wrongCount').textContent = wrong;
+            document.getElementById('skippedCount').textContent = skipped;
+            document.getElementById('timeTaken').textContent = timeTaken;
+            document.getElementById('finalScore').textContent = `${correct}/${questions.length} (${Math.round((correct/questions.length)*100)}%)`;
+
+            document.getElementById('quiz').style.display = 'none';
+            document.querySelector('.navigation').style.display = 'none';
+            document.getElementById('result').style.display = 'block';
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            answers = new Array(questions.length).fill(null);
+            startTime = Date.now();
+
+            // Re-shuffle on restart
+            for (let i = questions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [questions[i], questions[j]] = [questions[j], questions[i]];
+            }
+
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('quiz').style.display = 'block';
+            document.querySelector('.navigation').style.display = 'block';
+            updateCounters();
+            loadQuestion();
+        }
+
+        // Initialize
+        updateCounters();
+        loadQuestion();
+    </script>
+</body>
+</html>
