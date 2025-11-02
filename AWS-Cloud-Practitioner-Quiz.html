@@ -723,6 +723,2290 @@ const questions = [
                 explanation: "The Free Tier typically includes limited usage of services like EC2 and S3 for new accounts. Direct Connect, Shield Advanced, and Snow Family are paid services."
             },
             {
+        question: "A user wants to ensure that all data stored in AWS S3 buckets is automatically encrypted at rest. Which AWS feature provides this capability with minimal user management?",
+        options: ["Client-Side Encryption", "AWS KMS-managed keys (SSE-KMS)", "Amazon S3 default encryption", "Server-Side Encryption with Customer-provided keys (SSE-C)"],
+        correct: [2],
+        explanation: "Amazon S3 default encryption allows configuring a bucket to automatically encrypt all new objects written to it."
+    },
+    {
+        question: "According to the AWS Shared Responsibility Model, which task is the customer responsible for?",
+        options: ["Physical security of the data centers", "Maintaining the underlying hypervisor software", "Configuring security groups for an EC2 instance", "Patching the host operating system of an EC2 instance"],
+        correct: [2],
+        explanation: "The customer is responsible for security in the cloud, which includes configuring network access controls like security groups. AWS is responsible for security of the cloud (physical infrastructure, hypervisor, etc.)."
+    },
+    {
+        question: "Which AWS service is best used for protecting web applications from common web exploits like SQL injection and cross-site scripting (XSS)?",
+        options: ["Amazon Inspector", "AWS WAF (Web Application Firewall)", "Amazon GuardDuty", "AWS IAM (Identity and Access Management)"],
+        correct: [1],
+        explanation: "AWS WAF is specifically designed to protect web applications against common web exploits."
+    },
+    {
+        question: "A company needs to restrict access to AWS resources based on the user's job function. Which AWS IAM feature should be used?",
+        options: ["IAM Users", "IAM Roles", "Security Groups", "Network ACLs"],
+        correct: [1],
+        explanation: "IAM roles are used to delegate permissions to users, services, or applications temporarily, aligning with specific job functions."
+    },
+    {
+        question: "Which AWS service provides a comprehensive view of a company's compliance status with security best practices?",
+        options: ["AWS Artifact", "AWS CloudTrail", "AWS Config", "AWS Trusted Advisor"],
+        correct: [3],
+        explanation: "AWS Trusted Advisor evaluates your AWS environment and provides recommendations based on best practices across five categories, including security."
+    },
+    {
+        question: "Which AWS service provides scalable block storage for use with Amazon EC2 instances?",
+        options: ["Amazon S3 (Simple Storage Service)", "Amazon EBS (Elastic Block Store)", "Amazon Glacier", "Amazon EFS (Elastic File System)"],
+        correct: [1],
+        explanation: "Amazon EBS provides persistent block storage volumes that attach to EC2 instances and act like physical disks."
+    },
+    {
+        question: "A user needs to run a database that requires complex joins and transactions. Which AWS service is the most appropriate choice?",
+        options: ["Amazon DynamoDB", "Amazon S3", "Amazon RDS (Relational Database Service)", "Amazon Redshift"],
+        correct: [2],
+        explanation: "Amazon RDS is a managed relational database service that supports complex queries, transactions, and popular engines like MySQL, PostgreSQL, etc."
+    },
+    {
+        question: "Which services can be used to automatically scale compute capacity up or down based on demand?",
+        options: ["Amazon SQS", "AWS Lambda", "Amazon DynamoDB", "Amazon EBS", "Amazon EC2 Auto Scaling"],
+        correct: [1, 4],
+        explanation: "AWS Lambda is a serverless compute service that scales automatically with demand. EC2 Auto Scaling automatically adjusts the number of instances in an Auto Scaling group."
+    },
+    {
+        question: "A company wants to run a containerized application without managing the underlying servers. Which AWS service should they use?",
+        options: ["Amazon EC2", "AWS Fargate", "Amazon ECS", "AWS Elastic Beanstalk"],
+        correct: [1],
+        explanation: "AWS Fargate is a serverless compute engine for containers, allowing you to run containers without managing the underlying EC2 instances."
+    },
+    {
+        question: "Which AWS service acts as a global content delivery network (CDN) to cache data closer to end-users and reduce latency?",
+        options: ["Amazon Route 53", "AWS Direct Connect", "Amazon CloudFront", "Amazon S3 Transfer Acceleration"],
+        correct: [2],
+        explanation: "Amazon CloudFront is a CDN service that securely delivers data, videos, applications, and APIs globally with low latency."
+    },
+    {
+        question: "Which AWS networking component is a virtual network dedicated to your AWS account, providing isolation from other AWS customers?",
+        options: ["Subnet", "Availability Zone", "Virtual Private Cloud (VPC)", "Internet Gateway"],
+        correct: [2],
+        explanation: "A Virtual Private Cloud (VPC) is an isolated virtual network within AWS where you can launch AWS resources."
+    },
+    {
+        question: "A developer wants to deploy an application quickly without managing infrastructure. Which services are considered serverless compute options?",
+        options: ["AWS Lambda", "AWS Step Functions", "Amazon EC2", "Amazon RDS", "AWS Fargate"],
+        correct: [0, 4],
+        explanation: "AWS Lambda and AWS Fargate are serverless compute services where the user does not manage the underlying servers."
+    },
+    {
+        question: "Which AWS service provides a detailed log of all API calls made to your AWS account for security analysis and compliance auditing?",
+        options: ["Amazon CloudWatch", "AWS Trusted Advisor", "AWS CloudTrail", "AWS Health Dashboard"],
+        correct: [2],
+        explanation: "AWS CloudTrail logs all API calls and related events in your AWS account for auditing and compliance purposes."
+    },
+    {
+        question: "Which AWS Support plan provides access to the full set of Trusted Advisor checks and a designated Technical Account Manager (TAM)?",
+        options: ["Basic", "Developer", "Business", "Enterprise On-Ramp or Enterprise"],
+        correct: [3],
+        explanation: "The Enterprise On-Ramp and Enterprise support plans offer access to a Technical Account Manager (TAM) and full Trusted Advisor checks."
+    },
+    {
+        question: "Which service would a user utilize to get system performance data such as CPU utilization and network in/out for an EC2 instance?",
+        options: ["AWS CloudTrail", "Amazon GuardDuty", "Amazon CloudWatch", "AWS Config"],
+        correct: [2],
+        explanation: "Amazon CloudWatch is the monitoring and observability service that provides metrics on resource performance and health."
+    },
+    {
+        question: "Why is AWS more economical than traditional data centers for applications with varying compute workloads?",
+        options: [
+            "Amazon EC2 costs are billed on a monthly basis, regardless of usage.",
+            "Users retain full administrative access to their Amazon EC2 instances, reducing administrative costs.",
+            "Amazon EC2 instances can be launched on demand when needed, allowing payment only for the capacity used.",
+            "Users can permanently run enough instances to handle peak workloads, which is more cost-effective in the long run."
+        ],
+        correct: [2],
+        explanation: "The primary economic benefit of the cloud for varying workloads is the ability to scale resources up or down dynamically. Option C, launching instances on demand and paying only for the time they are running, aligns with the pay-as-you-go model and avoids the need to over-provision capacity for peak usage, which is required in traditional data centers. Option A is incorrect; billing is typically per second or per hour for EC2. Option B relates to control, not direct cost savings."
+    },
+    {
+        question: "According to the AWS shared responsibility model, which of the following is an AWS responsibility?",
+        options: [
+            "Managing guest operating system patches.",
+            "Securing applications and customer data.",
+            "Maintaining the physical infrastructure of the data centers.",
+            "Configuring the security groups and network access control lists (ACLs)."
+        ],
+        correct: [2],
+        explanation: "Under the shared responsibility model, AWS is responsible for the security of the cloud (the underlying infrastructure, hardware, and physical facilities). The customer is responsible for security in the cloud (guest OS patching, application security, data, and network configurations like security groups/ACLs)."
+    },
+    {
+        question: "Which AWS service is used to send alerts based on Amazon CloudWatch alarms?",
+        options: [
+            "Amazon SQS (Simple Queue Service)",
+            "Amazon SNS (Simple Notification Service)",
+            "AWS CloudTrail",
+            "Amazon EventBridge"
+        ],
+        correct: [1],
+        explanation: "Amazon SNS is a messaging service that provides a way to send notifications (e.g., email, SMS, or push notifications) when a specific event or alarm condition, such as those monitored by Amazon CloudWatch, is met. CloudTrail is for logging API calls, SQS is a message queueing service, and EventBridge is an event bus for connecting applications."
+    },
+    {
+        question: "A startup needs to estimate the monthly cost of using a specific set of AWS services before deployment. Which AWS service or tool should they use?",
+        options: [
+            "AWS Cost Explorer",
+            "AWS Budgets",
+            "AWS Pricing Calculator",
+            "AWS Cost & Usage Report (AWS CUR)"
+        ],
+        correct: [2],
+        explanation: "The AWS Pricing Calculator is the correct tool for estimating future costs based on planned usage. AWS Cost Explorer and AWS Budgets are used to analyze and manage costs for existing usage, and the AWS Cost & Usage Report provides detailed billing data after the fact."
+    },
+    {
+        question: "Which component of the AWS global infrastructure is used by Amazon CloudFront to ensure low-latency delivery of content to end-users worldwide?",
+        options: [
+            "Availability Zones",
+            "Regions",
+            "Edge Locations",
+            "Data Centers"
+        ],
+        correct: [2],
+        explanation: "Amazon CloudFront is a content delivery network (CDN) that uses a global network of Edge Locations to cache copies of content closer to the end-users, thereby reducing latency and improving delivery speed. Regions and Availability Zones are core components for deploying primary application infrastructure with high availability and fault tolerance."
+    },
+    {
+        question: "Which AWS pricing model allows customers to pay for compute capacity hourly or per second, with no long-term commitments?",
+        options: [
+            "Reserved Instances",
+            "On-Demand Instances",
+            "Spot Instances",
+            "Dedicated Hosts"
+        ],
+        correct: [1],
+        explanation: "On-Demand is the flexible, pay-as-you-go model without commitment."
+    },
+    {
+        question: "A company wants to move their entire data center to AWS. They have predictable, heavy workloads and want to minimize costs over a three-year period. Which pricing model should they consider?",
+        options: [
+            "Spot Instances",
+            "On-Demand Instances",
+            "Dedicated Instances",
+            "Reserved Instances / Savings Plans"
+        ],
+        correct: [3],
+        explanation: "Reserved Instances or Savings Plans offer significant discounts for long-term (1 or 3 year) commitments to predictable workloads."
+    },
+    {
+        question: "Which statement is a key advantage of the AWS Global Infrastructure regarding business continuity?",
+        options: [
+            "AWS provides a 100% uptime guarantee for all services globally.",
+            "Customers can deploy resources across multiple Availability Zones to achieve high availability and fault tolerance.",
+            "AWS handles all data backups automatically, removing customer responsibility.",
+            "Data is automatically replicated across all AWS Regions by default."
+        ],
+        correct: [1],
+        explanation: "Availability Zones within a region allow for highly available, fault-tolerant deployments by isolating failures."
+    },
+    {
+        question: "Which feature allows a customer to track and categorize their AWS spending by project or department?",
+        options: [
+            "Consolidated Billing",
+            "Resource Tags",
+            "AWS Organizations",
+            "Cost Explorer"
+        ],
+        correct: [1],
+        explanation: "Resource tags are key-value pairs used to organize and track costs by assigning metadata to resources."
+    },
+    {
+        question: "What is the primary benefit of 'pay-as-you-go' cloud pricing?",
+        options: [
+            "Converting variable expenses into capital expenses.",
+            "Eliminating all operational overhead costs.",
+            "Paying only for the resources you consume, without upfront costs or long-term contracts.",
+            "Receiving a consistent monthly bill regardless of usage spikes."
+        ],
+        correct: [2],
+        explanation: "This defines the core economic principle of cloud computing: only paying for what you use."
+    },
+    {
+        question: "Which AWS service provides a centralized console to manage access permissions to AWS resources across multiple accounts in an organization?",
+        options: [
+            "AWS IAM (Identity and Access Management)",
+            "AWS SSO (Single Sign-On, now part of AWS IAM Identity Center)",
+            "Amazon GuardDuty",
+            "AWS Organizations"
+        ],
+        correct: [1],
+        explanation: "IAM Identity Center (AWS SSO) manages access to multiple accounts and third-party applications from a central place."
+    },
+    {
+        question: "A user needs to configure multi-factor authentication (MFA) for their AWS account root user. Where can this be configured?",
+        options: [
+            "AWS Management Console (IAM Dashboard)",
+            "AWS CLI (Command Line Interface)",
+            "AWS Config",
+            "AWS VPN settings"
+        ],
+        correct: [0],
+        explanation: "MFA configuration is a core security setting managed via the IAM part of the console."
+    },
+    {
+        question: "Which AWS service helps you automate the discovery and classification of sensitive data stored in S3 buckets?",
+        options: [
+            "Amazon Inspector",
+            "AWS Config",
+            "AWS Shield",
+            "Amazon Macie"
+        ],
+        correct: [3],
+        explanation: "Amazon Macie uses machine learning to discover, classify, and protect sensitive data in AWS, primarily S3."
+    },
+    {
+        question: "What does the 'Principle of Least Privilege' mean in the context of AWS IAM?",
+        options: [
+            "Granting all users full administrative access by default.",
+            "Ensuring that IAM users only have the permissions necessary to perform their specific job duties.",
+            "Allowing all resources within a VPC to communicate freely.",
+            "Restricting access to the root account only."
+        ],
+        correct: [1],
+        explanation: "This is a fundamental security practice: granting only the minimum permissions required for a user to do their job."
+    },
+    {
+        question: "Which AWS compliance documentation provides a comprehensive report on AWS security and compliance controls for sensitive regulated industries?",
+        options: [
+            "AWS Service Level Agreement (SLA)",
+            "AWS Acceptable Use Policy",
+            "AWS Artifact (e.g., SOC reports, PCI DSS reports)",
+            "AWS Whitepapers"
+        ],
+        correct: [2],
+        explanation: "AWS Artifact provides access to compliance reports (like SOC, PCI, HIPAA BAA) required for regulatory purposes."
+    },
+    {
+        question: "Which service allows you to decouple microservices or distributed systems using a message queue?",
+        options: [
+            "Amazon SNS",
+            "Amazon SQS (Simple Queue Service)",
+            "Amazon SWF (Simple Workflow Service)",
+            "AWS Step Functions"
+        ],
+        correct: [1],
+        explanation: "Amazon SQS is a fully managed message queuing service used to decouple applications by sending messages between components."
+    },
+    {
+        question: "Which AWS service is a managed NoSQL database service that provides single-digit millisecond latency at any scale?",
+        options: [
+            "Amazon RDS",
+            "Amazon Aurora",
+            "Amazon Redshift",
+            "Amazon DynamoDB"
+        ],
+        correct: [3],
+        explanation: "DynamoDB is a key-value and document NoSQL database designed for high performance and scalability with low latency."
+    },
+     {
+        question: "A customer wants to analyze a large volume of historical data using standard SQL. Which data warehousing service should they use?",
+        options: [
+            "Amazon DynamoDB",
+            "Amazon RDS",
+            "Amazon Redshift",
+            "Amazon DocumentDB"
+        ],
+        correct: [2],
+        explanation: "Amazon Redshift is AWS's data warehousing solution optimized for complex analytical queries on large datasets using SQL."
+    },
+    {
+        question: "Which AWS compute service runs your code in response to events and automatically manages the underlying compute resources?",
+        options: [
+            "Amazon EC2",
+            "AWS Elastic Beanstalk",
+            "AWS Lambda",
+            "AWS Fargate"
+        ],
+        correct: [2],
+        explanation: "AWS Lambda is the premier serverless compute service that runs code in response to events without managing servers."
+    },
+    {
+        question: "Which AWS service provides a private, secure connection between a company’s on-premises data center and the AWS Cloud?",
+        options: [
+            "Internet Gateway",
+            "Amazon Connect",
+            "AWS Direct Connect",
+            "VPC Peering"
+        ],
+        correct: [2],
+        explanation: "AWS Direct Connect establishes a dedicated physical network connection from on-premises to AWS for consistent, private bandwidth."
+    },
+    {
+        question: "You need to store frequently accessed static website assets (images, videos) that must be highly durable and available. Which storage service is the best choice?",
+        options: [
+            "Amazon Glacier",
+            "Amazon EBS",
+            "Amazon S3",
+            "Instance Store"
+        ],
+        correct: [2],
+        explanation: "Amazon S3 (Standard) is designed for 99.999999999% durability and high availability, ideal for static content storage."
+    },
+    {
+        question: "Which AWS networking component is a virtual firewall that controls inbound and outbound traffic at the subnet level?",
+        options: [
+            "Security Group",
+            "Network Access Control List (Network ACL)",
+            "VPC peering connection",
+            "Internet Gateway"
+        ],
+        correct: [1],
+        explanation: "Network ACLs operate at the subnet level, controlling traffic based on source/destination IP addresses and ports, much like a firewall."
+    },
+    {
+        question: "Which AWS service can be used to monitor application performance, collect logs, and set alarms?",
+        options: [
+            "AWS CloudTrail",
+            "AWS X-Ray",
+            "Amazon EventBridge",
+            "Amazon CloudWatch"
+        ],
+        correct: [3],
+        explanation: "Amazon CloudWatch is the main monitoring service for AWS resources and applications."
+    },
+    {
+        question: "Which services are classified as serverless by AWS?",
+        options: [
+            "Amazon EC2",
+            "AWS Fargate",
+            "AWS Lambda",
+            "Amazon RDS",
+            "Amazon ECS"
+        ],
+        correct: [1, 2],
+        explanation: "Fargate and Lambda are serverless; EC2 is IaaS (you manage the server); RDS and ECS still involve managing instances/clusters."
+    },
+    {
+        question: "Which service acts as the Domain Name System (DNS) web service in AWS?",
+        options: [
+            "Amazon Connect",
+            "Amazon API Gateway",
+            "Amazon Route 53",
+            "AWS Global Accelerator"
+        ],
+        correct: [2],
+        explanation: "Amazon Route 53 is a highly available and scalable cloud Domain Name System (DNS) web service."
+    },
+    {
+        question: "A user has a Basic AWS Support plan and is experiencing a technical issue with an EC2 instance. How can they get technical assistance from AWS Support?",
+        options: [
+            "By contacting their Technical Account Manager (TAM).",
+            "By using the AWS Support API to open a ticket.",
+            "By contacting support via phone or live chat.",
+            "They can only access documentation and the AWS re:Post community forum, as technical support is not included in the Basic plan."
+        ],
+        correct: [3],
+        explanation: "The Basic support plan is free and only includes access to documentation, the health dashboard, and the community forums (re:Post)."
+    },
+    {
+        question: "Which AWS service provides personalized recommendations for optimizing cost, security, and performance of your AWS environment?",
+        options: [
+            "AWS CloudFormation",
+            "AWS Trusted Advisor",
+            "AWS Management Console",
+            "Amazon Inspector"
+        ],
+        correct: [1],
+        explanation: "AWS Trusted Advisor evaluates your environment against best practices in cost optimization, security, fault tolerance, performance, and service limits."
+    },
+    {
+        question: "Which service provides a detailed historical record of all API calls made within your AWS account, used for auditing and security analysis?",
+        options: [
+            "Amazon CloudWatch",
+            "AWS CloudTrail",
+            "AWS Config",
+            "VPC Flow Logs"
+        ],
+        correct: [1],
+        explanation: "CloudTrail records all API calls and related events for auditing purposes."
+    },
+    {
+        question: "Which AWS service allows you to view the operational health of all AWS services globally?",
+        options: [
+            "AWS Personal Health Dashboard",
+            "AWS Health Dashboard (or Service Health Dashboard)",
+            "Amazon CloudWatch Metrics",
+            "AWS Trusted Advisor Performance checks"
+        ],
+        correct: [1],
+        explanation: "The AWS Health Dashboard provides real-time status and guidance on AWS service interruptions or performance issues globally."
+    },
+    {
+        question: "A company needs to ensure they are notified if their monthly AWS spend exceeds a certain limit. Which service should they use?",
+        options: [
+            "AWS Budgets",
+            "AWS Cost Explorer",
+            "AWS Organizations",
+            "AWS Billing Dashboard"
+        ],
+        correct: [0],
+        explanation: "AWS Budgets allows you to set custom cost and usage limits and alerts you when those limits are approached or exceeded."
+    },
+      {
+    question: "AWS Elastic Beanstalk is a service that manages web infrastructure.",
+    options: ["False", "True"],
+    correct: [1],
+    explanation: "AWS Elastic Beanstalk manages the infrastructure and handles deployment, scaling, and monitoring for web applications."
+},
+{
+    question: "Which AWS service reduces network latency?",
+    options: ["Amazon CloudFront", "AWS Direct Connect", "AWS Transit Gateway", "Elastic Load Balancing"],
+    correct: [0],
+    explanation: "Amazon CloudFront is a Content Delivery Network (CDN) that reduces latency by caching data closer to users at Edge Locations."
+},
+{
+    question: "What kind of database is AWS DynamoDB?",
+    options: ["NoSQL database", "Relational database", "Document database"],
+    correct: [0],
+    explanation: "AWS DynamoDB is a fully managed NoSQL key-value and document database designed for high performance and scalability."
+},
+{
+    question: "What is AWS EC2?",
+    options: ["AWS EC2 is a serverless compute service", "AWS EC2 is a resource monitoring service", "AWS EC2 is a virtual server in the AWS Cloud", "AWS EC2 is a data center"],
+    correct: [2],
+    explanation: "Amazon EC2 (Elastic Compute Cloud) provides scalable virtual servers for running applications in the AWS Cloud."
+},
+{
+    question: "AWS Regions is part of the AWS Global Infrastructure.",
+    options: ["True", "False"],
+    correct: [0],
+    explanation: "AWS Regions are geographic areas that host multiple Availability Zones, forming part of AWS’s global infrastructure."
+},
+{
+    question: "Which Amazon S3 storage class has the lowest cost?",
+    options: ["S3 Glacier Deep Archive", "S3 Standard", "S3 Intelligent-Tiering"],
+    correct: [0],
+    explanation: "S3 Glacier Deep Archive offers the lowest-cost storage, optimized for long-term data archiving with infrequent access."
+},
+{
+    question: "What is AWS EFS?",
+    options: ["AWS Elastic File System", "AWS Enterprise File System", "AWS Efficient File System"],
+    correct: [0],
+    explanation: "Amazon Elastic File System (EFS) provides scalable, elastic file storage for use with AWS Cloud and on-premises resources."
+},
+{
+    question: "What are Edge Locations?",
+    options: ["Data centers that deliver data fast to the users", "Data centers that store petabytes of data", "Physical hard drives", "AWS Regions"],
+    correct: [0],
+    explanation: "Edge Locations are data centers in the AWS network that cache content closer to end users to reduce latency."
+},
+{
+    question: "Denial-of-Service (DoS) attack comes from different sources.",
+    options: ["False", "True"],
+    correct: [1],
+    explanation: "A DoS attack comes from one source, while a DDoS attack involves multiple sources. The statement refers to DDoS, which is true."
+},
+{
+    question: "What is the purpose of AWS Organizations service?",
+    options: ["AWS Organizations helps you manage multiple AWS Accounts", "AWS Organizations organizes your services and makes service usage reports", "AWS Organizations optimizes your system performance", "AWS Organizations groups your applications and manages them"],
+    correct: [0],
+    explanation: "AWS Organizations allows centralized management of multiple AWS accounts, including consolidated billing and policy control."
+},
+{
+    question: "Which of the following is AWS Migration Strategy?",
+    options: ["Replatforming", "Auditability", "Governance"],
+    correct: [0],
+    explanation: "Replatforming is a migration strategy that involves moving applications to the cloud with minor optimizations for better performance."
+},
+{
+    question: "Which perspective of the AWS Cloud Adoption Framework focuses on minimizing the business risks?",
+    options: ["Governance Perspective", "People Perspective", "Operations Perspective", "Business Perspective"],
+    correct: [3],
+    explanation: "The Business Perspective focuses on aligning cloud adoption with business outcomes while minimizing risk."
+},
+{
+    question: "Which pillar of the AWS Well-Architected Framework focuses on recovering from service or infrastructure disruptions?",
+    options: ["Reliability", "Operational excellence", "Performance efficiency"],
+    correct: [0],
+    explanation: "The Reliability pillar emphasizes designing systems that recover quickly from failures and meet availability goals."
+},
+{
+    question: "Economies of scale continually reduce AWS Cloud pricing.",
+    options: ["True", "False"],
+    correct: [0],
+    explanation: "AWS passes cost savings from economies of scale to customers through ongoing price reductions."
+},
+{
+    question: "Which service sends and receives messages between application components?",
+    options: ["AWS Simple Queue Service (AWS SQS)", "AWS Snowmobile", "AWS Lambda", "AWS CloudTrail"],
+    correct: [0],
+    explanation: "Amazon SQS is a fully managed message queuing service that enables decoupling and scaling of distributed applications."
+},
+{
+    question: "Who is responsible for protecting the storage and database infrastructure in AWS Cloud?",
+    options: ["AWS", "Customers"],
+    correct: [0],
+    explanation: "Under the Shared Responsibility Model, AWS is responsible for protecting the cloud infrastructure itself."
+},
+{
+    question: "AWS Artifact is a service that provides access to AWS security and compliance reports.",
+    options: ["True", "False"],
+    correct: [0],
+    explanation: "AWS Artifact provides on-demand access to AWS compliance documentation and agreements."
+},
+{
+    question: "Which AWS service helps you create users and provide them security access?",
+    options: ["AWS Identity and Access Management (IAM)", "AWS Redshift", "AWS Direct Connect", "AWS CloudFormation"],
+    correct: [0],
+    explanation: "AWS IAM allows you to manage users, groups, and permissions securely for AWS services and resources."
+},
+{
+    question: "Which AWS service helps you build text chatbots?",
+    options: ["Amazon Lex", "Amazon Comprehend", "Amazon Transcribe", "Amazon Polly"],
+    correct: [0],
+    explanation: "Amazon Lex is a service for building conversational interfaces and chatbots using natural language understanding."
+},
+{
+    question: "Can all accounts of an AWS Organization be billed with a single bill?",
+    options: ["Yes", "No"],
+    correct: [0],
+    explanation: "AWS Organizations supports consolidated billing, allowing all member accounts to share one payment method."
+},
+{
+    question: "Which database is ideal for large organizations and enterprises?",
+    options: ["Amazon Aurora", "MySQL", "PostgreSQL"],
+    correct: [0],
+    explanation: "Amazon Aurora is an enterprise-grade relational database compatible with MySQL and PostgreSQL, optimized for performance."
+},
+{
+    question: "If an instance store reboots, does the data in the instance persist?",
+    options: ["No", "Yes"],
+    correct: [0],
+    explanation: "Instance store data is temporary and lost when the instance stops, terminates, or fails."
+},
+{
+    question: "Which sentence best describes AWS CloudWatch?",
+    options: [
+        "CloudWatch is a monitoring service that monitors your resources, and configures automatic alarms.",
+        "CloudWatch is a service that logs your AWS environment actions.",
+        "CloudWatch monitors your account and recommends cost optimization actions."
+    ],
+    correct: [0],
+    explanation: "Amazon CloudWatch monitors AWS resources and applications, collects metrics, and triggers alarms based on thresholds."
+},
+{
+    question: "What does AWS Shield protect from?",
+    options: ["DoS and DDoS attacks", "Infrastructure threats", "Software vulnerabilities"],
+    correct: [0],
+    explanation: "AWS Shield protects applications running on AWS from DoS and DDoS attacks."
+},
+{
+    question: "Based on application's network requests, AWS Web Application Firewall can block network traffic.",
+    options: ["True", "False"],
+    correct: [0],
+    explanation: "AWS WAF filters and blocks malicious web traffic based on user-defined security rules."
+},
+{
+    question: "Which AWS service manages encryption and decryption of data?",
+    options: ["AWS WAF", "AWS Inspector", "AWS GuardDuty", "AWS Key Management Service (AWS KMS)"],
+    correct: [3],
+    explanation: "AWS KMS enables secure creation and management of cryptographic keys for encrypting data."
+},
+{
+    question: "AWS Elastic Block Store Snapshot is:",
+    options: ["Incremental data backup", "Differential data backup", "Full data backup"],
+    correct: [0],
+    explanation: "EBS Snapshots are incremental backups that store only changed data since the last snapshot."
+},
+{
+    question: "Which AWS storage service is designed to transfer petabytes of data in and out of the cloud?",
+    options: ["AWS Redshift", "AWS S3", "AWS Snowmobile"],
+    correct: [2],
+    explanation: "AWS Snowmobile transfers extremely large data volumes to AWS using secure data transport trucks."
+},
+{
+    question: "Which tool lets you visualize and manage your AWS costs?",
+    options: ["AWS Cost Explorer", "AWS Budgets", "AWS Price Calculator"],
+    correct: [0],
+    explanation: "AWS Cost Explorer helps analyze spending patterns and forecast future AWS costs."
+},
+{
+    question: "What is an IAM Policy?",
+    options: [
+        "IAM Policy is a document that customizes user permissions for AWS services and resources",
+        "IAM Policy is a temporary access to AWS services or resources",
+        "IAM Policy is an entity that interacts with AWS resources or services"
+    ],
+    correct: [0],
+    explanation: "An IAM Policy defines permissions through JSON-based documents specifying allowed or denied actions."
+},
+{
+    question: "How is called a service that lets you run code without needing to think about servers?",
+    options: ["AWS Serverless", "AWS ECS", "AWS Lambda", "AWS EC2 Auto Scaling"],
+    correct: [2],
+    explanation: "AWS Lambda allows running code without managing servers, automatically scaling based on execution needs."
+},
+{
+    question: "DNS stands for 'Data Name System'.",
+    options: ["False", "True"],
+    correct: [0],
+    explanation: "DNS stands for Domain Name System, which translates domain names into IP addresses."
+},
+{
+    question: "Who is responsible for managing platform and customer data in the AWS Cloud?",
+    options: ["Customers", "AWS"],
+    correct: [0],
+    explanation: "Under the Shared Responsibility Model, customers manage their own data, applications, and configurations."
+},
+{
+    question: "Which AWS database service provides historical data of your application changes?",
+    options: ["AWS Quantum Ledger Database", "AWS ElastiCache", "AWS Neptune", "AWS DocumentDB"],
+    correct: [0],
+    explanation: "Amazon QLDB tracks all changes to application data and maintains an immutable, cryptographically verifiable history."
+},
+{
+    question: "What is AWS DynamoDB Accelerator capable of?",
+    options: [
+        "Improves read times of non-relational data",
+        "Improves write times of documents",
+        "Improves visualization times of graphs",
+        "Improves read times of relational data"
+    ],
+    correct: [0],
+    explanation: "DAX (DynamoDB Accelerator) is an in-memory cache that accelerates read performance for DynamoDB tables."
+},
+{
+    question: "Which AWS service do you need to use to get complete history of user activity?",
+    options: ["AWS CloudTrail", "AWS CloudWatch", "AWS Trusted Advisor"],
+    correct: [0],
+    explanation: "AWS CloudTrail records and tracks all user actions and API activity within an AWS account."
+},
+{
+    question: "What does AWS Marketplace allow you to do?",
+    options: [
+        "AWS Marketplace lets you list and sell software",
+        "AWS Marketplace lets you see cost analysis of AWS services",
+        "AWS Marketplace lets you list all AWS Cloud Services"
+    ],
+    correct: [0],
+    explanation: "AWS Marketplace is an online store for buying, selling, and deploying third-party software on AWS."
+},
+{
+    question: "Containers are an essential concept in microservice architectures.",
+    options: ["True", "False"],
+    correct: [0],
+    explanation: "Containers package applications with dependencies, making them ideal for microservices-based architectures."
+},
+{
+    question: "With AWS EC2 you only pay for the compute time that you use.",
+    options: ["True", "False"],
+    correct: [0],
+    explanation: "EC2 uses a pay-as-you-go model, billing only for active compute time."
+},
+{
+    question: "Which service helps you reduce development time and complexity of Machine Learning (ML)?",
+    options: ["AWS SageMaker", "AWS Redshift", "AWS Elastic Beanstalk", "AWS Lex"],
+    correct: [0],
+    explanation: "Amazon SageMaker provides tools to build, train, and deploy machine learning models quickly and efficiently."
+},
+{
+    question: "Which of the following is a primary benefit of using AWS Cloud infrastructure for a new startup?",
+    options: [
+        "Eliminate all costs associated with IT infrastructure management.",
+        "Increased agility and the ability to innovate faster.",
+        "Complete ownership and control over the underlying physical hardware.",
+        "Guaranteed zero downtime for all applications."
+    ],
+    correct: [1],
+    explanation: "The AWS Cloud provides agility by allowing rapid provisioning and deployment of resources, enabling startups to innovate quickly without large upfront investments."
+},
+{
+    question: "Which AWS component is a physical location in the world where AWS clusters data centers?",
+    options: ["Availability Zone", "Region", "Edge Location", "VPC"],
+    correct: [1],
+    explanation: "An AWS Region is a physical location with multiple, isolated Availability Zones, each containing one or more data centers."
+},
+{
+    question: "What is an Availability Zone (AZ) composed of?",
+    options: [
+        "A single, isolated data center.",
+        "One or more discrete data centers with redundant power, networking, and connectivity.",
+        "A collection of AWS Regions.",
+        "A service used for caching content closer to end-users."
+    ],
+    correct: [1],
+    explanation: "An Availability Zone consists of one or more discrete data centers with independent power, networking, and connectivity."
+},
+{
+    question: "Which of the following is an example of the economic benefit of cloud computing's pay-as-you-go model?",
+    options: [
+        "The ability to launch new EC2 instances in minutes.",
+        "The customer is responsible for patching the guest operating system.",
+        "Converting capital expenses (CapEx) to variable expenses (OpEx).",
+        "AWS manages the security of the cloud."
+    ],
+    correct: [2],
+    explanation: "Pay-as-you-go converts CapEx into OpEx, letting you pay only for what you use instead of investing in hardware upfront."
+},
+{
+    question: "Which design principle of the AWS Cloud helps in minimizing the impact of a single point of failure?",
+    options: [
+        "Pay-as-you-go pricing",
+        "Geographic diversity/fault tolerance",
+        "On-demand provisioning",
+        "Serverless architecture"
+    ],
+    correct: [1],
+    explanation: "Using multiple Regions and Availability Zones enables geographic diversity and fault tolerance, reducing the impact of a single point of failure."
+},
+{
+    question: "Which service is a global DNS service that routes end-users to the closest available endpoint?",
+    options: ["Amazon VPC", "Amazon Route 53", "AWS Direct Connect", "Amazon S3"],
+    correct: [1],
+    explanation: "Amazon Route 53 is a scalable DNS web service that routes users to the closest endpoint for optimal performance."
+},
+{
+    question: "Which term describes the ability of a system to recover gracefully from infrastructure or service failures?",
+    options: ["Durability", "Elasticity", "Fault Tolerance", "Scalability"],
+    correct: [2],
+    explanation: "Fault Tolerance allows a system to continue operating even when one or more components fail."
+},
+{
+    question: "A company wants to move from an on-premises data center to the AWS Cloud. Which tool helps them estimate cost savings of migrating to AWS?",
+    options: [
+        "AWS Simple Monthly Calculator",
+        "AWS Cost Explorer",
+        "AWS Total Cost of Ownership (TCO) Calculator",
+        "AWS Budgets"
+    ],
+    correct: [2],
+    explanation: "The AWS TCO Calculator helps estimate the cost savings from migrating on-premises workloads to AWS."
+},
+{
+    question: "Which AWS Cloud concept allows customers to scale their compute capacity automatically in response to changing demand?",
+    options: ["High Availability", "Durability", "Elasticity", "Security"],
+    correct: [2],
+    explanation: "Elasticity allows systems to automatically adjust compute resources based on demand, preventing over- or under-provisioning."
+},
+{
+    question: "What is the term for AWS's network of data centers that delivers content to end-users with low latency?",
+    options: ["Regions", "Availability Zones", "Edge Locations", "Virtual Private Cloud"],
+    correct: [2],
+    explanation: "Edge Locations are part of AWS’s global network used by CloudFront and Global Accelerator to cache and deliver content closer to users."
+},
+{
+    question: "Under the AWS Shared Responsibility Model, which security task is always the customer's responsibility?",
+    options: [
+        "Physical security of the data centers.",
+        "Security of the Cloud (AWS Managed Services).",
+        "Security of the customer data and application configuration.",
+        "Patching of the underlying virtualization infrastructure."
+    ],
+    correct: [2],
+    explanation: "Customers are responsible for 'security in the cloud,' which includes protecting their data, configurations, and access control."
+},
+{
+    question: "Which AWS service is best suited for managing permissions for users, groups, and roles?",
+    options: ["AWS Config", "AWS Identity and Access Management (IAM)", "Amazon GuardDuty", "AWS Trusted Advisor"],
+    correct: [1],
+    explanation: "AWS IAM allows you to manage users, groups, and permissions securely through policies and roles."
+},
+{
+    question: "What is a key benefit of using Multi-Factor Authentication (MFA) with the AWS root account?",
+    options: [
+        "It eliminates the need for a password.",
+        "It adds an extra layer of security to the account login.",
+        "It automatically encrypts all S3 data.",
+        "It provides 24/7 technical support."
+    ],
+    correct: [1],
+    explanation: "MFA adds a second authentication factor, strengthening security by requiring a physical or virtual device in addition to a password."
+},
+{
+    question: "A company needs to ensure that all data stored in Amazon S3 is encrypted at rest. Which AWS capability can satisfy this requirement?",
+    options: ["AWS CloudTrail", "AWS Key Management Service (KMS)", "AWS WAF", "AWS Direct Connect"],
+    correct: [1],
+    explanation: "AWS KMS enables encryption and key management for securing data at rest, including data stored in Amazon S3."
+},
+{
+    question: "Which AWS service continuously monitors for malicious activity and unauthorized behavior to protect workloads?",
+    options: ["AWS Shield", "Amazon GuardDuty", "AWS WAF", "AWS Config"],
+    correct: [1],
+    explanation: "Amazon GuardDuty uses machine learning and threat intelligence to detect suspicious activity in AWS accounts."
+},
+{
+    question: "Which compliance program applies to all AWS customers who handle cardholder data?",
+    options: ["HIPAA", "SOC 1", "PCI DSS", "ISO 27001"],
+    correct: [2],
+    explanation: "PCI DSS ensures secure handling of credit card information for organizations processing payment data."
+},
+{
+    question: "Which AWS service allows auditing and monitoring of all API calls made to the AWS infrastructure?",
+    options: ["Amazon CloudWatch", "AWS CloudTrail", "AWS Config", "AWS Trusted Advisor"],
+    correct: [1],
+    explanation: "AWS CloudTrail records all API activity across an AWS account for auditing and compliance tracking."
+},
+{
+    question: "Which of the following is a primary benefit of using a Security Group?",
+    options: [
+        "Acts as a firewall at the subnet level.",
+        "Controls inbound and outbound traffic for an EC2 instance.",
+        "Automatically encrypts EBS data.",
+        "Records AWS configuration changes."
+    ],
+    correct: [1],
+    explanation: "Security Groups control inbound and outbound traffic at the instance level, acting as a virtual firewall for EC2."
+},
+{
+    question: "Which document is used to explicitly allow or deny access to AWS resources?",
+    options: ["AWS CloudFormation Template", "IAM Policy", "Security Group Rule", "AWS WAF Rule"],
+    correct: [1],
+    explanation: "IAM Policies define explicit permissions, allowing or denying actions on AWS services and resources."
+},
+{
+    question: "In the AWS Shared Responsibility Model, who is responsible for patching the guest operating system for EC2?",
+    options: ["AWS", "The customer", "A third-party auditor", "Shared responsibility"],
+    correct: [1],
+    explanation: "For EC2, the customer is responsible for maintaining and patching the guest operating system."
+},
+{
+    question: "Which compute service runs code without provisioning or managing servers?",
+    options: ["Amazon EC2", "AWS Lambda", "Amazon ECS", "AWS Fargate"],
+    correct: [1],
+    explanation: "AWS Lambda is a serverless compute service that automatically runs code in response to events."
+},
+{
+    question: "Which Amazon S3 storage class is best for frequently accessed data with low latency?",
+    options: ["S3 Glacier Deep Archive", "S3 One Zone-IA", "S3 Standard", "S3 Glacier"],
+    correct: [2],
+    explanation: "S3 Standard provides low-latency, high-availability storage for frequently accessed data."
+},
+{
+    question: "Which AWS database service supports multiple relational database engines like MySQL and PostgreSQL?",
+    options: ["Amazon DynamoDB", "Amazon Redshift", "Amazon Aurora", "Amazon RDS"],
+    correct: [3],
+    explanation: "Amazon RDS is a managed relational database service supporting popular engines like MySQL and PostgreSQL."
+},
+{
+    question: "Which AWS networking service provisions a logically isolated section of the cloud to launch resources?",
+    options: ["AWS Direct Connect", "Amazon Route 53", "Amazon VPC", "Amazon ELB"],
+    correct: [2],
+    explanation: "Amazon VPC allows creation of isolated virtual networks with control over IP ranges, subnets, and routing."
+},
+{
+    question: "What is the purpose of an Elastic Load Balancer (ELB)?",
+    options: [
+        "To increase EC2 instances automatically during load.",
+        "To distribute traffic across multiple targets in different AZs.",
+        "To manage user access and permissions.",
+        "To record and audit API calls."
+    ],
+    correct: [1],
+    explanation: "An ELB distributes incoming application traffic across multiple resources for high availability."
+},
+{
+    question: "Which S3 storage class is most cost-effective for 10-year data retention with slow retrieval?",
+    options: ["S3 Standard-IA", "S3 One Zone-IA", "S3 Glacier", "S3 Glacier Deep Archive"],
+    correct: [3],
+    explanation: "S3 Glacier Deep Archive is the lowest-cost option for long-term archival with infrequent access."
+},
+{
+    question: "Which AWS service provides fully managed NoSQL performance at any scale?",
+    options: ["Amazon RDS", "Amazon Aurora", "Amazon DynamoDB", "Amazon Redshift"],
+    correct: [2],
+    explanation: "Amazon DynamoDB is a serverless NoSQL database with single-digit millisecond latency at scale."
+},
+{
+    question: "Which AWS tool automates infrastructure deployment as code?",
+    options: ["AWS CodeCommit", "AWS CloudFormation", "AWS CloudTrail", "AWS Config"],
+    correct: [1],
+    explanation: "AWS CloudFormation enables infrastructure automation using declarative templates."
+},
+{
+    question: "Which service provides metrics and logs for AWS resources and applications?",
+    options: ["AWS CloudTrail", "AWS Trusted Advisor", "Amazon CloudWatch", "Amazon Inspector"],
+    correct: [2],
+    explanation: "Amazon CloudWatch monitors AWS resources and applications, providing performance metrics and alarms."
+},
+{
+    question: "Which service helps deploy web applications without managing infrastructure?",
+    options: ["Amazon EC2", "AWS Elastic Beanstalk", "Amazon VPC", "Amazon SQS"],
+    correct: [1],
+    explanation: "AWS Elastic Beanstalk handles deployment, scaling, and monitoring for web apps automatically."
+},
+{
+    question: "Which AWS service provides a dedicated private connection from your data center to AWS?",
+    options: ["Amazon Connect", "Amazon Route 53", "AWS Direct Connect", "AWS VPN"],
+    correct: [2],
+    explanation: "AWS Direct Connect establishes a private, high-bandwidth, low-latency link between your network and AWS."
+},
+{
+    question: "Which compute service offers virtual servers in the cloud with full OS control?",
+    options: ["AWS Lambda", "AWS Fargate", "Amazon EC2", "Amazon EKS"],
+    correct: [2],
+    explanation: "Amazon EC2 provides virtual machines with administrative access to the operating system."
+},
+{
+    question: "Which AWS service provides a fully managed shared file system for multiple EC2 instances?",
+    options: ["Amazon S3", "Amazon EBS", "Amazon EFS", "Amazon Glacier"],
+    correct: [2],
+    explanation: "Amazon EFS provides scalable, elastic file storage accessible by multiple EC2 instances simultaneously."
+},
+{
+    question: "A user wants to evaluate their AWS environment and receive recommendations for saving money, improving system performance, and closing security gaps. Which service should they use?",
+    options: ["AWS CloudTrail", "Amazon CloudWatch", "AWS Trusted Advisor", "AWS Config"],
+    correct: [2],
+    explanation: "AWS Trusted Advisor provides real-time guidance to help you follow AWS best practices across cost optimization, security, fault tolerance, performance, and service limits."
+},
+{
+    question: "Which service helps manage the entire lifecycle of a Docker container?",
+    options: ["AWS CloudFormation", "Amazon ECS", "Amazon S3", "Amazon CloudFront"],
+    correct: [1],
+    explanation: "Amazon ECS is a fully managed container orchestration service that manages Docker containers on EC2 instances or with AWS Fargate."
+},
+{
+    question: "Which tool is used to estimate the cost of a new deployment on AWS before any resources are launched?",
+    options: ["AWS Cost Explorer", "AWS Budgets", "AWS Pricing Calculator", "AWS Cost and Usage Report (CUR)"],
+    correct: [2],
+    explanation: "The AWS Pricing Calculator helps estimate monthly costs of AWS solutions before deployment."
+},
+{
+    question: "Which service is a fast and flexible message queuing service used for decoupling the components of a microservices architecture?",
+    options: ["Amazon SNS", "Amazon SQS", "Amazon SES", "AWS Step Functions"],
+    correct: [1],
+    explanation: "Amazon SQS is a fully managed message queuing service that enables decoupling and scaling of microservices and distributed systems."
+},
+{
+    question: "Which AWS service can be used for receiving real-time notifications when your actual or forecasted spend exceeds your set budget?",
+    options: ["AWS Cost Explorer", "AWS Billing Dashboard", "AWS Budgets", "AWS Cost and Usage Report (CUR)"],
+    correct: [2],
+    explanation: "AWS Budgets allows you to set and track cost and usage budgets and get alerts when your spending exceeds thresholds."
+},
+{
+    question: "What is the benefit of using Reserved Instances (RIs) for Amazon EC2?",
+    options: [
+        "Provides a dedicated physical server for license management.",
+        "Offers significant cost savings compared to On-Demand pricing in exchange for a one-year or three-year commitment.",
+        "Allows you to bid on unused EC2 capacity for up to a 90% discount.",
+        "Automatically scales your EC2 capacity based on load."
+    ],
+    correct: [1],
+    explanation: "Reserved Instances offer discounts up to 75% compared to On-Demand prices in exchange for a one- or three-year term commitment."
+},
+{
+    question: "A company needs a storage service that can be used as a high-performance boot volume for an EC2 instance. Which service should be used?",
+    options: ["Amazon S3", "Amazon Elastic Block Store (EBS)", "Amazon EFS", "Amazon Glacier"],
+    correct: [1],
+    explanation: "Amazon EBS provides persistent block storage used as boot volumes and application data disks for EC2 instances."
+},
+{
+    question: "Which of the following is NOT one of the three fundamental drivers of cost with AWS?",
+    options: ["Compute", "Data Inbound Transfer", "Storage", "Outbound Data Transfer"],
+    correct: [1],
+    explanation: "Inbound data transfer into AWS is typically free; the main cost drivers are Compute, Storage, and Outbound Data Transfer."
+},
+{
+    question: "What is the pricing model that allows you to bid on unused Amazon EC2 capacity, often resulting in significant cost savings?",
+    options: ["Reserved Instances", "On-Demand Instances", "Spot Instances", "Dedicated Hosts"],
+    correct: [2],
+    explanation: "Spot Instances let you bid on unused EC2 capacity at up to 90% off On-Demand pricing but can be interrupted when capacity is needed."
+},
+{
+    question: "A customer wants to consolidate the billing for multiple AWS accounts into a single bill. Which AWS service should they use?",
+    options: ["AWS Cost Explorer", "AWS Organizations", "AWS Budgets", "AWS Systems Manager"],
+    correct: [1],
+    explanation: "AWS Organizations provides centralized account management and supports consolidated billing for multiple AWS accounts."
+},
+{
+    question: "Which AWS Support plan provides access to a Technical Account Manager (TAM)?",
+    options: ["Basic", "Developer", "Business", "Enterprise"],
+    correct: [3],
+    explanation: "The Enterprise Support plan includes a Technical Account Manager who offers proactive guidance and account optimization."
+},
+{
+    question: "Under the AWS Free Tier, which service offers a 12-month free usage tier?",
+    options: ["Amazon S3", "Amazon DynamoDB", "AWS Lambda", "Amazon EC2"],
+    correct: [3],
+    explanation: "Amazon EC2 offers 750 free hours per month of t2.micro or t3.micro instances for 12 months after account creation."
+},
+{
+    question: "Which AWS tool provides detailed cost analysis with customizable reports to visualize, understand, and manage your AWS costs and usage over time?",
+    options: ["AWS Budgets", "AWS Cost Explorer", "AWS Pricing Calculator", "AWS Marketplace"],
+    correct: [1],
+    explanation: "AWS Cost Explorer allows you to view, analyze, and manage your AWS spending through customizable visual reports."
+},
+{
+    question: "What is the primary benefit of using Dedicated Hosts for Amazon EC2 instances?",
+    options: [
+        "Allows users to bid on unused EC2 capacity.",
+        "Provides significant savings through a one-year or three-year commitment.",
+        "Offers a physical server dedicated for your use, helpful for licensing compliance.",
+        "Automatically scales the number of instances based on demand."
+    ],
+    correct: [2],
+    explanation: "Dedicated Hosts are physical servers allocated for your exclusive use, ideal for compliance or software license requirements."
+},
+{
+    question: "A customer with an AWS Business Support plan has a system impairment issue that is affecting their business. What is the guaranteed response time goal for this issue?",
+    options: ["24 hours", "1 hour", "15 minutes", "Less than 4 hours"],
+    correct: [1],
+    explanation: "The Business Support plan provides a 1-hour response time for system-impaired issues."
+},
+{
+    question: "Which concept ensures that you only pay for the individual services you need, for as long as you use them, and without requiring long-term contracts?",
+    options: ["Economies of Scale", "Pay-as-you-go pricing", "Global Infrastructure", "Serverless Computing"],
+    correct: [1],
+    explanation: "Pay-as-you-go pricing means you only pay for the resources you consume with no long-term commitments."
+},
+{
+    question: "Which service provides a single place to view the operational health of all AWS services globally and for your specific account?",
+    options: ["AWS CloudTrail", "AWS Health Dashboard", "Amazon CloudWatch", "AWS Trusted Advisor"],
+    correct: [1],
+    explanation: "The AWS Health Dashboard displays both public AWS service status and personalized health alerts for your account."
+},
+{
+    question: "Which pillar of the AWS Well-Architected Framework focuses on maintaining steady operations, removing single points of failure, and quick recovery from disruptions?",
+    options: ["Operational Excellence", "Security", "Reliability", "Performance Efficiency"],
+    correct: [2],
+    explanation: "The Reliability pillar focuses on system recovery, fault tolerance, and scaling to meet demand."
+},
+{
+    question: "What is the principle of decoupling in cloud architecture?",
+    options: [
+        "Using multiple Availability Zones to prevent a single point of failure.",
+        "Converting Capital Expenses to Operational Expenses.",
+        "Breaking down monolithic applications into smaller, independent components that communicate with each other.",
+        "Using serverless services to remove the need for managing servers."
+    ],
+    correct: [2],
+    explanation: "Decoupling involves separating application components into independent modules that communicate through APIs or queues."
+},
+{
+    question: "Which pillar of the AWS Well-Architected Framework includes the principle of 'Performing operations as code'?",
+    options: ["Security", "Performance Efficiency", "Cost Optimization", "Operational Excellence"],
+    correct: [3],
+    explanation: "The Operational Excellence pillar emphasizes automation and infrastructure as code to improve operations and reduce errors."
+},
+{
+    question: "Which service is a fully managed petabyte-scale data warehousing service?",
+    options: ["Amazon RDS", "Amazon DynamoDB", "Amazon Redshift", "Amazon Athena"],
+    correct: [2],
+    explanation: "Amazon Redshift is a managed data warehouse for large-scale analytics using SQL and BI tools."
+},
+{
+    question: "What is the advantage of achieving economies of scale by using the AWS Cloud?",
+    options: [
+        "Customers no longer have to worry about security.",
+        "Customers have to manage less physical infrastructure.",
+        "AWS can lower costs for all users due to its massive scale.",
+        "Customers only pay for what they use."
+    ],
+    correct: [2],
+    explanation: "AWS achieves economies of scale by operating at massive scale, allowing cost savings that are passed on to customers."
+},
+{
+    question: "Which pillar of the AWS Well-Architected Framework focuses on the ability to use computing resources efficiently to meet system requirements?",
+    options: ["Cost Optimization", "Performance Efficiency", "Reliability", "Security"],
+    correct: [1],
+    explanation: "Performance Efficiency focuses on optimizing resource usage and selecting the right instance types and architectures."
+},
+{
+    question: "A company wants to migrate an existing Oracle database to AWS without changing its code. Which AWS service is the best fit for this requirement?",
+    options: ["AWS Database Migration Service (DMS)", "AWS Snowball", "AWS Storage Gateway", "Amazon Athena"],
+    correct: [0],
+    explanation: "AWS DMS helps migrate databases to AWS securely with minimal downtime and no need for code changes."
+},
+{
+    question: "Which AWS service is used for analyzing and querying data directly in Amazon S3 using standard SQL?",
+    options: ["Amazon Redshift", "Amazon EMR", "Amazon Athena", "Amazon QuickSight"],
+    correct: [2],
+    explanation: "Amazon Athena is a serverless query service that analyzes data stored in S3 using standard SQL."
+},
+{
+    question: "Which pillar of the AWS Well-Architected Framework includes the recommendation to 'adopt a consumption model'?",
+    options: ["Operational Excellence", "Security", "Cost Optimization", "Reliability"],
+    correct: [2],
+    explanation: "Cost Optimization promotes adopting a consumption model — paying only for what you use."
+},
+{
+    question: "Which service is a fully managed desktop-as-a-service (DaaS) solution that allows users to access their desktop from anywhere?",
+    options: ["Amazon WorkSpaces", "Amazon Connect", "AWS IoT Greengrass", "AWS Ground Station"],
+    correct: [0],
+    explanation: "Amazon WorkSpaces is a secure DaaS solution that lets users access cloud-based desktops remotely."
+},
+{
+    question: "Which AWS service can be used to analyze trends and visualize data in an interactive dashboard to better understand costs?",
+    options: ["AWS Budgets", "AWS Cost and Usage Report (CUR)", "AWS Cost Explorer", "AWS QuickSight"],
+    correct: [2],
+    explanation: "AWS Cost Explorer is the main tool for interactive analysis and visualization of AWS spending over time."
+},
+{
+    question: "A company needs to quickly transfer petabytes of data from its on-premises data center to AWS. Which physical device should they use?",
+    options: ["AWS Storage Gateway", "AWS Direct Connect", "AWS Snowball", "Amazon S3 Transfer Acceleration"],
+    correct: [2],
+    explanation: "AWS Snowball is a secure physical device for transferring massive data volumes to or from AWS."
+},
+{
+    question: "Which AWS service provides a hybrid cloud storage solution that connects an on-premises software appliance with cloud-based storage?",
+    options: ["AWS Snowball", "AWS Direct Connect", "AWS Storage Gateway", "Amazon EFS"],
+    correct: [2],
+    explanation: "AWS Storage Gateway provides hybrid cloud storage access by linking on-premises applications to AWS Cloud storage."
+},
+{
+    question: "Which AWS service is best for sending a single message to multiple subscribers or endpoints (e.g., EC2, SQS, Lambda, email)?",
+    options: ["Amazon Simple Notification Service (SNS)", "Amazon Simple Queue Service (SQS)", "Amazon Simple Email Service (SES)", "Amazon CloudWatch"],
+    correct: [0],
+    explanation: "Amazon SNS is a managed publish/subscribe service that delivers messages to multiple subscribers or endpoints."
+},
+{
+    question: "What is the term for a user whose access keys are used to programmatically interact with AWS services?",
+    options: ["IAM Group", "IAM Role", "IAM User", "IAM Policy"],
+    correct: [2],
+    explanation: "An IAM User represents a specific person or application and can have permanent access keys for programmatic access."
+},
+{
+    question: "Which AWS service can be used to set up a centralized log management and analytics platform?",
+    options: ["Amazon S3", "Amazon Kinesis", "Amazon CloudWatch", "AWS WAF"],
+    correct: [2],
+    explanation: "Amazon CloudWatch collects, monitors, and analyzes logs and metrics across AWS resources and applications."
+},
+{
+    question: "Which pricing model for Amazon EC2 instances is most suitable for flexible applications where you don't need a long-term commitment?",
+    options: ["Reserved Instances", "Spot Instances", "Dedicated Hosts", "On-Demand Instances"],
+    correct: [3],
+    explanation: "On-Demand Instances let you pay per hour or second with no upfront commitments, ideal for variable workloads."
+},
+{
+    question: "Which AWS service is a global managed Wide Area Network (WAN) that allows you to connect your Amazon VPCs and on-premises networks through a central hub?",
+    options: ["AWS Direct Connect", "Amazon Route 53", "AWS Transit Gateway", "Amazon VPC Peering"],
+    correct: [2],
+    explanation: "AWS Transit Gateway connects your Amazon Virtual Private Clouds (VPCs) and on-premises networks through a central hub, simplifying your network architecture."
+},
+{
+    question: "Which security feature is automatically enabled on Amazon S3 buckets when an object is uploaded?",
+    options: ["Encryption at Rest", "Server-Side Encryption", "Durability", "Multi-Factor Authentication (MFA) Delete"],
+    correct: [2],
+    explanation: "Durability (11 nines) is automatically provided by Amazon S3 as a core feature, ensuring that data is protected from loss. Encryption and MFA Delete are optional."
+},
+{
+    question: "What is the benefit of placing EC2 instances in an Auto Scaling Group?",
+    options: [
+        "Provides automatic monitoring and logging of instance performance.",
+        "Automatically distributes incoming traffic across all instances.",
+        "Automatically adjusts the number of EC2 instances to maintain performance and manage costs.",
+        "Records configuration changes made to the instances."
+    ],
+    correct: [2],
+    explanation: "An Auto Scaling Group automatically adds or removes EC2 instances based on conditions like CPU usage to maintain availability and optimize costs."
+},
+{
+    question: "Which tool or service can a customer use to ensure that they are following security best practices and complying with internal/external regulations?",
+    options: ["AWS CloudFormation", "AWS Config", "AWS Glue", "AWS Data Pipeline"],
+    correct: [1],
+    explanation: "AWS Config records configuration changes and provides a detailed inventory of AWS resources, helping with compliance and security auditing."
+},
+{
+    question: "Which of the following is an example of vertical scaling?",
+    options: [
+        "Adding more EC2 instances to an Auto Scaling Group.",
+        "Upgrading an Amazon EC2 instance from a t2.micro to a t2.large.",
+        "Deploying an application to multiple Availability Zones.",
+        "Using Amazon CloudFront to cache content globally."
+    ],
+    correct: [1],
+    explanation: "Vertical scaling increases the power of a single instance (e.g., upgrading from t2.micro to t2.large), while horizontal scaling adds more instances."
+},
+{
+    question: "A company wants to protect its web application from common web exploits like SQL injection and cross-site scripting. Which service should they use?",
+    options: ["AWS Shield", "AWS WAF", "Amazon GuardDuty", "AWS Firewall Manager"],
+    correct: [1],
+    explanation: "AWS WAF (Web Application Firewall) protects web applications from common exploits like SQL injection and XSS attacks."
+},
+{
+    question: "Which service is a fully managed service that provides a central registry for storing and managing Docker images?",
+    options: ["Amazon S3", "Amazon Elastic Container Registry (ECR)", "Amazon ECS", "AWS CodeCommit"],
+    correct: [1],
+    explanation: "Amazon Elastic Container Registry (ECR) is a fully managed Docker registry for storing and managing container images."
+},
+{
+    question: "What is the maximum amount of data that can be stored in an Amazon S3 bucket?",
+    options: ["5 TB", "1 PB", "Virtually Unlimited", "100 TB"],
+    correct: [2],
+    explanation: "Amazon S3 provides virtually unlimited storage capacity with no limit on the number of objects stored."
+},
+{
+    question: "Which AWS networking component is required to allow instances within a VPC to communicate with the public internet?",
+    options: ["Network ACL", "Internet Gateway", "Virtual Private Gateway", "VPC Peering"],
+    correct: [1],
+    explanation: "An Internet Gateway enables communication between your VPC instances and the internet."
+},
+{
+    question: "Which AWS service can be used to control the amount of spend for member accounts within an AWS Organization?",
+    options: ["AWS Pricing Calculator", "Service Control Policies (SCPs)", "AWS Budgets", "AWS Marketplace"],
+    correct: [1],
+    explanation: "Service Control Policies (SCPs) in AWS Organizations define maximum permissions for accounts, indirectly helping control spending."
+},
+{
+    question: "A user wants to store frequently accessed operating system and application files for their EC2 instance. Which is the most appropriate storage service?",
+    options: ["Amazon S3", "Amazon EBS", "Amazon EFS", "Amazon Glacier"],
+    correct: [1],
+    explanation: "Amazon Elastic Block Store (EBS) provides high-performance block storage ideal for OS and application data."
+},
+{
+    question: "What is the purpose of the AWS Global Accelerator?",
+    options: [
+        "To cache content at Edge Locations for low-latency delivery.",
+        "To improve the availability and performance of applications using the AWS global network.",
+        "To protect web applications from common web exploits.",
+        "To record all API calls made within an AWS account."
+    ],
+    correct: [1],
+    explanation: "AWS Global Accelerator improves performance and availability by routing traffic through the AWS global network to optimal endpoints."
+},
+{
+    question: "Which service is used for orchestration of multiple AWS services into business-critical workflows?",
+    options: ["Amazon SQS", "AWS Lambda", "AWS Step Functions", "Amazon SNS"],
+    correct: [2],
+    explanation: "AWS Step Functions orchestrates multiple AWS services into serverless workflows for complex applications."
+},
+{
+    question: "Which compliance standard is concerned with the protection of Protected Health Information (PHI) in the United States?",
+    options: ["SOC 2", "GDPR", "HIPAA", "ISO 27001"],
+    correct: [2],
+    explanation: "HIPAA (Health Insurance Portability and Accountability Act) ensures the protection of healthcare data in the United States."
+},
+{
+    question: "Which AWS service simplifies the process of migrating physical, virtual, and cloud-based servers to AWS?",
+    options: ["AWS DMS", "AWS Server Migration Service (SMS)", "AWS Snowball", "AWS Direct Connect"],
+    correct: [1],
+    explanation: "AWS Server Migration Service (SMS) automates and simplifies server migrations to AWS (now replaced by Application Migration Service)."
+},
+{
+    question: "Which AWS service allows a user to create a customized virtual machine image (AMI) for an EC2 instance?",
+    options: ["Amazon Machine Image (AMI)", "Amazon EC2", "AWS Marketplace", "AWS Systems Manager"],
+    correct: [1],
+    explanation: "You create a custom AMI using Amazon EC2 after configuring an instance with your desired software and settings."
+},
+{
+    question: "Which AWS feature allows you to accept a discount for predictable instance usage in exchange for a one or three-year term commitment without capacity reservation?",
+    options: ["Reserved Instances", "Savings Plans", "Spot Instances", "Dedicated Hosts"],
+    correct: [1],
+    explanation: "Savings Plans provide flexible discounts for consistent usage commitments without tying you to specific instance types."
+},
+{
+    question: "Which tool allows you to create security and governance policies that apply to all member accounts within your AWS Organization?",
+    options: ["IAM Policies", "AWS Config Rules", "Service Control Policies (SCPs)", "Amazon GuardDuty"],
+    correct: [2],
+    explanation: "Service Control Policies (SCPs) enforce organization-wide governance across AWS accounts."
+},
+{
+    question: "A company wants to use a fully managed PostgreSQL-compatible relational database that is highly available and durable. Which service should they choose?",
+    options: ["Amazon RDS", "Amazon DynamoDB", "Amazon Aurora", "Amazon Redshift"],
+    correct: [2],
+    explanation: "Amazon Aurora is a MySQL and PostgreSQL-compatible managed database offering high availability and scalability."
+},
+{
+    question: "Which AWS service is used to automate the software release process, including building, testing, and deploying the application?",
+    options: ["AWS CodeCommit", "AWS CodeBuild", "AWS CodePipeline", "AWS CodeDeploy"],
+    correct: [2],
+    explanation: "AWS CodePipeline automates the entire software release process, enabling continuous integration and delivery."
+},
+{
+    question: "Which AWS service provides a fully managed, serverless platform for extracting, transforming, and loading (ETL) data?",
+    options: ["Amazon Kinesis", "AWS Glue", "Amazon EMR", "AWS Data Pipeline"],
+    correct: [1],
+    explanation: "AWS Glue is a serverless ETL service that simplifies preparing and transforming data for analytics."
+},
+{
+    question: "Which AWS service provides a free tier that is 'Always Free'?",
+    options: ["Amazon EC2", "Amazon S3", "AWS Lambda", "Amazon RDS"],
+    correct: [2],
+    explanation: "AWS Lambda’s free tier is always available, including 1 million requests and 400,000 GB-seconds of compute per month."
+},
+{
+    question: "Which AWS service should be used to protect your AWS accounts from Distributed Denial of Service (DDoS) attacks?",
+    options: ["AWS WAF", "AWS Shield", "Amazon GuardDuty", "AWS Firewall Manager"],
+    correct: [1],
+    explanation: "AWS Shield provides managed DDoS protection with automatic defense mechanisms for all AWS users."
+},
+{
+    question: "What is the benefit of the AWS Marketplace?",
+    options: [
+        "A place to sell unused compute capacity at a discount.",
+        "A digital catalog with thousands of software listings from independent software vendors.",
+        "A tool for forecasting future AWS costs.",
+        "A service to connect on-premises data centers to AWS."
+    ],
+    correct: [1],
+    explanation: "AWS Marketplace is a digital catalog of third-party software and services that run on AWS."
+},
+{
+    question: "A company wants to use a managed service to analyze data in real-time, such as streaming sensor data or web clickstreams. Which service is best suited?",
+    options: ["Amazon Redshift", "Amazon Kinesis", "Amazon SQS", "AWS Batch"],
+    correct: [1],
+    explanation: "Amazon Kinesis processes and analyzes real-time streaming data for fast insights and response."
+},
+{
+    question: "Which IAM feature grants temporary permissions to users or services without requiring long-term credentials?",
+    options: ["IAM User", "IAM Group", "IAM Role", "IAM Policy"],
+    correct: [2],
+    explanation: "IAM Roles provide temporary security credentials, ideal for applications or services needing limited access."
+},
+{
+    question: "Which AWS service is a managed, highly scalable DNS service?",
+    options: ["Amazon Route 53", "Amazon VPC", "AWS Direct Connect", "Amazon CloudFront"],
+    correct: [0],
+    explanation: "Amazon Route 53 is a highly available and scalable Domain Name System (DNS) web service."
+},
+{
+    question: "A customer wants to perform image analysis on a large batch of images. Which compute service is best suited for running large-scale batch processing workloads?",
+    options: ["AWS Lambda", "Amazon EC2", "AWS Batch", "AWS Fargate"],
+    correct: [2],
+    explanation: "AWS Batch efficiently runs hundreds or thousands of batch jobs using EC2 and Spot capacity."
+},
+{
+    question: "Which AWS service provides an enterprise-class, managed Microsoft Active Directory (AD) in the AWS Cloud?",
+    options: ["AWS Identity and Access Management (IAM)", "AWS Directory Service", "Amazon Cognito", "AWS Organizations"],
+    correct: [1],
+    explanation: "AWS Directory Service provides a fully managed Microsoft Active Directory in the AWS Cloud."
+},
+{
+    question: "Which AWS service can be used to perform automated security assessment and vulnerability management of your EC2 instances?",
+    options: ["Amazon GuardDuty", "Amazon Inspector", "AWS WAF", "AWS Shield"],
+    correct: [1],
+    explanation: "Amazon Inspector performs automated security assessments of EC2 instances to identify vulnerabilities."
+},
+{
+    question: "What is a key characteristic of the AWS Enterprise Support plan?",
+    options: [
+        "Provides a response time of less than 24 hours for all issues.",
+        "Includes unlimited technical support cases and access to a Technical Account Manager (TAM).",
+        "Only offers guidance on billing and account issues.",
+        "Is free for the first 12 months after sign-up."
+    ],
+    correct: [1],
+    explanation: "The Enterprise Support plan includes a Technical Account Manager (TAM), Concierge Support, and 15-minute response for critical issues."
+},
+{
+    question: "Which AWS service allows a user to perform serverless computing for containers?",
+    options: ["Amazon EC2", "AWS Lambda", "AWS Fargate", "Amazon ECS"],
+    correct: [2],
+    explanation: "AWS Fargate is a serverless compute engine for containers, eliminating the need to manage servers."
+},
+{
+    question: "What is the main security benefit of using Security Groups instead of Network Access Control Lists (NACLs) for EC2 instances?",
+    options: [
+        "Security Groups are stateless.",
+        "Security Groups are stateful.",
+        "Security Groups operate at the subnet level.",
+        "Security Groups allow or deny based on an IP address range."
+    ],
+    correct: [1],
+    explanation: "Security Groups are stateful, meaning responses to allowed inbound traffic are automatically allowed outbound."
+},
+{
+    question: "Which service is designed to make it easy for you to analyze highly detailed billing and cost information by exporting a comprehensive data set to Amazon S3?",
+    options: ["AWS Budgets", "AWS Cost Explorer", "AWS Cost and Usage Report (CUR)", "AWS Pricing Calculator"],
+    correct: [2],
+    explanation: "The AWS Cost and Usage Report (CUR) provides the most detailed billing and usage data, exported to S3 for analysis."
+},
+{
+    question: "Which component of the AWS global infrastructure is used by Amazon CloudFront to ensure low-latency delivery of content to end-users worldwide?",
+    options: ["Availability Zones", "Regions", "Edge Locations", "Data Centers"],
+    correct: [2],
+    explanation: "Amazon CloudFront uses Edge Locations to cache content closer to users, reducing latency. Regions and Availability Zones are used for deploying compute and storage resources."
+},
+{
+    question: "Which AWS service provides an object storage solution for storing photos, videos, and backups?",
+    options: ["Amazon EBS", "Amazon EC2", "Amazon S3", "Amazon EFS"],
+    correct: [2],
+    explanation: "Amazon Simple Storage Service (S3) offers object storage with virtually unlimited scalability and is designed for durability, availability, and security."
+},
+{
+    question: "What is the main purpose of AWS Identity and Access Management (IAM)?",
+    options: ["To encrypt data at rest", "To control user access and permissions", "To monitor billing usage", "To create EC2 instances"],
+    correct: [1],
+    explanation: "IAM manages access to AWS resources, controlling who can perform actions and under what conditions."
+},
+{
+    question: "Which AWS service helps you monitor your AWS environment by collecting and tracking metrics?",
+    options: ["AWS Config", "Amazon CloudWatch", "AWS CloudTrail", "Amazon Inspector"],
+    correct: [1],
+    explanation: "Amazon CloudWatch collects and visualizes operational data like CPU usage and network traffic for monitoring AWS resources."
+},
+{
+    question: "What does AWS Lambda allow you to do?",
+    options: ["Run virtual servers continuously", "Run code without provisioning servers", "Store files securely", "Host a static website"],
+    correct: [1],
+    explanation: "AWS Lambda runs code in response to events and automatically manages compute resources, enabling serverless computing."
+},
+{
+    question: "Which AWS pricing model allows you to save money by committing to use AWS for a specific period of time?",
+    options: ["On-Demand", "Reserved Instances", "Spot Instances", "Dedicated Hosts"],
+    correct: [1],
+    explanation: "Reserved Instances provide a significant discount compared to On-Demand pricing when you commit to a 1- or 3-year term."
+},
+{
+    question: "Which AWS service helps distribute incoming application traffic across multiple targets?",
+    options: ["Amazon Route 53", "AWS Auto Scaling", "Elastic Load Balancing (ELB)", "AWS Global Accelerator"],
+    correct: [2],
+    explanation: "ELB automatically distributes traffic across multiple targets, improving application availability and fault tolerance."
+},
+{
+    question: "Which AWS service can automatically adjust the number of EC2 instances in response to demand?",
+    options: ["AWS Auto Scaling", "AWS CloudFormation", "AWS Elastic Beanstalk", "Amazon CloudWatch"],
+    correct: [0],
+    explanation: "Auto Scaling maintains performance and cost efficiency by adjusting compute capacity based on real-time usage."
+},
+{
+    question: "What type of cloud computing model does AWS primarily use?",
+    options: ["Platform as a Service (PaaS)", "Software as a Service (SaaS)", "Infrastructure as a Service (IaaS)", "Network as a Service (NaaS)"],
+    correct: [2],
+    explanation: "AWS primarily offers IaaS, providing compute, storage, and networking resources on demand."
+},
+{
+    question: "Which service helps users analyze billing and usage data?",
+    options: ["AWS Cost Explorer", "AWS Budgets", "AWS CloudFormation", "Amazon QuickSight"],
+    correct: [0],
+    explanation: "AWS Cost Explorer visualizes historical spending and helps forecast future costs."
+},
+{
+    question: "Which support plan provides access to a Technical Account Manager (TAM)?",
+    options: ["Developer", "Business", "Enterprise", "Basic"],
+    correct: [2],
+    explanation: "The Enterprise Support Plan includes a TAM for proactive guidance and best-practice support."
+},
+{
+    question: "Which service records all API calls made within your AWS account for auditing purposes?",
+    options: ["AWS CloudTrail", "AWS Config", "Amazon CloudWatch", "AWS Trusted Advisor"],
+    correct: [0],
+    explanation: "AWS CloudTrail logs all API activity, helping track changes and meet compliance requirements."
+},
+{
+    question: "Which AWS service can host a static website?",
+    options: ["Amazon EC2", "AWS Lambda", "Amazon S3", "Amazon RDS"],
+    correct: [2],
+    explanation: "Amazon S3 can serve static web content directly, such as HTML, CSS, and images."
+},
+{
+    question: "Which service provides a relational database managed by AWS?",
+    options: ["Amazon DynamoDB", "Amazon RDS", "Amazon S3", "Amazon Aurora"],
+    correct: [1],
+    explanation: "Amazon Relational Database Service (RDS) manages setup, operation, and scaling of relational databases."
+},
+{
+    question: "What does the AWS shared responsibility model state?",
+    options: ["AWS manages everything for the customer", "The customer is responsible for everything", "AWS secures the cloud; customers secure what’s in the cloud", "Both AWS and the customer share billing"],
+    correct: [2],
+    explanation: "AWS is responsible for the security of the cloud, while customers are responsible for security in the cloud."
+},
+{
+    question: "Which service simplifies the deployment of web applications on AWS?",
+    options: ["AWS Elastic Beanstalk", "Amazon EC2", "AWS CloudFormation", "Amazon Lightsail"],
+    correct: [0],
+    explanation: "Elastic Beanstalk automates provisioning, load balancing, scaling, and monitoring of applications."
+},
+{
+    question: "Which AWS feature allows customers to isolate resources within a virtual network?",
+    options: ["Security Groups", "VPC (Virtual Private Cloud)", "Subnets", "AWS Firewall Manager"],
+    correct: [1],
+    explanation: "A VPC provides network isolation and control over IP addressing and routing within AWS."
+},
+{
+    question: "Which AWS service provides a content delivery network (CDN)?",
+    options: ["Amazon Route 53", "Amazon CloudFront", "AWS WAF", "AWS Global Accelerator"],
+    correct: [1],
+    explanation: "CloudFront speeds up distribution of web content through a global network of edge locations."
+},
+{
+    question: "Which service enables you to run containerized applications on AWS?",
+    options: ["AWS Lambda", "Amazon ECS", "AWS Elastic Beanstalk", "AWS CloudFormation"],
+    correct: [1],
+    explanation: "Amazon Elastic Container Service (ECS) runs Docker containers at scale in the AWS cloud."
+},
+{
+    question: "Which AWS service automatically replicates data across multiple Availability Zones for durability?",
+    options: ["Amazon S3", "Amazon EC2", "Amazon RDS", "AWS Backup"],
+    correct: [0],
+    explanation: "Amazon S3 stores data redundantly across multiple Availability Zones by default."
+},
+{
+        question: "Which AWS service allows you to create isolated environments for running code securely at scale?",
+        options: [
+            "AWS Lambda",
+            "AWS Fargate",
+            "AWS Elastic Beanstalk",
+            "AWS Outposts"
+        ],
+        correct: [0],
+        explanation: "Lambda runs code in isolated, managed environments without provisioning servers."
+    },
+    {
+        question: "Which AWS service helps improve the security posture of your account by checking configurations?",
+        options: [
+            "AWS Config",
+            "AWS Trusted Advisor",
+            "AWS Inspector",
+            "AWS Shield"
+        ],
+        correct: [1],
+        explanation: "Trusted Advisor provides real-time best-practice checks for cost, security, fault tolerance, and performance."
+    },
+    {
+        question: "Which AWS service helps you register domain names?",
+        options: [
+            "Amazon CloudFront",
+            "Amazon Route 53",
+            "AWS Global Accelerator",
+            "Amazon API Gateway"
+        ],
+        correct: [1],
+        explanation: "Route 53 provides DNS services and allows domain registration and traffic routing."
+    },
+    {
+        question: "Which storage class in Amazon S3 is ideal for infrequently accessed data but needs quick retrieval when required?",
+        options: [
+            "S3 Standard",
+            "S3 Glacier",
+            "S3 Standard-IA",
+            "S3 One Zone-IA"
+        ],
+        correct: [2],
+        explanation: "S3 Standard-Infrequent Access is designed for data accessed occasionally, at a lower storage cost."
+    },
+    {
+        question: "Which AWS service allows you to easily create and manage encryption keys?",
+        options: [
+            "AWS Shield",
+            "AWS KMS",
+            "AWS WAF",
+            "AWS Secrets Manager"
+        ],
+        correct: [1],
+        explanation: "AWS Key Management Service (KMS) manages cryptographic keys for encryption and decryption."
+    },
+    {
+        question: "Which AWS service provides fully managed NoSQL databases?",
+        options: [
+            "Amazon Aurora",
+            "Amazon RDS",
+            "Amazon DynamoDB",
+            "Amazon Redshift"
+        ],
+        correct: [2],
+        explanation: "Amazon DynamoDB is a fully managed NoSQL database designed for high performance and scalability."
+    },
+    {
+        question: "Which AWS service helps you migrate databases to AWS quickly and securely?",
+        options: [
+            "AWS DataSync",
+            "AWS Snowball",
+            "AWS DMS",
+            "AWS Glue"
+        ],
+        correct: [2],
+        explanation: "AWS Database Migration Service (DMS) moves databases to AWS with minimal downtime."
+    },
+    {
+        question: "Which pricing tool lets you estimate AWS service costs before deploying?",
+        options: [
+            "AWS Budgets",
+            "AWS Pricing Calculator",
+            "AWS Cost Explorer",
+            "AWS Marketplace"
+        ],
+        correct: [1],
+        explanation: "The AWS Pricing Calculator estimates costs for planning and comparison before usage."
+    },
+    {
+        question: "Which AWS service provides DDoS protection?",
+        options: [
+            "AWS Shield",
+            "AWS WAF",
+            "AWS Firewall Manager",
+            "AWS GuardDuty"
+        ],
+        correct: [0],
+        explanation: "AWS Shield defends against Distributed Denial of Service (DDoS) attacks automatically."
+    },
+    {
+        question: "Which AWS service analyzes logs and detects security threats using machine learning?",
+        options: [
+            "AWS CloudTrail",
+            "AWS GuardDuty",
+            "AWS Config",
+            "AWS Security Hub"
+        ],
+        correct: [1],
+        explanation: "GuardDuty continuously monitors logs and network traffic to identify suspicious or malicious activity."
+    },
+    {
+        question: "Which AWS service can help identify unused EC2 instances or idle load balancers to reduce cost?",
+        options: [
+            "AWS CloudTrail",
+            "AWS Trusted Advisor",
+            "AWS Config",
+            "AWS Cost Explorer"
+        ],
+        correct: [1],
+        explanation: "AWS Trusted Advisor offers cost optimization checks to identify underused or idle resources."
+    },
+    {
+        question: "Which AWS service helps organizations detect anomalies and unauthorized access in their AWS environment?",
+        options: [
+            "AWS Inspector",
+            "AWS GuardDuty",
+            "AWS Shield",
+            "AWS CloudTrail"
+        ],
+        correct: [1],
+        explanation: "GuardDuty uses machine learning to identify unusual or malicious activity within your AWS accounts and workloads."
+    },
+    {
+        question: "Which AWS compute service allows you to run containers without managing servers or clusters?",
+        options: [
+            "Amazon EC2",
+            "Amazon ECS",
+            "AWS Fargate",
+            "AWS Batch"
+        ],
+        correct: [2],
+        explanation: "AWS Fargate runs containers serverlessly — you don’t need to manage EC2 instances or clusters."
+    },
+    {
+        question: "Which AWS service provides a fully managed, petabyte-scale data warehouse solution?",
+        options: [
+            "Amazon Aurora",
+            "Amazon DynamoDB",
+            "Amazon Redshift",
+            "Amazon RDS"
+        ],
+        correct: [2],
+        explanation: "Amazon Redshift is AWS’s managed data warehouse optimized for large-scale analytics and reporting."
+    },
+    {
+        question: "Which feature of AWS allows you to create multiple user accounts and apply centralized billing and access control?",
+        options: [
+            "AWS IAM Roles",
+            "AWS Organizations",
+            "AWS SSO",
+            "AWS Control Tower"
+        ],
+        correct: [1],
+        explanation: "AWS Organizations lets you manage multiple AWS accounts under one umbrella for consolidated billing and governance."
+    },
+    {
+        question: "Which service is designed to automate the setup of AWS environments based on best practices?",
+        options: [
+            "AWS CloudFormation",
+            "AWS Elastic Beanstalk",
+            "AWS Control Tower",
+            "AWS Systems Manager"
+        ],
+        correct: [2],
+        explanation: "AWS Control Tower automates the setup of secure, multi-account environments using best practices."
+    },
+    {
+        question: "Which AWS service simplifies transferring large datasets to AWS using physical devices?",
+        options: [
+            "AWS DataSync",
+            "AWS Direct Connect",
+            "AWS Snowball",
+            "AWS Backup"
+        ],
+        correct: [2],
+        explanation: "AWS Snowball provides a physical data transfer solution for securely moving large amounts of data to AWS."
+    },
+    {
+        question: "Which AWS support plan is ideal for experimenting or running personal projects on AWS?",
+        options: [
+            "Enterprise",
+            "Developer",
+            "Business",
+            "Basic"
+        ],
+        correct: [3],
+        explanation: "The Basic Support Plan includes customer service, documentation, and access to AWS Trusted Advisor’s basic checks for free."
+    },
+    {
+        question: "Which AWS service is primarily used to automate infrastructure deployment using code templates?",
+        options: [
+            "AWS CodeDeploy",
+            "AWS CloudFormation",
+            "AWS Elastic Beanstalk",
+            "AWS CodePipeline"
+        ],
+        correct: [1],
+        explanation: "AWS CloudFormation automates infrastructure deployment through reusable JSON or YAML templates."
+    },
+    {
+        question: "Which AWS service helps organizations centrally view and manage security alerts across multiple AWS accounts?",
+        options: [
+            "AWS GuardDuty",
+            "AWS Security Hub",
+            "AWS Inspector",
+            "AWS Shield"
+        ],
+        correct: [1],
+        explanation: "AWS Security Hub aggregates and prioritizes security alerts from multiple services in one dashboard."
+    },
+    {
+        question: "Which AWS service provides scalable DNS management?",
+        options: [
+            "Amazon CloudFront",
+            "Amazon Route 53",
+            "AWS Global Accelerator",
+            "AWS Shield"
+        ],
+        correct: [1],
+        explanation: "Route 53 is AWS’s managed Domain Name System (DNS) that routes traffic globally and can perform health checks."
+    },
+    {
+        question: "Which AWS service helps automate backups for EC2, EBS, and RDS resources?",
+        options: [
+            "AWS Backup",
+            "AWS Config",
+            "AWS DataSync",
+            "AWS CloudFormation"
+        ],
+        correct: [0],
+        explanation: "AWS Backup centrally manages and automates data backups across AWS services."
+    },
+    {
+        question: "What is one key benefit of using AWS managed services?",
+        options: [
+            "You manage hardware configurations",
+            "You pay for unused capacity",
+            "AWS handles operational tasks like patching and scaling",
+            "You must manually configure availability zones"
+        ],
+        correct: [2],
+        explanation: "Managed services offload maintenance tasks to AWS, allowing users to focus on their applications."
+    },
+    {
+        question: "Which AWS service helps analyze and convert data for analytics?",
+        options: [
+            "AWS Glue",
+            "Amazon EMR",
+            "Amazon Athena",
+            "AWS Lake Formation"
+        ],
+        correct: [0],
+        explanation: "AWS Glue is a serverless data integration service that prepares and transforms data for analytics."
+    },
+     {
+        question: "Which AWS feature allows customers to reduce costs by automatically moving data to cheaper storage tiers?",
+        options: [
+            "Lifecycle policies",
+            "Auto Scaling",
+            "Elastic Load Balancing",
+            "Cross-Region Replication"
+        ],
+        correct: [0],
+        explanation: "S3 lifecycle policies automate transitioning data between storage classes or deleting it after a set period."
+    },
+    {
+        question: "Which AWS service provides real-time streaming data ingestion and analysis?",
+        options: [
+            "Amazon Kinesis",
+            "Amazon EMR",
+            "Amazon SQS",
+            "Amazon SNS"
+        ],
+        correct: [0],
+        explanation: "Amazon Kinesis collects and analyzes streaming data such as IoT sensor data or application logs."
+    },
+    {
+        question: "Which AWS service enables developers to build, test, and deploy code automatically?",
+        options: [
+            "AWS CodePipeline",
+            "AWS CloudFormation",
+            "AWS Lambda",
+            "AWS Systems Manager"
+        ],
+        correct: [0],
+        explanation: "AWS CodePipeline automates the continuous integration and delivery (CI/CD) of applications."
+    },
+    {
+        question: "Which AWS service helps create isolated computing environments for running multiple virtual servers?",
+        options: [
+            "AWS Fargate",
+            "Amazon VPC",
+            "Amazon CloudFront",
+            "AWS Batch"
+        ],
+        correct: [1],
+        explanation: "Amazon VPC lets users define their own virtual network environment for AWS resources."
+    },
+    {
+        question: "What is the default maximum availability zone redundancy built into Amazon S3?",
+        options: [
+            "One Availability Zone",
+            "Two Availability Zones",
+            "Three or more Availability Zones",
+            "One Region only"
+        ],
+        correct: [2],
+        explanation: "Amazon S3 automatically stores data redundantly across three or more Availability Zones."
+    },
+    {
+        question: "Which AWS feature helps you track changes to resources and configurations over time?",
+        options: [
+            "AWS CloudTrail",
+            "AWS Config",
+            "AWS Trusted Advisor",
+            "AWS CloudWatch"
+        ],
+        correct: [1],
+        explanation: "AWS Config records configuration changes and evaluates resource compliance."
+    },
+    {
+        question: "Which AWS service can help you detect open security groups or unencrypted storage buckets?",
+        options: [
+            "AWS CloudTrail",
+            "AWS Trusted Advisor",
+            "AWS Config",
+            "AWS Security Hub"
+        ],
+        correct: [1],
+        explanation: "Trusted Advisor runs security checks and provides recommendations to fix risky configurations."
+    },
+    {
+        question: "Which AWS service allows you to decouple application components using message queues?",
+        options: [
+            "Amazon SNS",
+            "Amazon SQS",
+            "AWS Step Functions",
+            "AWS Lambda"
+        ],
+        correct: [1],
+        explanation: "Amazon Simple Queue Service (SQS) provides message queues that decouple and scale distributed systems."
+    },
+    {
+        question: "Which AWS tool helps protect web applications from common exploits like SQL injection?",
+        options: [
+            "AWS WAF",
+            "AWS Shield",
+            "AWS GuardDuty",
+            "AWS Inspector"
+        ],
+        correct: [0],
+        explanation: "AWS Web Application Firewall (WAF) filters HTTP requests and blocks common web attacks."
+    },
+    {
+        question: "Which AWS service helps deploy and scale virtual desktops securely?",
+        options: [
+            "Amazon WorkSpaces",
+            "Amazon AppStream 2.0",
+            "Amazon EC2",
+            "AWS Systems Manager"
+        ],
+        correct: [0],
+        explanation: "Amazon WorkSpaces delivers managed, cloud-based virtual desktops."
+    },
+    {
+        question: "Which AWS service allows you to easily host and manage WordPress websites?",
+        options: [
+            "Amazon Lightsail",
+            "Amazon EC2",
+            "Amazon S3",
+            "AWS Lambda"
+        ],
+        correct: [0],
+        explanation: "Amazon Lightsail provides simplified cloud hosting for web applications like WordPress."
+    },
+    {
+        question: "Which AWS service helps automatically deploy patches and updates across instances?",
+        options: [
+            "AWS Config",
+            "AWS Systems Manager",
+            "AWS CloudFormation",
+            "AWS OpsWorks"
+        ],
+        correct: [1],
+        explanation: "AWS Systems Manager automates patch management, configuration, and inventory collection."
+    },
+    {
+        question: "Which AWS service provides block-level storage for EC2 instances?",
+        options: [
+            "Amazon S3",
+            "Amazon EFS",
+            "Amazon EBS",
+            "AWS Backup"
+        ],
+        correct: [2],
+        explanation: "Amazon Elastic Block Store (EBS) offers persistent block storage volumes for EC2."
+    },
+    {
+        question: "Which AWS service can automatically scan your applications for vulnerabilities?",
+        options: [
+            "AWS Inspector",
+            "AWS Shield",
+            "AWS GuardDuty",
+            "AWS CloudTrail"
+        ],
+        correct: [0],
+        explanation: "AWS Inspector analyzes application behavior and identifies potential security vulnerabilities."
+    },
+    {
+        question: "Which AWS service allows organizations to monitor and enforce compliance across multiple accounts?",
+        options: [
+            "AWS Security Hub",
+            "AWS Organizations",
+            "AWS Control Tower",
+            "AWS Config"
+        ],
+        correct: [3],
+        explanation: "AWS Config enables governance by tracking compliance status and configuration history."
+    },
+    {
+        question: "Which AWS service provides a way to manage user authentication for applications?",
+        options: [
+            "AWS IAM",
+            "Amazon Cognito",
+            "AWS SSO",
+            "AWS Directory Service"
+        ],
+        correct: [1],
+        explanation: "Amazon Cognito manages user sign-up, sign-in, and access control for web and mobile apps."
+    },
+    {
+        question: "Which AWS service helps you easily move on-premises databases to AWS?",
+        options: [
+            "AWS DataSync",
+            "AWS Migration Hub",
+            "AWS Database Migration Service (DMS)",
+            "AWS Glue"
+        ],
+        correct: [2],
+        explanation: "AWS Database Migration Service replicates databases securely and efficiently to AWS with minimal downtime."
+    },
+    {
+        question: "Which AWS service helps you automatically scale EC2 instances based on demand?",
+        options: [
+            "AWS Elastic Beanstalk",
+            "Amazon EC2 Auto Scaling",
+            "Amazon CloudWatch",
+            "AWS Systems Manager"
+        ],
+        correct: [1],
+        explanation: "Auto Scaling adds or removes EC2 instances dynamically to maintain performance and reduce costs."
+    },
+    {
+        question: "Which AWS service is ideal for sending notifications or alerts to multiple subscribers?",
+        options: [
+            "Amazon SQS",
+            "Amazon SNS",
+            "AWS CloudWatch",
+            "AWS Lambda"
+        ],
+        correct: [1],
+        explanation: "Amazon Simple Notification Service (SNS) delivers push notifications, emails, and SMS to multiple endpoints."
+    },
+    {
+        question: "Which AWS service can host APIs that connect to backend services or Lambda functions?",
+        options: [
+            "AWS API Gateway",
+            "AWS CloudFront",
+            "AWS Elastic Beanstalk",
+            "AWS Lambda"
+        ],
+        correct: [0],
+        explanation: "Amazon API Gateway creates and manages secure APIs for applications to access backend services."
+    },
+    {
+        question: "Which AWS service allows you to run serverless functions triggered by events?",
+        options: [
+            "Amazon EC2",
+            "AWS Lambda",
+            "AWS Fargate",
+            "AWS Step Functions"
+        ],
+        correct: [1],
+        explanation: "AWS Lambda executes code in response to events — no server management required."
+    },
+    {
+        question: "Which AWS service helps manage encryption keys for data at rest and in transit?",
+        options: [
+            "AWS KMS",
+            "AWS Secrets Manager",
+            "AWS Certificate Manager",
+            "AWS IAM"
+        ],
+        correct: [0],
+        explanation: "AWS Key Management Service (KMS) centrally manages encryption keys for AWS resources and applications."
+    },
+    {
+        question: "Which AWS service allows you to deliver web content faster by caching it globally?",
+        options: [
+            "Amazon Route 53",
+            "AWS Global Accelerator",
+            "Amazon CloudFront",
+            "Amazon S3"
+        ],
+        correct: [2],
+        explanation: "Amazon CloudFront is a CDN (Content Delivery Network) that speeds up delivery using edge locations worldwide."
+    },
+    {
+        question: "Which AWS service allows hybrid cloud storage by connecting on-premises applications to AWS cloud storage?",
+        options: [
+            "AWS DataSync",
+            "AWS Storage Gateway",
+            "Amazon FSx",
+            "Amazon EFS"
+        ],
+        correct: [1],
+        explanation: "AWS Storage Gateway provides seamless integration between on-premises environments and AWS cloud storage."
+    },
+    {
+        question: "Which AWS feature allows customers to reserve capacity and save money on EC2 instances?",
+        options: [
+            "Spot Instances",
+            "Reserved Instances",
+            "Savings Plans",
+            "Dedicated Hosts"
+        ],
+        correct: [1],
+        explanation: "Reserved Instances let you commit to EC2 capacity for one or three years at discounted pricing."
+    },
+     {
+question: "Which AWS service offers an integrated environment for developing and debugging cloud-based applications?",
+options: ["AWS CodeStar", "AWS Cloud9", "AWS CodeBuild", "AWS Lambda"],
+correct: [1],
+explanation: "AWS Cloud9 provides a cloud-based IDE that lets developers write, run, and debug code from a browser."
+},
+{
+question: "Which AWS service helps manage secrets like API keys and passwords securely?",
+options: ["AWS IAM", "AWS Secrets Manager", "AWS KMS", "AWS Config"],
+correct: [1],
+explanation: "AWS Secrets Manager automatically rotates, manages, and retrieves application secrets securely."
+},
+{
+question: "Which AWS service is used to automate server provisioning and application deployment using Chef or Puppet?",
+options: ["AWS OpsWorks", "AWS CloudFormation", "AWS Systems Manager", "AWS CodeDeploy"],
+correct: [0],
+explanation: "AWS OpsWorks manages configuration automation using Chef or Puppet templates."
+},
+{
+question: "Which AWS service can help optimize cost by automatically recommending better instance types?",
+options: ["AWS Config", "AWS Trusted Advisor", "AWS Cost Explorer", "AWS Compute Optimizer"],
+correct: [3],
+explanation: "AWS Compute Optimizer analyzes resource utilization and suggests optimal EC2 instance types."
+},
+{
+question: "Which AWS service provides managed Kubernetes clusters?",
+options: ["Amazon ECS", "AWS Fargate", "Amazon EKS", "AWS Batch"],
+correct: [2],
+explanation: "Amazon Elastic Kubernetes Service (EKS) runs Kubernetes without managing control plane infrastructure."
+},
+{
+question: "Which AWS service allows customers to view detailed billing information and usage reports?",
+options: ["AWS Billing Console", "AWS Cost Explorer", "AWS Trusted Advisor", "AWS Budgets"],
+correct: [1],
+explanation: "AWS Cost Explorer provides visualization and analysis of spending trends over time."
+},
+{
+question: "Which AWS service can mirror network traffic for deep security analysis?",
+options: ["AWS Shield", "Amazon VPC Traffic Mirroring", "AWS GuardDuty", "AWS CloudTrail"],
+correct: [1],
+explanation: "VPC Traffic Mirroring copies network traffic for inspection, diagnostics, or intrusion detection."
+},
+{
+question: "Which AWS tool helps automate compliance checks using prebuilt rules?",
+options: ["AWS Security Hub", "AWS Inspector", "AWS Config Conformance Packs", "AWS Trusted Advisor"],
+correct: [2],
+explanation: "Conformance Packs in AWS Config group compliance rules for auditing across accounts and regions."
+},
+{
+question: "Which AWS service lets you easily deploy and manage containers using Docker?",
+options: ["Amazon ECS", "AWS Fargate", "Amazon EKS", "AWS Batch"],
+correct: [0],
+explanation: "Amazon Elastic Container Service (ECS) manages Docker containers at scale."
+},
+{
+question: "Which AWS service provides access to machine learning models through APIs without needing ML expertise?",
+options: ["Amazon SageMaker", "Amazon Comprehend", "AWS Lambda", "Amazon Rekognition"],
+correct: [3],
+explanation: "Amazon Rekognition uses ML APIs for image and video analysis without requiring ML training."
+},
+{
+question: "Which AWS service is ideal for analyzing data directly from Amazon S3 using standard SQL?",
+options: ["Amazon Redshift", "Amazon Athena", "Amazon EMR", "AWS Glue"],
+correct: [1],
+explanation: "Amazon Athena is a serverless query service that analyzes S3 data using SQL."
+},
+{
+question: "Which AWS service is primarily designed for building, training, and deploying ML models?",
+options: ["Amazon SageMaker", "AWS Glue", "Amazon Comprehend", "Amazon Bedrock"],
+correct: [0],
+explanation: "Amazon SageMaker offers a full ML workflow — from data preparation to model deployment."
+},
+{
+question: "Which AWS service can be used to store and manage Docker container images?",
+options: ["AWS Fargate", "Amazon ECS", "Amazon ECR", "AWS CodeBuild"],
+correct: [2],
+explanation: "Amazon Elastic Container Registry (ECR) stores, manages, and deploys container images securely."
+},
+{
+question: "Which AWS service allows you to set alarms based on metrics like CPU utilization?",
+options: ["AWS CloudTrail", "AWS CloudWatch", "AWS Config", "AWS Trusted Advisor"],
+correct: [1],
+explanation: "CloudWatch monitors resources and sends alerts when thresholds are breached."
+},
+{
+question: "Which AWS feature improves availability by routing traffic across multiple regions?",
+options: ["Route 53 Latency Routing", "Elastic Load Balancing", "Auto Scaling", "Global Accelerator"],
+correct: [3],
+explanation: "AWS Global Accelerator improves performance by routing user traffic through AWS’s global network."
+},
+{
+question: "Which AWS service enables secure, dedicated network connections from your premises to AWS?",
+options: ["AWS VPN", "AWS Direct Connect", "AWS DataSync", "AWS Snowball"],
+correct: [1],
+explanation: "AWS Direct Connect provides a private, low-latency network connection to AWS."
+},
+{
+question: "Which AWS service is a serverless ETL (Extract, Transform, Load) tool?",
+options: ["AWS Data Pipeline", "AWS Glue", "Amazon Redshift", "Amazon Athena"],
+correct: [1],
+explanation: "AWS Glue transforms and loads data for analytics automatically and serverlessly."
+},
+{
+question: "Which AWS service helps you automatically enforce tagging policies across resources?",
+options: ["AWS Config", "AWS Organizations", "AWS Service Catalog", "AWS Control Tower"],
+correct: [0],
+explanation: "AWS Config ensures resource compliance by enforcing tagging and configuration rules."
+},
+{
+question: "Which AWS service lets users model workflows as state machines?",
+options: ["AWS Step Functions", "AWS Lambda", "AWS Batch", "AWS CodePipeline"],
+correct: [0],
+explanation: "AWS Step Functions orchestrate multiple AWS services using visual workflows."
+},
+{
+question: "Which AWS pricing model offers the lowest cost but no guaranteed capacity?",
+options: ["On-Demand Instances", "Savings Plans", "Spot Instances", "Reserved Instances"],
+correct: [2],
+explanation: "Spot Instances use spare EC2 capacity at deep discounts but can be interrupted anytime."
+},
+{
+question: "Which AWS service provides centralized logging for applications across accounts?",
+options: ["AWS CloudTrail", "Amazon CloudWatch Logs", "AWS Config", "AWS Audit Manager"],
+correct: [1],
+explanation: "CloudWatch Logs aggregates and stores log data for real-time monitoring and analysis."
+},
+{
+question: "Which AWS feature allows you to use your existing Active Directory credentials for AWS login?",
+options: ["AWS IAM", "AWS Directory Service", "AWS Cognito", "AWS SSO"],
+correct: [1],
+explanation: "AWS Directory Service integrates with Microsoft Active Directory for identity federation."
+},
+{
+question: "Which AWS service can create virtual file systems accessible by multiple EC2 instances?",
+options: ["Amazon S3", "Amazon EBS", "Amazon EFS", "AWS Backup"],
+correct: [2],
+explanation: "Amazon Elastic File System (EFS) provides shared file storage across multiple EC2 instances."
+},
+{
+question: "Which AWS tool provides best-practice blueprints for building secure and scalable architectures?",
+options: ["AWS Trusted Advisor", "AWS Well-Architected Tool", "AWS CloudFormation", "AWS Control Tower"],
+correct: [1],
+explanation: "The Well-Architected Tool guides you in designing resilient, efficient, and cost-effective AWS systems."
+},
+{
+question: "Which AWS service helps automate security assessments for EC2-based applications?",
+options: ["AWS Inspector", "AWS Shield", "AWS Security Hub", "AWS Config"],
+correct: [0],
+explanation: "AWS Inspector analyzes EC2 configurations for vulnerabilities or deviations from best practices."
+},
+{
+question: "Which AWS service helps forecast future cloud spend based on historical usage?",
+options: ["AWS Budgets", "AWS Cost Explorer", "AWS Trusted Advisor", "AWS Compute Optimizer"],
+correct: [1],
+explanation: "Cost Explorer includes forecasting to predict future spending trends based on prior data."
+},
+{
+question: "Which AWS service provides real-time insights into operational data using dashboards?",
+options: ["AWS Config", "AWS CloudWatch", "AWS CloudTrail", "AWS Trusted Advisor"],
+correct: [1],
+explanation: "CloudWatch dashboards visualize metrics and logs in real time for system health monitoring."
+},
+{
+question: "Which AWS service enables developers to deploy code automatically to EC2 or Lambda?",
+options: ["AWS CodeDeploy", "AWS CodePipeline", "AWS CodeBuild", "AWS CodeCommit"],
+correct: [0],
+explanation: "AWS CodeDeploy automates deployment of code changes to EC2, Lambda, or on-prem servers."
+},
+{
+question: "Which AWS service lets you securely share data with other AWS accounts?",
+options: ["AWS Resource Access Manager", "AWS Organizations", "AWS Control Tower", "AWS Transfer Family"],
+correct: [0],
+explanation: "AWS Resource Access Manager (RAM) allows resource sharing across AWS accounts securely."
+},
+{
+question: "Which AWS service automatically protects against DDoS attacks?",
+options: ["AWS Shield", "AWS WAF", "AWS GuardDuty", "AWS Inspector"],
+correct: [0],
+explanation: "AWS Shield offers always-on DDoS protection for AWS applications at no extra cost."
+},
+{
+question: "Which AWS service helps you create data lakes quickly and securely?",
+options: ["AWS Glue", "Amazon S3", "AWS Lake Formation", "Amazon Redshift"],
+correct: [2],
+explanation: "AWS Lake Formation simplifies building, securing, and managing data lakes on top of S3."
+},
+{
+question: "Which AWS service lets you create and manage isolated virtual networks within the AWS Cloud?",
+options: ["Amazon Route 53", "Amazon CloudFront", "Amazon VPC", "AWS Direct Connect"],
+correct: [2],
+explanation: "Amazon VPC (Virtual Private Cloud) allows you to define and control a virtual network environment including IP ranges, subnets, and routing."
+},
+{
+question: "A company wants to automatically provision infrastructure based on templates to ensure consistency across environments. Which AWS service should they use?",
+options: ["AWS CloudFormation", "AWS Config", "AWS CloudTrail", "AWS CodePipeline"],
+correct: [0],
+explanation: "AWS CloudFormation enables automated resource provisioning using templates, ensuring consistent and repeatable infrastructure deployments."
+},
+{
+question: "Which AWS service enables developers to deploy and manage applications without provisioning or managing servers?",
+options: ["AWS Elastic Beanstalk", "Amazon EC2", "AWS Lambda", "Amazon ECS"],
+correct: [0],
+explanation: "AWS Elastic Beanstalk manages application deployment, scaling, and monitoring automatically without requiring manual server configuration."
+},
+{
+question: "Which AWS service helps protect applications against DDoS attacks?",
+options: ["AWS Shield", "AWS WAF", "Amazon GuardDuty", "AWS Firewall Manager"],
+correct: [0],
+explanation: "AWS Shield provides automatic protection against Distributed Denial of Service (DDoS) attacks with advanced features in Shield Advanced."
+},
+{
+question: "Which AWS service can detect unauthorized or malicious activity by analyzing AWS account logs and network traffic?",
+options: ["AWS Config", "AWS CloudTrail", "Amazon GuardDuty", "AWS Security Hub"],
+correct: [2],
+explanation: "Amazon GuardDuty uses machine learning and threat intelligence to detect suspicious or malicious activity in your AWS environment."
+},
+{
+question: "Which AWS service allows developers to store, manage, and version application source code in the cloud?",
+options: ["AWS CodeCommit", "AWS CodeBuild", "AWS CodeDeploy", "AWS CodePipeline"],
+correct: [0],
+explanation: "AWS CodeCommit is a fully managed source control service that hosts private Git repositories securely at scale."
+},
+{
+question: "A company needs to send, store, and process messages between distributed software components reliably. Which AWS service should they use?",
+options: ["Amazon SNS", "Amazon SQS", "AWS Step Functions", "Amazon MQ"],
+correct: [1],
+explanation: "Amazon SQS (Simple Queue Service) is a fully managed message queuing service for decoupling and scaling distributed systems."
+},
+{
+question: "Which AWS service allows you to run containerized applications without managing servers or clusters?",
+options: ["Amazon ECS on EC2", "AWS Fargate", "Amazon EKS", "AWS Lambda"],
+correct: [1],
+explanation: "AWS Fargate is a serverless compute engine for containers, removing the need to manage EC2 instances or Kubernetes nodes."
+},
+{
+question: "Which AWS service allows you to track user activity and API usage across your AWS account?",
+options: ["AWS CloudTrail", "AWS Config", "AWS CloudWatch", "AWS Trusted Advisor"],
+correct: [0],
+explanation: "AWS CloudTrail records all account activity and API calls, providing visibility into user actions and resource changes."
+},
+{
+question: "Which AWS service enables centralized management and auditing of security and compliance across multiple AWS accounts?",
+options: ["AWS CloudTrail", "AWS Security Hub", "AWS Shield", "Amazon GuardDuty"],
+correct: [1],
+explanation: "AWS Security Hub provides a unified view of security alerts and compliance findings across AWS accounts and services."
+},
+            {
                 question: "XXXXX",
                 options: ["XXXXX"],
                 correct: 0,
